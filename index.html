@@ -59,22 +59,22 @@
 
     /* ── SECCIÓN ── */
     .section {
-      max-width: 960px;
+      max-width: 1200px;
       margin: 0 auto;
-      padding: 48px 24px;
+      padding: 48px 32px;
     }
     .section h2 {
       font-size: 24px;
       margin-bottom: 24px;
-      color: #2e7d32;
-      border-left: 4px solid #4CAF50;
+      color: #0d47a1;
+      border-left: 4px solid #1565C0;
       padding-left: 12px;
     }
 
     /* ── GRID DE TARJETAS ── */
     .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
       gap: 16px;
     }
     .card {
@@ -118,7 +118,8 @@
 
     @media (max-width: 600px) {
       .hero h1 { font-size: 28px; }
-      .grid { grid-template-columns: 1fr 1fr; }
+      .grid { grid-template-columns: 1fr; }
+      .section { padding: 32px 16px; }
     }
     .topbar { background: #1565C0; }
     .hero { background: linear-gradient(135deg, #0d47a1, #42a5f5); }
