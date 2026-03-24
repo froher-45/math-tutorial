@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tutoriales de Cálculo</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: "Segoe UI", Arial, sans-serif;
+      font-size: 15px;
+      color: #333;
+    }
+
+    /* ── TOPBAR ── */
+    .topbar {
+      background: #1565C0;
+      color: white;
+      padding: 0 16px;
+      display: flex;
+      align-items: center;
+      height: 50px;
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      gap: 24px;
+    }
+    .topbar .brand {
+      font-size: 20px;
+      font-weight: bold;
+      text-decoration: none;
+      color: white;
+    }
+    .topbar nav a {
+      color: white;
+      text-decoration: none;
+      font-size: 14px;
+      padding: 4px 8px;
+      border-radius: 4px;
+    }
+    .topbar nav a:hover { background: rgba(255,255,255,0.2); }
+
+    /* ── LAYOUT ── */
+    .layout {
+      display: flex;
+      margin-top: 50px;
+    }
+
+    /* ── SIDEBAR ── */
+    .sidebar {
+      width: 240px;
+      min-height: calc(100vh - 50px);
+      background: #f1f1f1;
+      padding: 16px 0;
+      position: fixed;
+      top: 50px;
+      overflow-y: auto;
+    }
+    .sidebar h3 {
+      font-size: 13px;
+      color: #555;
+      text-transform: uppercase;
+      padding: 12px 16px 6px;
+      letter-spacing: 0.5px;
+    }
+    .sidebar a {
+      display: block;
+      padding: 8px 16px;
+      color: #333;
+      text-decoration: none;
+      font-size: 14px;
+    }
+    .sidebar a:hover { background: #ddd; }
+    .sidebar a.active {
+      background: #4CAF50;
+      color: white;
+      font-weight: bold;
+    }
+    .sidebar .divider {
+      border: none;
+      border-top: 1px solid #ddd;
+      margin: 8px 0;
+    }
+
+    /* ── CONTENIDO ── */
+    .content {
+      margin-left: 240px;
+      padding: 32px 40px;
+      max-width: 900px;
+      min-height: calc(100vh - 50px);
+    }
+
+    .content h1 {
+      font-size: 32px;
+      color: #333;
+      margin-bottom: 8px;
+    }
+    .content h2 {
+      font-size: 22px;
+      margin: 28px 0 10px;
+      color: #333;
+    }
+    .content p {
+      line-height: 1.7;
+      margin-bottom: 16px;
+      color: #444;
+    }
+
+    /* Caja de ejemplo (como W3Schools) */
+    .example-box {
+      background: #f9f9f9;
+      border-left: 4px solid #1565C0;
+      padding: 16px 20px;
+      margin: 20px 0;
+      border-radius: 0 4px 4px 0;
+    }
+    .example-box .label {
+      font-size: 12px;
+      font-weight: bold;
+      color: #1565C0;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .example-box pre {
+      background: white;
+      border: 1px solid #ddd;
+      padding: 14px;
+      border-radius: 4px;
+      font-size: 15px;
+      overflow-x: auto;
+      line-height: 1.6;
+    }
+
+    /* Caja de nota */
+    .note-box {
+      background: #fffde7;
+      border-left: 4px solid #FFC107;
+      padding: 12px 16px;
+      margin: 20px 0;
+      border-radius: 0 4px 4px 0;
+      font-size: 14px;
+    }
+
+    /* ── BOTONES ANTERIOR / SIGUIENTE ── */
+    .nav-btns {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 48px;
+      padding-top: 24px;
+      border-top: 1px solid #eee;
+    }
+    .btn {
+      display: inline-block;
+      padding: 10px 22px;
+      background: #1565C0;
+      color: white;
+      text-decoration: none;
+      border-radius: 4px;
+      font-size: 14px;
+      font-weight: bold;
+    }
+    .btn:hover { background: #0d47a1; }
+    .btn.outline {
+      background: white;
+      color: #1565C0;
+      border: 2px solid #1565C0;
+    }
+    .btn.outline:hover { background: #e3f2fd; }
+
+    .sidebar a.active {
+      background: #1565C0;
+      color: white;
+      font-weight: bold;
+    }
+
+    .gen-box {
+      background: #e3f2fd;
+      border: 1px solid #90caf9;
+      border-radius: 8px;
+      padding: 24px;
+      margin: 40px 0;
+    }
+    .gen-box h2 { margin-top: 0; color: #0d47a1; }
+    .gen-controls select, .gen-controls button {
+      padding: 9px 14px;
+      border-radius: 4px;
+      font-size: 14px;
+      border: 1px solid #ccc;
+      cursor: pointer;
+    }
+    .gen-controls select { flex: 1; min-width: 160px; background: white; }
+    .gen-controls button {
+      background: #1565C0;
+      color: white;
+      border-color: #1565C0;
+      font-weight: bold;
+    }
+    .gen-controls button:hover { background: #0d47a1; }
+    .gen-controls button:disabled { background: #aaa; border-color: #aaa; cursor: not-allowed; }
+    .show-solution-btn {
+      margin-top: 12px;
+      padding: 8px 18px;
+      background: white;
+      color: #1565C0;
+      border: 2px solid #1565C0;
+      border-radius: 4px;
+      font-size: 13px;
+      font-weight: bold;
+      cursor: pointer;
+      display: none;
+    }
+    .show-solution-btn.visible { display: inline-block; }
+    .show-solution-btn:hover { background: #e3f2fd; }
+
+    /* ── GENERADOR ── */
+    .gen-box {
+      background: #f0f7f0;
+      border: 1px solid #c8e6c9;
+      border-radius: 8px;
+      padding: 24px;
+      margin: 40px 0;
+    }
+    .gen-box h2 { margin-top: 0; color: #2e7d32; }
+    .gen-controls {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin: 16px 0;
+    }
+    .gen-controls select, .gen-controls button {
+      padding: 9px 14px;
+      border-radius: 4px;
+      font-size: 14px;
+      border: 1px solid #ccc;
+      cursor: pointer;
+    }
+    .gen-controls select { flex: 1; min-width: 160px; background: white; }
+    .gen-controls button {
+      background: #4CAF50;
+      color: white;
+      border-color: #4CAF50;
+      font-weight: bold;
+    }
+    .gen-controls button:hover { background: #43A047; }
+    .gen-controls button:disabled { background: #aaa; border-color: #aaa; cursor: not-allowed; }
+
+    .exercise-output {
+      background: white;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      padding: 20px;
+      margin-top: 16px;
+      line-height: 1.8;
+      min-height: 60px;
+      white-space: pre-wrap;
+      font-size: 14px;
+      display: none;
+    }
+    .exercise-output.visible { display: block; }
+
+    .show-solution-btn {
+      margin-top: 12px;
+      padding: 8px 18px;
+      background: white;
+      color: #4CAF50;
+      border: 2px solid #4CAF50;
+      border-radius: 4px;
+      font-size: 13px;
+      font-weight: bold;
+      cursor: pointer;
+      display: none;
+    }
+    .show-solution-btn.visible { display: inline-block; }
+    .show-solution-btn:hover { background: #f1f8f1; }
+
+    .solution-output {
+      background: #f9fbe7;
+      border: 1px solid #dce775;
+      border-radius: 6px;
+      padding: 20px;
+      margin-top: 12px;
+      line-height: 1.8;
+      white-space: pre-wrap;
+      font-size: 14px;
+      display: none;
+    }
+    .solution-output.visible { display: block; }
+
+    .loader {
+      color: #888;
+      font-style: italic;
+      padding: 10px 0;
+      display: none;
+    }
+    .loader.visible { display: block; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      .sidebar { display: none; }
+      .content { margin-left: 0; padding: 24px 16px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ══ TOPBAR ══ -->
+  <div class="topbar">
+    <a class="brand" href="index.html">CalcTutoriales</a>
+    <nav>
+      <a href="index.html">Inicio</a>
+      <a href="#">Temas</a>
+      <a href="#">Acerca de</a>
+    </nav>
+  </div>
+
+  <div class="layout">
+
+    <!-- ══ SIDEBAR ══ -->
+    <aside class="sidebar">
+      <h3>Cálculo</h3>
+      <a href="#">Introducción</a>
+      <a href="#">Funciones</a>
+
+      <hr class="divider">
+      <h3>Límites</h3>
+      <a href="#" class="active">¿Qué es un límite?</a>
+      <a href="#">Límites laterales</a>
+      <a href="#">Límites al infinito</a>
+
+      <hr class="divider">
+      <h3>Derivadas</h3>
+      <a href="#">Definición</a>
+      <a href="#">Reglas de derivación</a>
+      <a href="#">Regla de la cadena</a>
+      <a href="#">Derivadas implícitas</a>
+
+      <hr class="divider">
+      <h3>Integrales</h3>
+      <a href="#">Integral definida</a>
+      <a href="#">Integral indefinida</a>
+      <a href="#">Técnicas de integración</a>
+
+      <hr class="divider">
+      <h3>Avanzado</h3>
+      <a href="#">Series de Taylor</a>
+      <a href="#">Transformada de Laplace</a>
+    </aside>
+
+    <!-- ══ CONTENIDO ══ -->
+    <main class="content">
+      <h1>¿Qué es un Límite?</h1>
+      <p>
+        El concepto de <strong>límite</strong> es la base de todo el Cálculo. 
+        Nos permite describir el comportamiento de una función cuando su variable 
+        se acerca a un determinado valor, sin necesariamente llegar a él.
+      </p>
+
+      <h2>Notación</h2>
+      <p>
+        El límite de f(x) cuando x se aproxima a un valor <em>a</em> se escribe así:
+      </p>
+
+      <div class="example-box">
+        <div class="label">Ejemplo</div>
+        <pre>lim   f(x) = L
+x→a</pre>
+      </div>
+
+      <p>
+        Esto se lee: <em>"El límite de f(x) cuando x tiende a a, es igual a L"</em>.
+      </p>
+
+      <h2>Ejemplo paso a paso</h2>
+      <p>Calcula el siguiente límite:</p>
+
+      <div class="example-box">
+        <div class="label">Paso a paso</div>
+        <pre>lim   (2x + 3)
+x→4
+
+Paso 1: Sustituir x = 4 directamente
+= 2(4) + 3
+
+Paso 2: Resolver
+= 8 + 3 = 11</pre>
+      </div>
+
+      <div class="note-box">
+        💡 <strong>Nota:</strong> Cuando una función es continua en x = a, 
+        puedes encontrar el límite simplemente sustituyendo el valor directamente.
+      </div>
+
+      <!-- ══ GENERADOR DE EJERCICIOS ══ -->
+      <div class="gen-box">
+        <h2>🧮 Generador de Ejercicios</h2>
+        <p style="color:#555; font-size:14px;">Selecciona un tema y nivel de dificultad para generar un ejercicio con su solución paso a paso.</p>
+
+        <div class="gen-controls">
+          <select id="tema">
+            <option value="funciones">Funciones</option>
+            <option value="límites" selected>Límites</option>
+            <option value="límites laterales">Límites Laterales</option>
+            <option value="continuidad">Continuidad</option>
+            <option value="derivadas">Derivadas</option>
+            <option value="regla de la cadena">Regla de la Cadena</option>
+            <option value="derivadas implícitas">Derivadas Implícitas</option>
+            <option value="integrales indefinidas">Integrales Indefinidas</option>
+            <option value="integrales definidas">Integrales Definidas</option>
+            <option value="Transformada de Laplace">Transformada de Laplace</option>
+          </select>
+
+          <select id="dificultad">
+            <option value="básico">Básico</option>
+            <option value="intermedio" selected>Intermedio</option>
+            <option value="avanzado">Avanzado</option>
+          </select>
+
+          <button id="genBtn" onclick="generarEjercicio()">⚡ Generar ejercicio</button>
+        </div>
+
+        <div class="loader" id="loader">Generando ejercicio...</div>
+        <div class="exercise-output" id="exerciseOutput"></div>
+        <button class="show-solution-btn" id="solBtn" onclick="mostrarSolucion()">Ver solución paso a paso</button>
+        <div class="solution-output" id="solutionOutput"></div>
+      </div>
+
+      <!-- Botones anterior / siguiente -->
+      <div class="nav-btns">
+        <a href="#" class="btn outline">❮ Anterior: Funciones</a>
+        <a href="#" class="btn">Siguiente: Límites Laterales ❯</a>
+      </div>
+    </main>
+
+  </div>
+</body>
+<script>
+  let solucionPendiente = "";
+
+  async function generarEjercicio() {
+    const tema = document.getElementById("tema").value;
+    const dificultad = document.getElementById("dificultad").value;
+    const btn = document.getElementById("genBtn");
+    const loader = document.getElementById("loader");
+    const exOut = document.getElementById("exerciseOutput");
+    const solBtn = document.getElementById("solBtn");
+    const solOut = document.getElementById("solutionOutput");
+
+    btn.disabled = true;
+    loader.classList.add("visible");
+    exOut.classList.remove("visible");
+    solBtn.classList.remove("visible");
+    solOut.classList.remove("visible");
+    solucionPendiente = "";
+
+    try {
+      const res = await fetch("https://api.anthropic.com/v1/messages", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          model: "claude-sonnet-4-20250514",
+          max_tokens: 1000,
+          messages: [{
+            role: "user",
+            content: `Genera un ejercicio de cálculo sobre "${tema}" de nivel ${dificultad}. 
+Responde SOLO con JSON, sin backticks ni texto extra, con este formato exacto:
+{
+  "ejercicio": "enunciado del ejercicio aquí, con la expresión matemática clara",
+  "solucion": "solución paso a paso numerada, explicando cada paso claramente"
+}`
+          }]
+        })
+      });
+
+      const data = await res.json();
+      const raw = data.content.find(b => b.type === "text")?.text || "{}";
+      const clean = raw.replace(/```json|```/g, "").trim();
+      const parsed = JSON.parse(clean);
+
+      exOut.textContent = "📝 " + parsed.ejercicio;
+      exOut.classList.add("visible");
+      solucionPendiente = parsed.solucion;
+      solBtn.classList.add("visible");
+      solOut.classList.remove("visible");
+
+    } catch (e) {
+      exOut.textContent = "Ocurrió un error al generar el ejercicio. Intenta de nuevo.";
+      exOut.classList.add("visible");
+    }
+
+    loader.classList.remove("visible");
+    btn.disabled = false;
+  }
+
+  function mostrarSolucion() {
+    const solOut = document.getElementById("solutionOutput");
+    solOut.textContent = "✅ Solución:\n\n" + solucionPendiente;
+    solOut.classList.add("visible");
+    document.getElementById("solBtn").classList.remove("visible");
+  }
+</script>
+</html>
