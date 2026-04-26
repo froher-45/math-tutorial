@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Funciones — MathGen</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Figtree:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../tutorial.css">
+</head>
+<body>
+
+  <div class="bg-grid"></div>
+  <div class="bg-glow"></div>
+
+  <header>
+    <a class="logo" href="../index.html">
+      <span class="logo-symbol">∑</span>
+      <span class="logo-text">MathGen</span>
+    </a>
+    <nav>
+      <a href="../index.html">Inicio</a>
+      <a href="../acerca.html">Acerca de</a>
+    </nav>
+  </header>
+
+  <div class="layout">
+
+    <aside class="sidebar">
+      <div class="sidebar-label">Cálculo</div>
+      <a href="#" class="active">Funciones</a>
+
+      <hr>
+      <div class="sidebar-label">Límites</div>
+      <a href="limites.html">¿Qué es un límite?</a>
+      <a href="#">Límites laterales</a>
+      <a href="#">Límites al infinito</a>
+
+      <hr>
+      <div class="sidebar-label">Derivadas</div>
+      <a href="#">Definición</a>
+      <a href="#">Reglas de derivación</a>
+      <a href="#">Regla de la cadena</a>
+      <a href="#">Derivadas implícitas</a>
+
+      <hr>
+      <div class="sidebar-label">Integrales</div>
+      <a href="#">Integral definida</a>
+      <a href="#">Integral indefinida</a>
+      <a href="#">Técnicas de integración</a>
+
+      <hr>
+      <div class="sidebar-label">Avanzado</div>
+      <a href="#">Transformada de Laplace</a>
+    </aside>
+
+    <main class="content">
+      <h1>Funciones</h1>
+      <p>
+        Una <strong>función</strong> es una relación entre dos conjuntos donde a cada elemento
+        del conjunto de entrada (dominio) le corresponde exactamente un elemento del conjunto
+        de salida (rango). Se denota como <em>f(x)</em>.
+      </p>
+
+      <h2>Notación</h2>
+      <p>Una función se escribe de la siguiente forma:</p>
+
+      <div class="example-box">
+        <div class="label">Ejemplo</div>
+        <pre>f(x) = expresión en términos de x
+
+Ejemplo: f(x) = 2x + 3</pre>
+      </div>
+
+      <p>Donde <em>x</em> es la variable independiente y <em>f(x)</em> es el valor que produce la función.</p>
+
+      <h2>Ejemplo paso a paso</h2>
+      <p>Evalúa f(x) = 3x² − 2x + 1 en x = 4:</p>
+
+      <div class="example-box">
+        <div class="label">Paso a paso</div>
+        <pre>f(x) = 3x² − 2x + 1
+
+Paso 1: Sustituir x = 4
+f(4) = 3(4)² − 2(4) + 1
+
+Paso 2: Resolver la potencia
+= 3(16) − 2(4) + 1
+
+Paso 3: Multiplicar
+= 48 − 8 + 1
+
+Paso 4: Sumar y restar
+= 41</pre>
+      </div>
+
+      <div class="note-box">
+        💡 <strong>Nota:</strong> El <strong>dominio</strong> es el conjunto de todos los valores
+        posibles de x. El <strong>rango</strong> es el conjunto de todos los valores posibles de f(x).
+      </div>
+
+      <div class="gen-box">
+        <h2>Generador de Ejercicios</h2>
+        <p>Selecciona un tema y nivel para generar un ejercicio con solución paso a paso.</p>
+        <div class="gen-controls">
+          <select id="topicSelect">
+            <option value="funciones" selected>Funciones</option>
+            <option value="limites">Límites</option>
+            <option value="derivadas">Derivadas</option>
+            <option value="integrales">Integrales</option>
+            <option value="laplace">Transformada de Laplace</option>
+            <option value="ecuaciones">Ecuaciones</option>
+            <option value="trigonometria">Trigonometría</option>
+            <option value="logaritmos">Logaritmos</option>
+            <option value="series">Series y Sucesiones</option>
+            <option value="edo">Ec. Diferenciales</option>
+          </select>
+          <select id="diffSelect">
+            <option value="basico" selected>Básico</option>
+            <option value="intermedio">Intermedio</option>
+            <option value="avanzado">Avanzado</option>
+          </select>
+          <button onclick="genFromTutorial()">⚡ Generar ejercicio</button>
+        </div>
+        <div id="tutorialExArea"></div>
+      </div>
+
+      <div class="nav-btns">
+        <a href="limites.html" class="btn">Siguiente: Límites ❯</a>
+      </div>
+    </main>
+
+  </div>
+
+  <script src="../ejercicios.js"></script>
+  <script>
+    function genFromTutorial() {
+      const topicId = document.getElementById("topicSelect").value;
+      const diff    = document.getElementById("diffSelect").value;
+      const area    = document.getElementById("tutorialExArea");
+      const gen     = GENERATORS[topicId];
+
+      if (!gen) { area.innerHTML = `<p style="color:#f87171;margin-top:12px">Tema no disponible aún.</p>`; return; }
+
+      const data       = (gen[diff] || gen["basico"])();
+      const topicLabel = document.getElementById("topicSelect").selectedOptions[0].text;
+      const diffLabel  = { basico:"Básico", intermedio:"Intermedio", avanzado:"Avanzado" }[diff];
+
+      area.innerHTML = `
+        <div class="ex-header" style="margin-top:16px">
+          <div class="ex-meta">
+            <span class="badge badge-topic">${topicLabel}</span>
+            <span class="badge badge-diff">${diffLabel}</span>
+          </div>
+          <button class="new-btn" onclick="genFromTutorial()">Nuevo ↺</button>
+        </div>
+        <p class="ex-question">${esc(data.enunciado)}</p>
+        <div class="divider"></div>
+        <button class="sol-toggle" id="solToggle" onclick="toggleSol()">
+          <span>Ver solución paso a paso</span>
+          <span class="sol-arrow">▾</span>
+        </button>
+        <div class="solution-box" id="solutionBox">
+          ${(data.pasos||[]).map((p,i) => `
+            <div class="step">
+              <div class="step-num">${i+1}</div>
+              <div class="step-body">
+                <div class="step-title">${esc(p.titulo)}</div>
+                ${p.explicacion ? `<div class="step-text">${esc(p.explicacion)}</div>` : ""}
+                ${p.formula     ? `<code class="step-formula">${esc(p.formula)}</code>` : ""}
+              </div>
+            </div>`).join("")}
+          <div class="answer-box">
+            <span class="answer-label">Respuesta</span>
+            <span class="answer-value">${esc(data.respuesta)}</span>
+          </div>
+        </div>`;
+    }
+
+    function toggleSol() {
+      const box  = document.getElementById("solutionBox");
+      const btn  = document.getElementById("solToggle");
+      const open = box.classList.toggle("open");
+      btn.classList.toggle("open", open);
+      btn.querySelector("span:first-child").textContent = open ? "Ocultar solución" : "Ver solución paso a paso";
+    }
+
+    function esc(s) {
+      return String(s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/\n/g,"<br>");
+    }
+  </script>
+</body>
+</html>

@@ -3,254 +3,135 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CalcTutoriales — Aprende Cálculo paso a paso</title>
-  <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-
-    body {
-      font-family: "Segoe UI", Arial, sans-serif;
-      background: #f9f9f9;
-      color: #333;
-    }
-
-    /* ── TOPBAR ── */
-    .topbar {
-      background: #4CAF50;
-      color: white;
-      padding: 0 32px;
-      display: flex;
-      align-items: center;
-      height: 50px;
-      gap: 24px;
-      position: sticky;
-      top: 0;
-      z-index: 100;
-    }
-    .topbar .brand { font-size: 20px; font-weight: bold; text-decoration: none; color: white; }
-    .topbar nav a {
-      color: white;
-      text-decoration: none;
-      font-size: 14px;
-      padding: 4px 8px;
-      border-radius: 4px;
-    }
-    .topbar nav a:hover { background: rgba(255,255,255,0.2); }
-
-    /* ── HERO ── */
-    .hero {
-      background: linear-gradient(135deg, #2e7d32, #66bb6a);
-      color: white;
-      text-align: center;
-      padding: 64px 24px;
-    }
-    .hero h1 { font-size: 40px; margin-bottom: 12px; }
-    .hero p { font-size: 18px; opacity: 0.9; max-width: 520px; margin: 0 auto 28px; line-height: 1.6; }
-    .hero a {
-      display: inline-block;
-      background: white;
-      color: #2e7d32;
-      padding: 12px 28px;
-      border-radius: 4px;
-      font-weight: bold;
-      text-decoration: none;
-      font-size: 15px;
-    }
-    .hero a:hover { background: #f1f8f1; }
-
-    /* ── SECCIÓN ── */
-    .section {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 48px 32px;
-    }
-    .section h2 {
-      font-size: 24px;
-      margin-bottom: 24px;
-      color: #0d47a1;
-      border-left: 4px solid #1565C0;
-      padding-left: 12px;
-    }
-
-    /* ── GRID DE TARJETAS ── */
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-      gap: 16px;
-    }
-    .card {
-      background: white;
-      border: 1px solid #e0e0e0;
-      border-radius: 8px;
-      padding: 20px 16px;
-      text-decoration: none;
-      color: #333;
-      transition: box-shadow 0.2s, transform 0.2s;
-      display: block;
-    }
-    .card:hover {
-      box-shadow: 0 4px 16px rgba(0,0,0,0.1);
-      transform: translateY(-2px);
-    }
-    .card .icon { font-size: 28px; margin-bottom: 10px; }
-    .card h3 { font-size: 15px; margin-bottom: 6px; }
-    .card p { font-size: 13px; color: #777; line-height: 1.5; }
-    .card .badge {
-      display: inline-block;
-      margin-top: 10px;
-      font-size: 11px;
-      padding: 2px 8px;
-      border-radius: 12px;
-      font-weight: bold;
-    }
-    .badge.basico { background: #e8f5e9; color: #2e7d32; }
-    .badge.intermedio { background: #fff8e1; color: #f57f17; }
-    .badge.avanzado { background: #fce4ec; color: #c62828; }
-
-    /* ── FOOTER ── */
-    footer {
-      text-align: center;
-      padding: 24px;
-      font-size: 13px;
-      color: #999;
-      border-top: 1px solid #eee;
-      margin-top: 32px;
-    }
-
-    @media (max-width: 600px) {
-      .hero h1 { font-size: 28px; }
-      .grid { grid-template-columns: 1fr; }
-      .section { padding: 32px 16px; }
-    }
-    .topbar { background: #1565C0; }
-    .hero { background: linear-gradient(135deg, #0d47a1, #42a5f5); }
-    .hero a { color: #0d47a1; }
-    .hero a:hover { background: #e3f2fd; }
-    .section h2 { color: #0d47a1; border-left: 4px solid #1565C0; padding-left: 12px; }
-    .card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.1); }
-    .badge.basico { background: #e3f2fd; color: #0d47a1; }
-    .badge.intermedio { background: #fff8e1; color: #f57f17; }
-    .badge.avanzado { background: #fce4ec; color: #c62828; }
-  </style>
+  <title>MathGen</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Figtree:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <!-- ══ TOPBAR ══ -->
-  <div class="topbar">
-    <a class="brand" href="index.html">CalcTutoriales</a>
+  <div class="bg-grid"></div>
+  <div class="bg-glow"></div>
+
+  <header class="header">
+    <a class="logo" href="index.html">
+      <span class="logo-symbol">∑</span>
+      <span class="logo-text">MathGen</span>
+    </a>
     <nav>
       <a href="#temas">Temas</a>
-      <a href="#acerca">Acerca de</a>
+      <a href="acerca.html">Acerca de</a>
     </nav>
-  </div>
+  </header>
 
-  <!-- ══ HERO ══ -->
   <div class="hero">
-    <h1>Aprende Cálculo paso a paso</h1>
-    <p>Tutoriales claros y sencillos sobre funciones, límites, derivadas, integrales y la Transformada de Laplace.</p>
-    <a href="tutoriales/limites.html">Comenzar ahora →</a>
+    <div class="hero-tag">Tutoriales · Ejercicios · Paso a paso</div>
+    <h1>Aprende Cálculo<br>sin complicaciones</h1>
+    <p>Guías claras sobre funciones, límites, derivadas, integrales y la Transformada de Laplace.</p>
+    <a class="hero-btn" href="tutoriales/funciones.html">Comenzar ahora →</a>
   </div>
 
-  <!-- ══ TEMAS ══ -->
-  <div class="section" id="temas">
-    <h2>Fundamentos</h2>
-    <div class="grid">
-      <a class="card" href="tutoriales/funciones.html">
-        <div class="icon">📐</div>
-        <h3>Funciones</h3>
-        <p>Dominio, rango, tipos de funciones y su representación.</p>
-        <span class="badge basico">Básico</span>
-      </a>
-      <a class="card" href="tutoriales/limites.html">
-        <div class="icon">🎯</div>
-        <h3>Límites</h3>
-        <p>Concepto de límite, notación y evaluación directa.</p>
-        <span class="badge basico">Básico</span>
-      </a>
-      <a class="card" href="tutoriales/limites-laterales.html">
-        <div class="icon">↔️</div>
-        <h3>Límites Laterales</h3>
-        <p>Límites por la izquierda y por la derecha.</p>
-        <span class="badge basico">Básico</span>
-      </a>
+  <main class="main" id="temas">
+
+    <div>
+      <div class="section-label">Fundamentos</div>
+      <div class="grid">
+        <a class="card" href="tutoriales/funciones.html">
+          <div class="card-icon">f(x)</div>
+          <h3>Funciones</h3>
+          <p>Dominio, rango, tipos de funciones y su representación.</p>
+          <span class="badge basico">Básico</span>
+        </a>
+        <a class="card" href="tutoriales/limites.html">
+          <div class="card-icon">lim</div>
+          <h3>Límites</h3>
+          <p>Concepto de límite, notación y evaluación directa.</p>
+          <span class="badge basico">Básico</span>
+        </a>
+        <a class="card" href="tutoriales/limites-laterales.html">
+          <div class="card-icon">±lim</div>
+          <h3>Límites Laterales</h3>
+          <p>Límites por la izquierda y por la derecha.</p>
+          <span class="badge basico">Básico</span>
+        </a>
+      </div>
     </div>
 
-    <h2 style="margin-top: 40px;">Derivadas</h2>
-    <div class="grid">
-      <a class="card" href="tutoriales/derivadas.html">
-        <div class="icon">📈</div>
-        <h3>Definición</h3>
-        <p>Concepto de derivada y su interpretación geométrica.</p>
-        <span class="badge intermedio">Intermedio</span>
-      </a>
-      <a class="card" href="tutoriales/reglas-derivacion.html">
-        <div class="icon">📏</div>
-        <h3>Reglas de Derivación</h3>
-        <p>Regla de la potencia, producto, cociente y más.</p>
-        <span class="badge intermedio">Intermedio</span>
-      </a>
-      <a class="card" href="tutoriales/regla-cadena.html">
-        <div class="icon">🔗</div>
-        <h3>Regla de la Cadena</h3>
-        <p>Derivación de funciones compuestas.</p>
-        <span class="badge intermedio">Intermedio</span>
-      </a>
-      <a class="card" href="tutoriales/derivadas-implicitas.html">
-        <div class="icon">🔄</div>
-        <h3>Derivadas Implícitas</h3>
-        <p>Derivación cuando y no está despejada.</p>
-        <span class="badge intermedio">Intermedio</span>
-      </a>
+    <div>
+      <div class="section-label">Derivadas</div>
+      <div class="grid">
+        <a class="card" href="tutoriales/derivadas.html">
+          <div class="card-icon">f'(x)</div>
+          <h3>Definición</h3>
+          <p>Concepto de derivada y su interpretación geométrica.</p>
+          <span class="badge intermedio">Intermedio</span>
+        </a>
+        <a class="card" href="tutoriales/reglas-derivacion.html">
+          <div class="card-icon">d/dx</div>
+          <h3>Reglas de Derivación</h3>
+          <p>Regla de la potencia, producto, cociente y más.</p>
+          <span class="badge intermedio">Intermedio</span>
+        </a>
+        <a class="card" href="tutoriales/regla-cadena.html">
+          <div class="card-icon">∘</div>
+          <h3>Regla de la Cadena</h3>
+          <p>Derivación de funciones compuestas.</p>
+          <span class="badge intermedio">Intermedio</span>
+        </a>
+        <a class="card" href="tutoriales/derivadas-implicitas.html">
+          <div class="card-icon">∂y</div>
+          <h3>Derivadas Implícitas</h3>
+          <p>Derivación cuando y no está despejada.</p>
+          <span class="badge intermedio">Intermedio</span>
+        </a>
+      </div>
     </div>
 
-    <h2 style="margin-top: 40px;">Integrales</h2>
-    <div class="grid">
-      <a class="card" href="tutoriales/integral-indefinida.html">
-        <div class="icon">∫</div>
-        <h3>Integral Indefinida</h3>
-        <p>Antiderivadas y reglas básicas de integración.</p>
-        <span class="badge intermedio">Intermedio</span>
-      </a>
-      <a class="card" href="tutoriales/integral-definida.html">
-        <div class="icon">📊</div>
-        <h3>Integral Definida</h3>
-        <p>Teorema fundamental del cálculo y área bajo la curva.</p>
-        <span class="badge intermedio">Intermedio</span>
-      </a>
-      <a class="card" href="tutoriales/tecnicas-integracion.html">
-        <div class="icon">🧩</div>
-        <h3>Técnicas de Integración</h3>
-        <p>Sustitución, partes, fracciones parciales.</p>
-        <span class="badge avanzado">Avanzado</span>
-      </a>
+    <div>
+      <div class="section-label">Integrales</div>
+      <div class="grid">
+        <a class="card" href="tutoriales/integral-indefinida.html">
+          <div class="card-icon">∫dx</div>
+          <h3>Integral Indefinida</h3>
+          <p>Antiderivadas y reglas básicas de integración.</p>
+          <span class="badge intermedio">Intermedio</span>
+        </a>
+        <a class="card" href="tutoriales/integral-definida.html">
+          <div class="card-icon">∫ₐᵇ</div>
+          <h3>Integral Definida</h3>
+          <p>Teorema fundamental del cálculo y área bajo la curva.</p>
+          <span class="badge intermedio">Intermedio</span>
+        </a>
+        <a class="card" href="tutoriales/tecnicas-integracion.html">
+          <div class="card-icon">∫u</div>
+          <h3>Técnicas de Integración</h3>
+          <p>Sustitución, partes, fracciones parciales.</p>
+          <span class="badge avanzado">Avanzado</span>
+        </a>
+      </div>
     </div>
 
-    <h2 style="margin-top: 40px;">Temas Avanzados</h2>
-    <div class="grid">
-      <a class="card" href="tutoriales/laplace.html">
-        <div class="icon">⚡</div>
-        <h3>Transformada de Laplace</h3>
-        <p>Definición, propiedades y aplicaciones en ecuaciones diferenciales.</p>
-        <span class="badge avanzado">Avanzado</span>
-      </a>
+    <div>
+      <div class="section-label">Temas Avanzados</div>
+      <div class="grid">
+        <a class="card" href="tutoriales/laplace.html">
+          <div class="card-icon">ℒ{f}</div>
+          <h3>Transformada de Laplace</h3>
+          <p>Definición, propiedades y aplicaciones en ecuaciones diferenciales.</p>
+          <span class="badge avanzado">Avanzado</span>
+        </a>
+      </div>
     </div>
-  </div>
 
-  <!-- ══ ACERCA DE ══ -->
-  <div class="section" id="acerca" style="background: white; max-width: 100%; padding: 48px 24px;">
-    <div style="max-width: 960px; margin: 0 auto;">
+    <div class="about-box" id="acerca">
       <h2>Acerca del proyecto</h2>
-      <p style="margin-top: 16px; line-height: 1.8; color: #555; max-width: 640px;">
-        CalcTutoriales es una colección de guías prácticas de Cálculo escritas por estudiantes, para estudiantes.
-        Cada tutorial explica los conceptos con pasos claros, ejemplos resueltos y un generador de ejercicios
-        con inteligencia artificial para que puedas practicar cuando quieras.
-      </p>
+      <p>MathGen es una colección de guías prácticas de Cálculo escritas por estudiantes, para estudiantes. Cada tutorial explica los conceptos con pasos claros, ejemplos resueltos y un generador de ejercicios para que puedas practicar cuando quieras.</p>
     </div>
-  </div>
 
-  <!-- ══ FOOTER ══ -->
-  <footer>
-    CalcTutoriales — Proyecto académico · Hecho con HTML, CSS y GitHub Pages
-  </footer>
+  </main>
+
+  <footer class="footer">MathGen · Proyecto académico · Hecho con HTML, CSS y GitHub Pages</footer>
 
 </body>
 </html>
