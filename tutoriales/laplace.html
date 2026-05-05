@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Transformada de Laplace — MathGen</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Figtree:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../tutorial.css">
+</head>
+<body>
+
+  <div class="bg-grid"></div>
+  <div class="bg-glow"></div>
+
+  <header>
+    <a class="logo" href="../index.html">
+      <span class="logo-symbol">∑</span>
+      <span class="logo-text">MathGen</span>
+    </a>
+    <nav>
+      <a href="../index.html">Inicio</a>
+      <a href="../acerca.html">Acerca de</a>
+    </nav>
+  </header>
+
+  <div class="layout">
+
+    <aside class="sidebar">
+      <div class="sidebar-label">Cálculo</div>
+      <a href="funciones.html">Funciones</a>
+
+      <hr>
+      <div class="sidebar-label">Límites</div>
+      <a href="limites.html">¿Qué es un límite?</a>
+      <a href="#">Límites laterales</a>
+      <a href="#">Límites al infinito</a>
+
+      <hr>
+      <div class="sidebar-label">Derivadas</div>
+      <a href="#">Definición</a>
+      <a href="#">Reglas de derivación</a>
+      <a href="#">Regla de la cadena</a>
+      <a href="#">Derivadas implícitas</a>
+
+      <hr>
+      <div class="sidebar-label">Integrales</div>
+      <a href="#">Integral definida</a>
+      <a href="#">Integral indefinida</a>
+      <a href="#">Técnicas de integración</a>
+
+      <hr>
+      <div class="sidebar-label">Avanzado</div>
+      <a href="#" class="active">Transformada de Laplace</a>
+    </aside>
+
+    <main class="content">
+      <h1>Transformada de Laplace</h1>
+      <p>
+        Imagina que compraste un mueble increíble, pero las instrucciones vienen completamente en ruso. Intentar armarlo así sería una pesadilla. Lo lógico sería usar un traductor para pasarlas a español, armar tu mueble tranquilamente y listo.
+      </p>
+      <p>
+        ¡La <strong>Transformada de Laplace</strong> hace exactamente eso en las matemáticas! Es una herramienta "traductora" que toma un problema muy difícil y lo pasa a un idioma donde es súper fácil de resolver.
+      </p>
+
+      <h2>Los Dos Mundos</h2>
+      <p>Para entender a Laplace, debes imaginar que existen dos universos paralelos:</p>
+      <ul>
+        <li><strong>El Mundo del Tiempo (t):</strong> Aquí vivimos nosotros. Es el mundo real donde ocurren problemas físicos, pero resolver ecuaciones aquí a veces requiere cálculo avanzado complejo.</li>
+        <li><strong>El Mundo de la Frecuencia (s):</strong> El universo alterno. En este mundo mágico, el cálculo difícil desaparece y las ecuaciones se resuelven con álgebra básica (sumas, restas, multiplicaciones y divisiones).</li>
+      </ul>
+
+      <h2>Conociendo a la Máquina</h2>
+      <p>Ya sabemos que es un traductor, pero ¿cómo se ve por dentro? Esta es su maquinaria oficial:</p>
+
+      <div class="example-box">
+        <div class="label">La Fórmula Oficial</div>
+        <pre>L{ f(t) } = ∫ [de 0 a ∞] e^(-st) · f(t) dt</pre>
+      </div>
+
+      <p>No te asustes, cada pieza tiene un trabajo sencillo:</p>
+      <ul>
+        <li><em>f(t)</em> es el <strong>paciente</strong> que queremos traducir.</li>
+        <li>La integral de 0 a infinito significa que a la máquina solo le importa el <strong>futuro</strong>, no el pasado.</li>
+        <li><em>e^(-st)</em> es el <strong>filtro traductor</strong>. Su trabajo es transformar la función para que podamos cruzar al mundo de <em>s</em>.</li>
+      </ul>
+
+      <div class="note-box">
+        💡 <strong>El Secreto:</strong> Si tuviéramos que usar esta fórmula integral cada vez, nunca terminaríamos. ¡Por suerte, existen los atajos!
+      </div>
+
+      <h2>Los Atajos (Tabla Básica)</h2>
+      <p>Los matemáticos ya metieron las funciones más comunes a la máquina y anotaron los resultados. En la vida real, casi siempre usamos esta tabla de traducción directa:</p>
+
+      <div class="example-box">
+        <div class="label">Diccionario VIP de Laplace</div>
+        <pre>
+1. La Constante:   L{ 1 }       = 1 / s
+2. La Rampa:       L{ t }       = 1 / s²
+3. Exponencial:    L{ e^(at) }  = 1 / (s - a)
+4. Seno:           L{ sin(wt) } = w / (s² + w²)</pre>
+      </div>
+
+      <h2>Las Reglas del Juego</h2>
+      <p>¿Qué pasa si tienes ecuaciones más grandes? Solo necesitas aplicar dos reglas simples para armar y desarmar funciones.</p>
+
+      <h3>1. Linealidad (La Regla del Supermercado)</h3>
+      <p>Funciona igual que la caja de cobro: procesa las cosas por separado. Las sumas se separan, y los números que multiplican esperan afuera.</p>
+      <div class="example-box">
+        <div class="label">Ejemplo de Linealidad</div>
+        <pre>Problema: L{ 3 + 5t }
+
+Paso 1: Separar y dejar los números afuera
+        3·L{ 1 } + 5·L{ t }
+
+Paso 2: Usar la tabla de atajos
+        3·(1/s) + 5·(1/s²)
+
+Resultado final: (3/s) + (5/s²)</pre>
+      </div>
+
+      <h3>2. Primer Teorema de Traslación (Efecto Teletransportador)</h3>
+      <p>Cuando veas que tu función está multiplicada por un exponencial <em>e^(at)</em>, ese exponencial actúa como un pase VIP que empuja a la letra <em>s</em>.</p>
+      <div class="example-box">
+        <div class="label">Ejemplo de Traslación</div>
+        <pre>Problema: L{ e^(2t) · t }
+
+Paso 1: Ignora la "e" un segundo y transforma "t"
+        L{ t } = 1 / s²
+
+Paso 2: Reemplaza cada "s" por "(s - a)". Aquí a=2
+        Reemplazamos "s" por "(s - 2)"
+
+Resultado final: 1 / (s - 2)²</pre>
+      </div>
+
+      <div class="gen-box">
+        <h2>Generador de Ejercicios</h2>
+        <p>Pon a prueba tus conocimientos. Selecciona el nivel de dificultad para la Transformada de Laplace.</p>
+        <div class="gen-controls">
+          <select id="topicSelect">
+            <option value="funciones">Funciones</option>
+            <option value="limites">Límites</option>
+            <option value="derivadas">Derivadas</option>
+            <option value="integrales">Integrales</option>
+            <option value="laplace" selected>Transformada de Laplace</option>
+            <option value="ecuaciones">Ecuaciones</option>
+            <option value="trigonometria">Trigonometría</option>
+            <option value="logaritmos">Logaritmos</option>
+            <option value="series">Series y Sucesiones</option>
+            <option value="edo">Ec. Diferenciales</option>
+          </select>
+          <select id="diffSelect">
+            <option value="basico" selected>Básico</option>
+            <option value="intermedio">Intermedio</option>
+            <option value="avanzado">Avanzado</option>
+          </select>
+          <button onclick="genFromTutorial()">⚡ Generar ejercicio</button>
+        </div>
+        <div id="tutorialExArea"></div>
+      </div>
+
+      <div class="nav-btns">
+        <a href="funciones.html" class="btn outline">❮ Anterior: Funciones</a>
+        <a href="#" class="btn">Siguiente: Ec. Diferenciales ❯</a>
+      </div>
+    </main>
+
+  </div>
+
+  <script src="../ejercicios.js"></script>
+  <script>
+    function genFromTutorial() {
+      const topicId = document.getElementById("topicSelect").value;
+      const diff    = document.getElementById("diffSelect").value;
+      const area    = document.getElementById("tutorialExArea");
+      const gen     = GENERATORS[topicId];
+
+      if (!gen) { area.innerHTML = `<p style="color:#f87171;margin-top:12px">Tema no disponible aún.</p>`; return; }
+
+      const data       = (gen[diff] || gen["basico"])();
+      const topicLabel = document.getElementById("topicSelect").selectedOptions[0].text;
+      const diffLabel  = { basico:"Básico", intermedio:"Intermedio", avanzado:"Avanzado" }[diff];
+
+      area.innerHTML = `
+        <div class="ex-header" style="margin-top:16px">
+          <div class="ex-meta">
+            <span class="badge badge-topic">${topicLabel}</span>
+            <span class="badge badge-diff">${diffLabel}</span>
+          </div>
+          <button class="new-btn" onclick="genFromTutorial()">Nuevo ↺</button>
+        </div>
+        <p class="ex-question">${esc(data.enunciado)}</p>
+        <div class="divider"></div>
+        <button class="sol-toggle" id="solToggle" onclick="toggleSol()">
+          <span>Ver solución paso a paso</span>
+          <span class="sol-arrow">▾</span>
+        </button>
+        <div class="solution-box" id="solutionBox">
+          ${(data.pasos||[]).map((p,i) => `
+            <div class="step">
+              <div class="step-num">${i+1}</div>
+              <div class="step-body">
+                <div class="step-title">${esc(p.titulo)}</div>
+                ${p.explicacion ? `<div class="step-text">${esc(p.explicacion)}</div>` : ""}
+                ${p.formula     ? `<code class="step-formula">${esc(p.formula)}</code>` : ""}
+              </div>
+            </div>`).join("")}
+          <div class="answer-box">
+            <span class="answer-label">Respuesta</span>
+            <span class="answer-value">${esc(data.respuesta)}</span>
+          </div>
+        </div>`;
+    }
+
+    function toggleSol() {
+      const box  = document.getElementById("solutionBox");
+      const btn  = document.getElementById("solToggle");
+      const open = box.classList.toggle("open");
+      btn.classList.toggle("open", open);
+      btn.querySelector("span:first-child").textContent = open ? "Ocultar solución" : "Ver solución paso a paso";
+    }
+
+    function esc(s) {
+      return String(s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/\n/g,"<br>");
+    }
+  </script>
+</body>
+</html>
