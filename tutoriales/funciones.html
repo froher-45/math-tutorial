@@ -100,6 +100,7 @@ Paso 4: Sumar y restar
         posibles de x. El <strong>rango</strong> es el conjunto de todos los valores posibles de f(x).
       </div>
 
+      <!-- ══ GENERADOR ══ -->
       <div class="gen-box">
         <h2>Generador de Ejercicios</h2>
         <p>Selecciona un tema y nivel para generar un ejercicio con solución paso a paso.</p>
@@ -126,6 +127,14 @@ Paso 4: Sumar y restar
         <div id="tutorialExArea"></div>
       </div>
 
+      <!-- ══ QUIZ ══ -->
+      <div class="gen-box">
+        <h2>Quiz — Pon a prueba lo que aprendiste</h2>
+        <p>Responde 3 preguntas para verificar tu comprensión del tema.</p>
+        <div id="quiz" data-topic="funciones"></div>
+      </div>
+
+      <!-- ══ NAVEGACIÓN ══ -->
       <div class="nav-btns">
         <a href="limites.html" class="btn">Siguiente: Límites ❯</a>
       </div>
@@ -134,7 +143,10 @@ Paso 4: Sumar y restar
   </div>
 
   <script src="../ejercicios.js"></script>
+  <script src="../quiz.js"></script>
   <script>
+    initQuiz("funciones");
+
     function genFromTutorial() {
       const topicId = document.getElementById("topicSelect").value;
       const diff    = document.getElementById("diffSelect").value;
