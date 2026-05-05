@@ -27,33 +27,7 @@
 
   <div class="layout">
 
-    <aside class="sidebar">
-      <div class="sidebar-label">Cálculo</div>
-      <a href="funciones.html">Funciones</a>
-
-      <hr>
-      <div class="sidebar-label">Límites</div>
-      <a href="limites.html">¿Qué es un límite?</a>
-      <a href="#">Límites laterales</a>
-      <a href="#">Límites al infinito</a>
-
-      <hr>
-      <div class="sidebar-label">Derivadas</div>
-      <a href="#">Definición</a>
-      <a href="#">Reglas de derivación</a>
-      <a href="#">Regla de la cadena</a>
-      <a href="#">Derivadas implícitas</a>
-
-      <hr>
-      <div class="sidebar-label">Integrales</div>
-      <a href="#">Integral definida</a>
-      <a href="#">Integral indefinida</a>
-      <a href="#">Técnicas de integración</a>
-
-      <hr>
-      <div class="sidebar-label">Avanzado</div>
-      <a href="#" class="active">Transformada de Laplace</a>
-    </aside>
+    <aside id="menu-lateral" class="sidebar"></aside>
 
     <main class="content">
       <h1>Transformada de Laplace</h1>
@@ -170,6 +144,7 @@ Resultado final: 1 / (s - 2)²</pre>
   </div>
 
   <script src="../ejercicios.js"></script>
+  <script src="../app.js"></script>
   <script>
     function genFromTutorial() {
       const topicId = document.getElementById("topicSelect").value;

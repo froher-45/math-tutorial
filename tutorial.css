@@ -61,9 +61,16 @@ header nav a.active { color: var(--accent2); }
 
 /* ── SIDEBAR ── */
 .sidebar {
-  width: 240px; min-height: calc(100vh - 52px);
-  background: var(--bg2); border-right: 1px solid var(--border);
-  padding: 20px 0; position: fixed; top: 52px; overflow-y: auto;
+  width: 240px; 
+  /* Cambia min-height por height */
+  height: calc(100vh - 52px); 
+  background: var(--bg2); 
+  border-right: 1px solid var(--border);
+  /* Aumenta un poco el padding inferior para que el último enlace no quede pegado */
+  padding: 20px 0 40px 0; 
+  position: fixed; 
+  top: 52px; 
+  overflow-y: auto;
 }
 .sidebar-label {
   font-size: 10px; font-weight: 600; color: var(--text3);

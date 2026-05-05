@@ -136,3 +136,37 @@ function escHtml(str) {
     .replace(/>/g,"&gt;").replace(/"/g,"&quot;")
     .replace(/\n/g,"<br>");
 }
+//detector de la side bar
+document.addEventListener("DOMContentLoaded", () => {
+  // 1. Buscamos el archivo sidebar.html
+  fetch('../utilidades/sidebar.html')
+    .then(response => {
+      if (!response.ok) throw new Error("No se pudo cargar el menú");
+      return response.text();
+    })
+    .then(html => {
+      // 2. Insertamos el HTML dentro del aside
+      document.getElementById('menu-lateral').innerHTML = html;
+
+      // 3. Lógica para pintar de morado el tema actual
+      // Obtenemos el nombre del archivo actual (ej. 'laplace.html')
+      let paginaActual = window.location.pathname.split('/').pop();
+      
+      // Si entra a la raíz sin nombre de archivo, asumimos index.html
+      if (paginaActual === '') paginaActual = 'index.html'; 
+
+      // Buscamos todos los enlaces inyectados
+      const enlaces = document.querySelectorAll('#menu-lateral a');
+
+      enlaces.forEach(enlace => {
+        const href = enlace.getAttribute('href');
+        // Si el enlace coincide con la página en la que estamos, le damos la clase 'active'
+        if (href === paginaActual) {
+          enlace.classList.add('active');
+        } else {
+          enlace.classList.remove('active');
+        }
+      });
+    })
+    .catch(error => console.error('Error cargando el menú lateral:', error));
+});
