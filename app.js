@@ -169,4 +169,84 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     })
     .catch(error => console.error('Error cargando el menú lateral:', error));
-});
+// --- 2. CÓDIGO DEL GENERADOR DE EJERCICIOS ---
+  const genContainer = document.getElementById('generador-container');
+  
+  if (genContainer) {
+    fetch('../utilidades/generador.html')
+      .then(response => {
+        if (!response.ok) throw new Error("No se pudo cargar el generador");
+        return response.text();
+      })
+      .then(html => {
+        // Inyectamos el HTML del generador
+        genContainer.innerHTML = html;
+
+        // Leemos qué tema necesita esta página específica
+        const temaAsignado = genContainer.getAttribute('data-tema');
+        const topicSelect = document.getElementById('topicSelect');
+
+        // Si existe el select y tenemos un tema asignado, lo forzamos
+        if (topicSelect && temaAsignado) {
+          topicSelect.value = temaAsignado;
+        }
+      })
+      .catch(error => console.error('Error cargando el generador:', error));
+  }
+
+  });
+
+ function genFromTutorial() {
+      const topicId = document.getElementById("topicSelect").value;
+      const diff    = document.getElementById("diffSelect").value;
+      const area    = document.getElementById("tutorialExArea");
+      const gen     = GENERATORS[topicId];
+
+      if (!gen) { area.innerHTML = `<p style="color:#f87171;margin-top:12px">Tema no disponible aún.</p>`; return; }
+
+      const data       = (gen[diff] || gen["basico"])();
+      const topicLabel = document.getElementById("topicSelect").selectedOptions[0].text;
+      const diffLabel  = { basico:"Básico", intermedio:"Intermedio", avanzado:"Avanzado" }[diff];
+
+      area.innerHTML = `
+        <div class="ex-header" style="margin-top:16px">
+          <div class="ex-meta">
+            <span class="badge badge-topic">${topicLabel}</span>
+            <span class="badge badge-diff">${diffLabel}</span>
+          </div>
+          <button class="new-btn" onclick="genFromTutorial()">Nuevo ↺</button>
+        </div>
+        <p class="ex-question">${esc(data.enunciado)}</p>
+        <div class="divider"></div>
+        <button class="sol-toggle" id="solToggle" onclick="toggleSol()">
+          <span>Ver solución paso a paso</span>
+          <span class="sol-arrow">▾</span>
+        </button>
+        <div class="solution-box" id="solutionBox">
+          ${(data.pasos||[]).map((p,i) => `
+            <div class="step">
+              <div class="step-num">${i+1}</div>
+              <div class="step-body">
+                <div class="step-title">${esc(p.titulo)}</div>
+                ${p.explicacion ? `<div class="step-text">${esc(p.explicacion)}</div>` : ""}
+                ${p.formula     ? `<code class="step-formula">${esc(p.formula)}</code>` : ""}
+              </div>
+            </div>`).join("")}
+          <div class="answer-box">
+            <span class="answer-label">Respuesta</span>
+            <span class="answer-value">${esc(data.respuesta)}</span>
+          </div>
+        </div>`;
+    }
+
+    function toggleSol() {
+      const box  = document.getElementById("solutionBox");
+      const btn  = document.getElementById("solToggle");
+      const open = box.classList.toggle("open");
+      btn.classList.toggle("open", open);
+      btn.querySelector("span:first-child").textContent = open ? "Ocultar solución" : "Ver solución paso a paso";
+    }
+
+    function esc(s) {
+      return String(s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/\n/g,"<br>");
+    }
