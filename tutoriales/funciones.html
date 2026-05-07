@@ -14,20 +14,11 @@
   <div class="bg-grid"></div>
   <div class="bg-glow"></div>
 
-  <header>
-    <a class="logo" href="../index.html">
-      <span class="logo-symbol">∑</span>
-      <span class="logo-text">MathGen</span>
-    </a>
-    <nav>
-      <a href="../index.html">Inicio</a>
-      <a href="../acerca.html">Acerca de</a>
-    </nav>
-  </header>
+  <header></header>
 
   <div class="layout">
 
-   <aside id="menu-lateral" class="sidebar"></aside>
+    <aside id="menu-lateral" class="sidebar"></aside>
 
     <main class="content">
       <h1>Funciones</h1>
@@ -74,14 +65,15 @@ Paso 4: Sumar y restar
         posibles de x. El <strong>rango</strong> es el conjunto de todos los valores posibles de f(x).
       </div>
 
+      <!-- ══ GENERADOR ══ -->
+      <div id="generador-container" data-tema="funciones"></div>
+
       <!-- ══ QUIZ ══ -->
       <div class="gen-box">
         <h2>Quiz — Pon a prueba lo que aprendiste</h2>
         <p>Responde 3 preguntas para verificar tu comprensión del tema.</p>
         <div id="quiz" data-topic="funciones"></div>
       </div>
-    <!-- ══ ejercicios ══ -->
-     <div id="generador-container" data-tema="funciones"></div>
 
       <!-- ══ NAVEGACIÓN ══ -->
       <div class="nav-btns">
@@ -91,9 +83,12 @@ Paso 4: Sumar y restar
 
   </div>
 
+  <script src="../components.js"></script>
   <script src="../ejercicios.js"></script>
-  <script src="../app.js"></script>
   <script src="../quiz.js"></script>
-  <script>initQuiz("funciones");</script>
+  <script>
+    loadComponents("funciones");
+    initQuiz("funciones");
+  </script>
 </body>
 </html>

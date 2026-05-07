@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200');
+
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
@@ -322,4 +324,39 @@ footer {
 }
 @media (max-width: 580px) {
   .nav-btns { flex-direction: column; gap: 10px; }
+}
+
+/* ── MODO CLARO ── */
+body.light-mode {
+  --bg:          #ffffff;
+  --bg2:         #f4f4f8;
+  --bg3:         #eaeaf0;
+  --border:      rgba(0,0,0,0.08);
+  --border-md:   rgba(0,0,0,0.15);
+  --text:        #1a1a2e;
+  --text2:       #4a4a6a;
+  --text3:       #8888aa;
+  --accent-glow: rgba(124,106,247,0.08);
+}
+body.light-mode .bg-grid {
+  background-image:
+    linear-gradient(rgba(124,106,247,0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(124,106,247,0.05) 1px, transparent 1px);
+}
+body.light-mode header {
+  background: rgba(255,255,255,0.9);
+}
+body.light-mode .bg-glow { opacity: 0.4; }
+
+#theme-btn {
+  background: transparent; border: 1px solid var(--border);
+  border-radius: var(--radius-sm); padding: 5px 10px;
+  font-size: 16px; cursor: pointer; transition: background 0.18s;
+  margin-left: auto;
+}
+#theme-btn:hover { background: var(--bg3); }
+
+.material-symbols-rounded {
+  font-size: 20px;
+  vertical-align: middle;
 }

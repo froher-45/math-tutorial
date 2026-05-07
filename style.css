@@ -244,3 +244,33 @@ body { font-family: var(--sans); background: var(--bg); color: var(--text); min-
 @media (max-width: 400px) {
   .grid { grid-template-columns: 1fr; }
 }
+
+/* ── MODO CLARO ── */
+body.light-mode {
+  --bg:          #ffffff;
+  --bg2:         #f4f4f8;
+  --bg3:         #eaeaf0;
+  --border:      rgba(0,0,0,0.08);
+  --border-md:   rgba(0,0,0,0.15);
+  --text:        #1a1a2e;
+  --text2:       #4a4a6a;
+  --text3:       #8888aa;
+  --accent-glow: rgba(124,106,247,0.08);
+}
+body.light-mode .bg-grid {
+  background-image:
+    linear-gradient(rgba(124,106,247,0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(124,106,247,0.05) 1px, transparent 1px);
+}
+body.light-mode header {
+  background: rgba(255,255,255,0.9);
+}
+body.light-mode .bg-glow { opacity: 0.4; }
+
+#theme-btn {
+  background: transparent; border: 1px solid var(--border);
+  border-radius: var(--radius-sm); padding: 5px 10px;
+  font-size: 16px; cursor: pointer; transition: background 0.18s;
+  margin-left: auto;
+}
+#theme-btn:hover { background: var(--bg3); }
