@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Integrales: El Arte de Acumular — MathGen</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Figtree:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../tutorial.css">
+  <style>
+    .toc-list { list-style: none; padding-left: 0; margin-top: 10px; }
+    .toc-list li { margin-bottom: 6px; }
+    .toc-list a { color: var(--accent2); text-decoration: none; font-size: 14px; transition: opacity 0.2s; }
+    .toc-list a:hover { opacity: 0.7; text-decoration: underline; }
+  </style>
+</head>
+<body>
+
+  <div class="bg-grid"></div>
+  <div class="bg-glow"></div>
+
+  <header></header>
+
+  <div class="layout">
+
+    <aside id="menu-lateral" class="sidebar"></aside>
+
+    <main class="content">
+      <h1>Cálculo Integral</h1>
+      
+      <div class="note-box" style="margin-bottom: 2rem;">
+        <strong style="color: var(--accent); text-transform: uppercase; font-size: 11px; letter-spacing: 1px;">Guía de Aprendizaje</strong>
+        <ul class="toc-list">
+          <li><a href="#indefinidas">1. Integrales Indefinidas (La Antiderivada)</a></li>
+          <li><a href="#definidas">2. Integrales Definidas (Cálculo de Áreas)</a></li>
+          <li><a href="#tecnicas">3. Técnicas de Integración (Trucos Avanzados)</a></li>
+        </ul>
+      </div>
+
+      <p>
+        Si la **derivada** es la herramienta para medir el cambio instantáneo, la **integral** es la herramienta para medir la acumulación. Es, en esencia, la operación inversa a la derivación.
+      </p>
+
+      <h2 id="indefinidas">1. Integrales Indefinidas</h2>
+      <p>
+        Una integral indefinida es el proceso de encontrar la función original a partir de su derivada. Se le llama "antiderivada". 
+      </p>
+      <div class="example-box">
+        <div class="label">La constante mágica C</div>
+        $$ \int f(x) \, dx = F(x) + C $$
+        <p>Añadimos siempre la <strong>+ C</strong> porque al derivar una constante, esta se vuelve cero. Al integrar, no sabemos qué número había ahí originalmente.</p>
+      </div>
+
+      <h3>Ejemplos Resueltos</h3>
+      <div class="example-box">
+        <div class="label">Ejemplo: Potencia básica</div>
+        <p>Para integrar \( x^n \), sumamos 1 al exponente y dividimos por ese mismo resultado:</p>
+        $$ \int x^2 \, dx = \frac{x^{2+1}}{2+1} + C = \frac{x^3}{3} + C $$
+      </div>
+
+      <h2 id="concepto">La Calculadora de Áreas</h2>
+      <p>
+        Si la derivada nos dice qué tan rápido cambia algo, la <strong>integral definida</strong> nos ayuda a acumular esos cambios. La aplicación más famosa y fácil de entender es el cálculo del área bajo una curva.
+      </p>
+      <p>
+        Imagina que quieres medir el área de un terreno que tiene un borde curvo. No puedes usar fórmulas simples como las del cuadrado o triángulo. La integral definida "rebana" esa área en rectángulos infinitamente delgados y los suma todos para darte el valor exacto.
+      </p>
+
+      <h2 id="notacion">Notación y Partes</h2>
+      <p>La integral definida se distingue por tener un inicio y un fin bien establecidos:</p>
+
+      <div class="example-box">
+        <div class="label">Simbología</div>
+        $$ \int_{a}^{b} f(x) \, dx $$
+      </div>
+
+      <ul>
+        <li>\( \int \) es el símbolo de la suma (una "S" alargada).</li>
+        <li>\( a \) y \( b \) son los <strong>límites de integración</strong> (donde empieza y termina tu terreno).</li>
+        <li>\( f(x) \) es la función que define la "altura" de tu curva.</li>
+        <li>\( dx \) indica que estamos sumando trozos pequeñitos a lo largo del eje \( x \).</li>
+      </ul>
+
+      <h2 id="teorema">El Teorema Fundamental del Cálculo</h2>
+      <p>
+        Este es el "puente" que conecta las derivadas con las integrales. Nos dice que para calcular una integral definida, solo necesitamos encontrar la antiderivada (integral indefinida) y evaluar los límites.
+      </p>
+      <div class="example-box">
+        <div class="label">Regla de Barrow</div>
+        $$ \int_{a}^{b} f(x) \, dx = [F(x)]_{a}^{b} = F(b) - F(a) $$
+      </div>
+      <p>Donde \( F(x) \) es la función integrada. ¡Es como medir una distancia restando el punto final menos el punto inicial!</p>
+
+      <h2 id="ejemplos">Ejemplos Resueltos</h2>
+
+      <div class="example-box">
+        <div class="label">Ejemplo 1: Área bajo la recta f(x) = x</div>
+        <p>Calcularemos el área desde \( x=0 \) hasta \( x=2 \):</p>
+        $$ \int_{0}^{2} x \, dx $$
+        <p><strong>Paso 1:</strong> Integramos la función.</p>
+        $$ = \left[ \frac{x^2}{2} \right]_{0}^{2} $$
+        <p><strong>Paso 2:</strong> Evaluamos el límite superior (2) y restamos el inferior (0).</p>
+        $$ = \left( \frac{2^2}{2} \right) - \left( \frac{0^2}{2} \right) $$
+        $$ = \left( \frac{4}{2} \right) - (0) = 2 $$
+        <p><strong>Resultado:</strong> El área es de 2 unidades cuadradas.</p>
+      </div>
+
+      <div class="example-box">
+        <div class="label">Ejemplo 2: Una curva cuadrática f(x) = x²</div>
+        <p>Calcularemos el área desde \( x=1 \) hasta \( x=3 \):</p>
+        $$ \int_{1}^{3} x^2 \, dx $$
+        <p><strong>Paso 1:</strong> Integramos.</p>
+        $$ = \left[ \frac{x^3}{3} \right_{1}^{3} $$
+        <p><strong>Paso 2:</strong> Evaluamos \( F(3) - F(1) \).</p>
+        $$ = \left( \frac{3^3}{3} \right) - \left( \frac{1^3}{3} \right) $$
+        $$ = \left( \frac{27}{3} \right) - \left( \frac{1}{3} \right) = 9 - \frac{1}{3} $$
+        <p><strong>Resultado Final:</strong></p>
+        $$ = \frac{26}{3} \approx 8.66 $$
+      </div>
+
+      <h2 id="propiedades">Propiedades fundamentales</h2>
+      <div class="note-box">
+        <p>1. <strong>Límites iguales:</strong> Si \( a = b \), el área es cero. \( \int_{a}^{a} f(x) \, dx = 0 \).</p>
+        <p>2. <strong>Inversión:</strong> Si cambias el orden de los límites, el signo cambia. \( \int_{a}^{b} f(x) \, dx = -\int_{b}^{a} f(x) \, dx \).</p>
+        <p>3. <strong>Suma de intervalos:</strong> Puedes dividir la integral en partes. \( \int_{a}^{c} = \int_{a}^{b} + \int_{b}^{c} \).</p>
+      </div>
+
+      <h2 id="tecnicas">3. Técnicas de Integración</h2>
+      <p>
+        A veces las funciones son muy complejas para la tabla básica. Aquí usamos "trucos" para simplificarlas.
+      </p>
+
+      <h3>A. Sustitución U (Regla de la cadena al revés)</h3>
+      <p>Se usa cuando una parte de la integral es la derivada de otra parte.</p>
+      <div class="example-box">
+        <div class="label">Ejemplo de Sustitución</div>
+        <p>Resolver \( \int 2x e^{x^2} \, dx \):</p>
+        <ul>
+          <li>Elegimos \( u = x^2 \)</li>
+          <li>Su derivada es \( du = 2x \, dx \)</li>
+        </ul>
+        $$ \int e^u \, du = e^u + C = e^{x^2} + C $$
+      </div>
+
+      <h3>B. Integración por Partes</h3>
+      <p>Se usa cuando tenemos un producto de dos funciones distintas (ej. una potencia por un logaritmo).</p>
+      <div class="example-box">
+        <div class="label">La fórmula de "La Vaca"</div>
+        $$ \int u \, dv = uv - \int v \, du $$
+        <p><small>Truco mnemotécnico: "Un Día Vi Una Vaca Vestida De Uniforme"</small></p>
+      </div>
+
+      <div id="generador-container" data-tema="integrales"></div>
+
+      <div class="gen-box">
+        <h2>Evaluación General</h2>
+        <p>Este cuestionario abarca conceptos de integrales definidas e indefinidas.</p>
+        <div id="quiz" data-topic="integrales"></div>
+      </div>
+
+      <div class="nav-btns">
+        <a href="derivadas.html" class="btn outline">❮ Anterior: Derivadas</a>
+        <a href="laplace.html" class="btn">Siguiente: Laplace ❯</a>
+      </div>
+    </main>
+
+  </div>
+
+  <script src="../components.js"></script>
+  <script src="../ejercicios.js"></script>
+  <script src="../quiz.js"></script>
+  <script src="../app.js"></script>
+  <script>
+    if(typeof loadComponents === "function") loadComponents("integrales");
+    if(typeof initQuiz === "function") initQuiz("integrales");
+  </script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</body>
+</html>

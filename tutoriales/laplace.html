@@ -8,6 +8,13 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Figtree:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../tutorial.css">
+  <style>
+    /* Estilos para que el índice se vea limpio */
+    .toc-list { list-style: none; padding-left: 0; margin-top: 10px; }
+    .toc-list li { margin-bottom: 6px; }
+    .toc-list a { color: var(--accent2); text-decoration: none; font-size: 14px; transition: opacity 0.2s; }
+    .toc-list a:hover { opacity: 0.7; text-decoration: underline; }
+  </style>
 </head>
 <body>
 
@@ -22,6 +29,20 @@
 
     <main class="content">
       <h1>Transformada de Laplace</h1>
+      
+      <div class="note-box" style="margin-bottom: 2rem;">
+        <strong style="color: var(--accent); text-transform: uppercase; font-size: 11px; letter-spacing: 1px;">Contenido de esta lección</strong>
+        <ul class="toc-list">
+          <li><a href="#introduccion">1. Introducción (El Traductor)</a></li>
+          <li><a href="#dos-mundos">2. Los Dos Mundos</a></li>
+          <li><a href="#la-maquina">3. Conociendo a la Máquina (La Fórmula Oficial)</a></li>
+          <li><a href="#ejemplos-formula">4. Ejemplos resueltos paso a paso por fórmula</a></li>
+          <li><a href="#atajos">5. Los Atajos (Tabla Básica)</a></li>
+          <li><a href="#reglas">6. Las Reglas del Juego</a></li>
+        </ul>
+      </div>
+
+      <h2 id="introduccion">El Traductor Matemático</h2>
       <p>
         Imagina que compraste un mueble increíble, pero las instrucciones vienen completamente en ruso. Intentar armarlo así sería una pesadilla. Lo lógico sería usar un traductor para pasarlas a español, armar tu mueble tranquilamente y listo.
       </p>
@@ -29,88 +50,114 @@
         ¡La <strong>Transformada de Laplace</strong> hace exactamente eso en las matemáticas! Es una herramienta "traductora" que toma un problema muy difícil y lo pasa a un idioma donde es súper fácil de resolver.
       </p>
 
-      <h2>Los Dos Mundos</h2>
+      <h2 id="dos-mundos">Los Dos Mundos</h2>
       <p>Para entender a Laplace, debes imaginar que existen dos universos paralelos:</p>
       <ul>
-        <li><strong>El Mundo del Tiempo (t):</strong> Aquí vivimos nosotros. Es el mundo real donde ocurren problemas físicos, pero resolver ecuaciones aquí a veces requiere cálculo avanzado complejo.</li>
-        <li><strong>El Mundo de la Frecuencia (s):</strong> El universo alterno. En este mundo mágico, el cálculo difícil desaparece y las ecuaciones se resuelven con álgebra básica (sumas, restas, multiplicaciones y divisiones).</li>
+        <li><strong>El Mundo del Tiempo \( (t) \):</strong> Aquí vivimos nosotros. Es el mundo real donde ocurren problemas físicos, pero resolver ecuaciones aquí a veces requiere cálculo avanzado complejo.</li>
+        <li><strong>El Mundo de la Frecuencia \( (s) \):</strong> El universo alterno. En este mundo mágico, el cálculo difícil desaparece y las ecuaciones se resuelven con álgebra básica (sumas, restas, multiplicaciones y divisiones).</li>
       </ul>
 
-      <h2>Conociendo a la Máquina</h2>
+      <h2 id="la-maquina">Conociendo a la Máquina</h2>
       <p>Ya sabemos que es un traductor, pero ¿cómo se ve por dentro? Esta es su maquinaria oficial:</p>
 
       <div class="example-box">
         <div class="label">La Fórmula Oficial</div>
-        <pre>L{ f(t) } = ∫ [de 0 a ∞] e^(-st) · f(t) dt</pre>
+        $$ \mathcal{L}\{f(t)\} = \int_{0}^{\infty} e^{-st} f(t) \, dt $$
       </div>
 
       <p>No te asustes, cada pieza tiene un trabajo sencillo:</p>
       <ul>
-        <li><em>f(t)</em> es el <strong>paciente</strong> que queremos traducir.</li>
-        <li>La integral de 0 a infinito significa que a la máquina solo le importa el <strong>futuro</strong>, no el pasado.</li>
-        <li><em>e^(-st)</em> es el <strong>filtro traductor</strong>. Su trabajo es transformar la función para que podamos cruzar al mundo de <em>s</em>.</li>
+        <li>\( f(t) \) es el <strong>paciente</strong> que queremos traducir.</li>
+        <li>La integral de \( 0 \) a \( \infty \) significa que a la máquina solo le importa el <strong>futuro</strong>, no el pasado.</li>
+        <li>\( e^{-st} \) es el <strong>filtro traductor</strong>. Su trabajo es transformar la función para que podamos cruzar al mundo de \( s \).</li>
       </ul>
 
-      <div class="note-box">
-        💡 <strong>El Secreto:</strong> Si tuviéramos que usar esta fórmula integral cada vez, nunca terminaríamos. ¡Por suerte, existen los atajos!
+      <h2 id="ejemplos-formula">Ejemplos resueltos por Fórmula</h2>
+      <p>Antes de conocer los atajos, vamos a meter un par de funciones a la máquina para que veas cómo la integral hace su magia de traducción de \( t \) hacia \( s \).</p>
+
+      <div class="example-box">
+        <div class="label">Ejemplo 1: Transformar una constante f(t) = 1</div>
+        <p>Sustituimos nuestra función en la fórmula oficial:</p>
+        $$ \mathcal{L}\{1\} = \int_{0}^{\infty} e^{-st} (1) \, dt $$
+        <p>Resolvemos la integral con respecto al tiempo \( t \) (asumiendo que \( s > 0 \)):</p>
+        $$ = \left[ -\frac{1}{s} e^{-st} \right]_{0}^{\infty} $$
+        <p>Evaluamos los límites. Recuerda que al evaluar infinito \( e^{-\infty} = 0 \), y al evaluar cero \( e^{0} = 1 \):</p>
+        $$ = \left( 0 \right) - \left( -\frac{1}{s} \cdot 1 \right) $$
+        <p><strong>Resultado Final:</strong></p>
+        $$ \mathcal{L}\{1\} = \frac{1}{s} $$
       </div>
 
-      <h2>Los Atajos (Tabla Básica)</h2>
-      <p>Los matemáticos ya metieron las funciones más comunes a la máquina y anotaron los resultados. En la vida real, casi siempre usamos esta tabla de traducción directa:</p>
+      <div class="example-box">
+        <div class="label">Ejemplo 2: Transformar una exponencial f(t) = e^{at}</div>
+        <p>Sustituimos nuestra función en la fórmula oficial:</p>
+        $$ \mathcal{L}\{e^{at}\} = \int_{0}^{\infty} e^{-st} e^{at} \, dt $$
+        <p>Por leyes de los exponentes, podemos sumar las potencias e integrar:</p>
+        $$ = \int_{0}^{\infty} e^{-(s-a)t} \, dt $$
+        <p>Resolvemos la integral y evaluamos los límites de \( 0 \) a \( \infty \) (asumiendo que \( s > a \)):</p>
+        $$ = \left[ -\frac{1}{s-a} e^{-(s-a)t} \right]_{0}^{\infty} $$
+        $$ = (0) - \left( -\frac{1}{s-a} \cdot 1 \right) $$
+        <p><strong>Resultado Final:</strong></p>
+        $$ \mathcal{L}\{e^{at}\} = \frac{1}{s-a} $$
+      </div>
+
+      <div class="note-box">
+        💡 <strong>El Secreto:</strong> Si tuviéramos que integrar desde cero cada vez, nunca terminaríamos. ¡Por suerte, podemos memorizar las respuestas finales en una tabla!
+      </div>
+
+      <h2 id="atajos">Los Atajos (Tabla Básica)</h2>
+      <p>Los matemáticos ya hicieron esas integrales infinitas por nosotros. En la vida real, casi siempre usamos este diccionario de traducción directa:</p>
 
       <div class="example-box">
         <div class="label">Diccionario VIP de Laplace</div>
-        <pre>
-1. La Constante:   L{ 1 }       = 1 / s
-2. La Rampa:       L{ t }       = 1 / s²
-3. Exponencial:    L{ e^(at) }  = 1 / (s - a)
-4. Seno:           L{ sin(wt) } = w / (s² + w²)</pre>
+        <p><strong>1. La Constante:</strong></p>
+        $$ \mathcal{L}\{1\} = \frac{1}{s} $$
+        <p><strong>2. La Rampa (tiempo):</strong></p>
+        $$ \mathcal{L}\{t\} = \frac{1}{s^2} $$
+        <p><strong>3. Función Exponencial:</strong></p>
+        $$ \mathcal{L}\{e^{at}\} = \frac{1}{s - a} $$
+        <p><strong>4. Ondas (Seno):</strong></p>
+        $$ \mathcal{L}\{\sin(\omega t)\} = \frac{\omega}{s^2 + \omega^2} $$
       </div>
 
-      <h2>Las Reglas del Juego</h2>
-      <p>¿Qué pasa si tienes ecuaciones más grandes? Solo necesitas aplicar dos reglas simples para armar y desarmar funciones.</p>
+      <h2 id="reglas">Las Reglas del Juego</h2>
+      <p>¿Qué pasa si tienes ecuaciones más grandes? Solo necesitas aplicar dos reglas simples para armar y desarmar funciones sin tener que volver a integrar.</p>
 
-      <h3>1. Linealidad (La Regla del Supermercado)</h3>
-      <p>Funciona igual que la caja de cobro: procesa las cosas por separado. Las sumas se separan, y los números que multiplican esperan afuera.</p>
+      <h3 id="linealidad">1. Linealidad (La Regla del Supermercado)</h3>
+      <p>Funciona igual que la caja de cobro: procesa las cosas por separado. Las sumas se separan, y los números constantes que multiplican esperan afuera de la máquina.</p>
       <div class="example-box">
         <div class="label">Ejemplo de Linealidad</div>
-        <pre>Problema: L{ 3 + 5t }
-
-Paso 1: Separar y dejar los números afuera
-        3·L{ 1 } + 5·L{ t }
-
-Paso 2: Usar la tabla de atajos
-        3·(1/s) + 5·(1/s²)
-
-Resultado final: (3/s) + (5/s²)</pre>
+        <p><strong>Problema a resolver:</strong></p>
+        $$ \mathcal{L}\{ 3 + 5t \} $$
+        <p><strong>Paso 1:</strong> Separar sumas y dejar los números afuera.</p>
+        $$ 3 \mathcal{L}\{ 1 \} + 5 \mathcal{L}\{ t \} $$
+        <p><strong>Paso 2:</strong> Usar la tabla de atajos.</p>
+        $$ 3 \left( \frac{1}{s} \right) + 5 \left( \frac{1}{s^2} \right) $$
+        <p><strong>Resultado final:</strong></p>
+        $$ \frac{3}{s} + \frac{5}{s^2} $$
       </div>
 
-      <h3>2. Primer Teorema de Traslación (Efecto Teletransportador)</h3>
-      <p>Cuando veas que tu función está multiplicada por un exponencial <em>e^(at)</em>, ese exponencial actúa como un pase VIP que empuja a la letra <em>s</em>.</p>
+      <h3 id="traslacion">2. Primer Teorema de Traslación (Efecto Teletransportador)</h3>
+      <p>Cuando veas que tu función está multiplicada por un exponencial \( e^{at} \), ese exponencial actúa como un pase VIP que "empuja" o desplaza a la letra \( s \).</p>
       <div class="example-box">
         <div class="label">Ejemplo de Traslación</div>
-        <pre>Problema: L{ e^(2t) · t }
-
-Paso 1: Ignora la "e" un segundo y transforma "t"
-        L{ t } = 1 / s²
-
-Paso 2: Reemplaza cada "s" por "(s - a)". Aquí a=2
-        Reemplazamos "s" por "(s - 2)"
-
-Resultado final: 1 / (s - 2)²</pre>
+        <p><strong>Problema a resolver:</strong></p>
+        $$ \mathcal{L}\{ e^{2t} \cdot t \} $$
+        <p><strong>Paso 1:</strong> Ignora la exponencial "e" por un segundo y transforma la "t" basándote en la tabla.</p>
+        $$ \mathcal{L}\{ t \} = \frac{1}{s^2} $$
+        <p><strong>Paso 2:</strong> Reemplaza cada letra \( s \) por \( (s - a) \). En nuestro problema, el exponente es 2 (\( a=2 \)), así que cambiamos \( s \) por \( (s - 2) \).</p>
+        $$ \left. \frac{1}{s^2} \right|_{s \to s-2} $$
+        <p><strong>Resultado final:</strong></p>
+        $$ \frac{1}{(s - 2)^2} $$
       </div>
 
-      <!-- ══ GENERADOR ══ -->
       <div id="generador-container" data-tema="laplace"></div>
 
-      <!-- ══ QUIZ ══ -->
       <div class="gen-box">
         <h2>Quiz — Pon a prueba lo que aprendiste</h2>
         <p>Responde 3 preguntas para verificar tu comprensión del tema.</p>
         <div id="quiz" data-topic="laplace"></div>
       </div>
 
-      <!-- ══ NAVEGACIÓN ══ -->
       <div class="nav-btns">
         <a href="funciones.html" class="btn outline">❮ Anterior: Funciones</a>
         <a href="#" class="btn">Siguiente: Ec. Diferenciales ❯</a>
@@ -122,9 +169,13 @@ Resultado final: 1 / (s - 2)²</pre>
   <script src="../components.js"></script>
   <script src="../ejercicios.js"></script>
   <script src="../quiz.js"></script>
+  <script src="../app.js"></script>
   <script>
-    loadComponents("laplace");
-    initQuiz("laplace");
+    // Inicialización de los componentes modulares
+    if(typeof loadComponents === "function") loadComponents("laplace");
+    if(typeof initQuiz === "function") initQuiz("laplace");
   </script>
+  
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </body>
 </html>
