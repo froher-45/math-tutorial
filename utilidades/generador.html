@@ -3,10 +3,11 @@
   <h2>Generador de Ejercicios</h2>
   <p>Selecciona el nivel de dificultad para generar tu ejercicio paso a paso.</p>
   <div class="gen-controls">
-    
-    <!-- Este select está deshabilitado para que el usuario no lo cambie -->
-    <select id="topicSelect" disabled style="opacity: 0.7; cursor: not-allowed; background-color: var(--bg3);">
+
+    <!-- Este select está deshabilitado; el tema se asigna desde data-tema del contenedor -->
+    <select id="topicSelect" disabled>
       <option value="funciones">Funciones</option>
+      <option value="exponenciales">Exponenciales</option>
       <option value="limites">Límites</option>
       <option value="derivadas">Derivadas</option>
       <option value="integrales">Integrales</option>
@@ -15,7 +16,10 @@
       <option value="trigonometria">Trigonometría</option>
       <option value="logaritmos">Logaritmos</option>
       <option value="series">Series y Sucesiones</option>
+      <option value="series_y_sucesiones">Series y Sucesiones</option>
       <option value="edo">Ec. Diferenciales</option>
+      <option value="fourier_series">Series de Fourier</option>
+      <option value="fourier_transform">Transformada de Fourier</option>
     </select>
 
     <select id="diffSelect">
@@ -23,8 +27,14 @@
       <option value="intermedio">Intermedio</option>
       <option value="avanzado">Avanzado</option>
     </select>
-    
+
     <button onclick="genFromTutorial()">⚡ Generar ejercicio</button>
   </div>
   <div id="tutorialExArea"></div>
+
+  <div class="gen-widget-footer">
+    <a href="../generador.html" class="gen-widget-link">
+      Ver todos los temas en el generador completo →
+    </a>
+  </div>
 </div>
