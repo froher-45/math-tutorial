@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Funciones — MathGen</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Figtree:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../tutorial.css">
+</head>
+
+  <div class="bg-grid"></div>
+  <div class="bg-glow"></div>
+
+  <header></header>
+
+  <div class="layout">
+
+    <aside id="menu-lateral" class="sidebar"></aside>
+
+    <main class="content">
+      <h1>Exponenciales</h1>
+      <p>
+        Una <strong>función exponencial</strong> tiene la variable en el <em>exponente</em>.
+        Modela procesos donde la tasa de cambio es proporcional al valor actual:
+        crecimiento poblacional, decaimiento radiactivo, interés compuesto y más.
+      </p>
+
+      <h2>Forma general</h2>
+
+      <div class="example-box">
+        <div class="label">Definición</div>
+        <pre>f(x) = a · bˣ
+
+Donde:
+  a → valor inicial (cuando x = 0)
+  b → base  (b > 0, b ≠ 1)
+  x → el exponente (variable independiente)</pre>
+      </div>
+
+      <p>La forma más usada en ciencias e ingeniería usa el número <em>e</em>:</p>
+
+      <div class="example-box">
+        <div class="label">Forma con e</div>
+        <pre>f(x) = A · e^(kx)
+
+Donde:
+  e ≈ 2.71828…  (número de Euler, base natural)
+  k             → tasa de crecimiento o decaimiento
+  A             → valor inicial (condición inicial)
+
+Propiedad especial: es la única función tal que f'(x) = f(x)</pre>
+      </div>
+
+      <h2>Crecimiento y decaimiento</h2>
+
+      <div class="example-box">
+        <div class="label">Crecimiento (k &gt; 0)</div>
+        <pre>N(t) = N₀ · e^(kt)     con k > 0
+
+La función crece sin límite conforme t → +∞.
+
+Ejemplo: bacteria con k = 0.5 y N₀ = 200 en t = 4:
+  N(4) = 200 · e^(0.5·4) = 200 · e² ≈ 1,478 unidades</pre>
+      </div>
+
+      <div class="example-box">
+        <div class="label">Decaimiento (k &lt; 0)</div>
+        <pre>N(t) = N₀ · e^(−kt)    con k > 0
+
+La función decrece hacia cero conforme t → +∞.
+
+Vida media → tiempo para que la cantidad caiga al 50%:
+  t½ = ln(2) / k ≈ 0.693 / k
+
+Ejemplo: k = 0.2  →  t½ = 0.693 / 0.2 ≈ 3.47 unidades de tiempo</pre>
+      </div>
+
+      <h2>Propiedades de e^(ax)</h2>
+
+      <div class="example-box">
+        <div class="label">Cálculo</div>
+        <pre>Derivada:   d/dx (e^(ax)) = a · e^(ax)
+Integral:   ∫ e^(ax) dx  = (1/a) · e^(ax) + C
+
+Propiedades algebraicas:
+  e^(a+b) = eᵃ · eᵇ
+  e^(a−b) = eᵃ / eᵇ
+  (eᵃ)ᵇ  = e^(ab)
+  e⁰ = 1  |  e¹ = e</pre>
+      </div>
+
+      <div class="example-box">
+        <div class="label">Comportamiento en los límites</div>
+        <pre>lim  eˣ = +∞      (crece sin límite)
+x→+∞
+
+lim  eˣ = 0       (asíntota horizontal en y = 0)
+x→−∞
+
+eˣ domina a xⁿ para todo n finito
+(la exponencial supera a cualquier polinomio)</pre>
+      </div>
+
+      <h2>Aplicaciones reales</h2>
+
+      <div class="example-box">
+        <div class="label">Ejemplos</div>
+        <pre>Decaimiento radiactivo:      N(t) = N₀ · e^(−λt)
+  Carbono-14: t½ ≈ 5,730 años (datación arqueológica)
+
+Crecimiento poblacional:     P(t) = P₀ · e^(rt)
+  r = 0.02 (2% anual): 1 M → 1.22 M en 10 años
+
+Interés compuesto continuo:  A(t) = P · e^(rt)
+  $1,000 al 5% por 10 años → $1,000 · e^0.5 ≈ $1,648.7
+
+Descarga de capacitor:       V(t) = V₀ · e^(−t/RC)
+  En t = RC el voltaje es el 36.8% del inicial (= 1/e)
+
+Enfriamiento de Newton:      T(t) = T_amb + (T₀ − T_amb) · e^(−kt)
+  Un café a 90 °C en ambiente de 20 °C sigue esta ley.</pre>
+      </div>
+
+      <h2>Base para la Transformada de Laplace</h2>
+      <p>
+        La Transformada de Laplace usa una exponencial como núcleo para convertir
+        funciones del dominio del tiempo en funciones algebraicas más simples:
+      </p>
+
+      <div class="example-box">
+        <div class="label">Definición y resultado clave</div>
+        <pre>L{f(t)} = ∫₀^∞ f(t) · e^(−st) dt = F(s)
+
+Propiedad fundamental:
+  L{e^(at)} = 1 / (s − a)     (requiere s > a)
+
+Tabla básica:
+  f(t)              F(s)                  Condición
+  ─────────────────────────────────────────────────
+  1                 1/s                   s > 0
+  t                 1/s²                  s > 0
+  tⁿ                n! / s^(n+1)          s > 0
+  e^(at)            1 / (s − a)           s > a
+  t · e^(at)        1 / (s − a)²          s > a
+  sin(ωt)           ω / (s² + ω²)         s > 0
+  cos(ωt)           s / (s² + ω²)         s > 0</pre>
+      </div>
+
+      <h2>Ejemplo paso a paso</h2>
+      <p>Calcula la vida media de una sustancia con k = 0.3:</p>
+
+      <div class="example-box">
+        <div class="label">Paso a paso</div>
+        <pre>N(t) = N₀ · e^(−0.3t)
+
+Paso 1: Plantear la condición de vida media
+N(t½) = N₀ / 2
+
+Paso 2: Sustituir
+N₀ / 2 = N₀ · e^(−0.3 · t½)
+
+Paso 3: Cancelar N₀ y tomar logaritmo
+1/2 = e^(−0.3 · t½)
+ln(1/2) = −0.3 · t½
+
+Paso 4: Despejar t½
+−ln(2) = −0.3 · t½
+t½ = ln(2) / 0.3 = 0.693 / 0.3 ≈ 2.31 unidades de tiempo</pre>
+      </div>
+
+      <div class="note-box">
+        💡 <strong>Nota:</strong> Si k &gt; 0 el exponente es positivo → <strong>crecimiento</strong>.
+        Si k &lt; 0 (o se escribe −k con k &gt; 0) → <strong>decaimiento</strong>.
+        La constante <em>e</em> es especial porque su derivada es ella misma.
+      </div>
+
+      <!-- ══ GENERADOR ══ -->
+      <div id="generador-container" data-tema="exponenciales"></div>
+
+      <!-- ══ QUIZ ══ -->
+      <div class="gen-box">
+        <h2>Quiz — Pon a prueba lo que aprendiste</h2>
+        <p>Responde 3 preguntas para verificar tu comprensión del tema.</p>
+        <div id="quiz" data-topic="exponenciales"></div>
+      </div>
+
+      <!-- ══ NAVEGACIÓN ══ -->
+      <div class="nav-btns">
+        <a href="funciones.html" class="btn">❮ Anterior: Funciones</a>
+        <a href="series_y_sucesiones.html" class="btn">Siguiente: Series y Sucesiones ❯</a>
+      </div>
+    </main>
+
+  </div>
+
+  <script src="../components.js"></script>
+  <script src="../ejercicios.js"></script>
+  <script src="../quiz.js"></script>
+  <script>
+    loadComponents("exponenciales");
+    initQuiz("exponenciales");
+  </script>
+</body>
+</html>
