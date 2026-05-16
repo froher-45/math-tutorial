@@ -7,6 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Figtree:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../tutorial.css">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -332,40 +333,12 @@
   <div class="bg-glow"></div>
 
   <!-- ══ HEADER ══ -->
-  <header>
-    <a class="logo" href="#">
-      <span class="logo-symbol">∂</span>
-      <span class="logo-text">MathGen</span>
-    </a>
-    <nav style="display:flex;gap:4px;">
-      <a href="#derivadas">Derivadas</a>
-      <a href="#reglas">Reglas</a>
-      <a href="#exponenciales">Exponenciales</a>
-      <a href="#trigonometricas">Trig.</a>
-      <a href="#tabla">Tabla</a>
-      <a href="#interactivo">Herramientas</a>
-    </nav>
-    <button id="theme-btn" title="Cambiar tema">🌙</button>
-  </header>
+  <header></header>
 
   <div class="layout">
 
     <!-- ══ SIDEBAR ══ -->
-    <aside class="sidebar">
-      <p class="sidebar-label">En esta página</p>
-      <a href="#derivadas">¿Qué es una derivada?</a>
-      <a href="#notacion">Notación</a>
-      <a href="#reglas">Reglas de derivación</a>
-      <a href="#exponenciales">Exponenciales</a>
-      <a href="#trigonometricas">Trigonométricas</a>
-      <a href="#tabla">Tabla resumen</a>
-      <hr>
-      <p class="sidebar-label">Herramientas</p>
-      <a href="#graficador">Graficador</a>
-      <a href="#tangente">Recta tangente</a>
-      <a href="#calculadora">Calculadora</a>
-      <a href="#quiz">Ejercicios</a>
-    </aside>
+    <aside id="menu-lateral" class="sidebar"></aside>
 
     <!-- ══ CONTENIDO ══ -->
     <main class="content">
@@ -652,6 +625,9 @@ f'(x) = cos(3x²) · 6x = 6x·cos(3x²)</pre>
         <canvas id="tanCanvas" style="height:280px;"></canvas>
       </div>
 
+      <!-- ══ GENERADOR ══ -->
+      <div id="generador-container" data-tema="derivadas"></div>
+
       <!-- CALCULADORA -->
       <div class="gen-box" id="calculadora">
         <h2>🧮 Calculadora de Derivadas</h2>
@@ -755,11 +731,6 @@ f'(x) = cos(3x²) · 6x = 6x·cos(3x²)</pre>
   </div>
 
   <script>
-    // ── Tema ──
-    document.getElementById('theme-btn').addEventListener('click', function() {
-      document.body.classList.toggle('light-mode');
-      this.textContent = document.body.classList.contains('light-mode') ? '🌕' : '🌙';
-    });
 
     // ── Accordion ──
     document.querySelectorAll('.accordion-btn').forEach(btn => {
@@ -917,14 +888,13 @@ f'(x) = cos(3x²) · 6x = 6x·cos(3x²)</pre>
       document.getElementById('quizScore').textContent='';
     });
 
-    // ── Sidebar activo ──
-    const sections = document.querySelectorAll('[id]');
-    const links    = document.querySelectorAll('.sidebar a');
-    window.addEventListener('scroll', () => {
-      let cur='';
-      sections.forEach(s => { if(window.scrollY>=s.offsetTop-80) cur=s.id; });
-      links.forEach(a => { a.classList.remove('active'); if(a.getAttribute('href')===`#${cur}`) a.classList.add('active'); });
-    });
   </script>
+  <script src="../components.js"></script>
+  <script src="../ejercicios.js"></script>
+  <script src="../app.js"></script>
+  <script>
+    loadComponents("funciones");
+  </script>
+
 </body>
 </html>
