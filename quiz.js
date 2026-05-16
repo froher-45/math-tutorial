@@ -189,6 +189,72 @@ const QUIZ_BANK = {
       opciones: ["F(s+a)", "F(s−a)", "eᵃˢF(s)", "F(s)/a"],
       correcta: 1
     }
+  ],
+
+  series_y_sucesiones: [
+    {
+      pregunta: "Una serie geométrica con a₁ = 2 y r = 1/2 converge a:",
+      opciones: ["1", "2", "4", "Diverge"],
+      correcta: 2
+    },
+    {
+      pregunta: "¿Cuándo converge una serie geométrica infinita Σ arⁿ?",
+      opciones: ["|r| > 1", "r > 0", "|r| < 1", "r < 0"],
+      correcta: 2
+    },
+    {
+      pregunta: "La suma de los primeros n términos de una serie aritmética es:",
+      opciones: ["n·a₁", "n·(a₁ + aₙ)", "n·(a₁ + aₙ)/2", "a₁/(1−r)"],
+      correcta: 2
+    },
+    {
+      pregunta: "Si lim aₙ ≠ 0 cuando n→∞, la serie Σaₙ:",
+      opciones: ["Converge", "Diverge", "Puede converger o divergir", "Depende de a₁"],
+      correcta: 1
+    },
+    {
+      pregunta: "La serie armónica Σ 1/n:",
+      opciones: ["Converge a π", "Converge a 1", "Diverge", "Converge a ln(2)"],
+      correcta: 2
+    }
+  ],
+
+  fourier: [
+    {
+      pregunta: "¿Qué tipo de funciones se pueden representar con series de Fourier?",
+      opciones: [
+        "Solo funciones polinómicas",
+        "Solo funciones exponenciales",
+        "Funciones periódicas (bajo condiciones de Dirichlet)",
+        "Solo funciones continuas"
+      ],
+      correcta: 2
+    },
+    {
+      pregunta: "Para una función impar f(x) en [−π, π], los coeficientes aₙ son:",
+      opciones: ["Todos iguales a 1", "Todos iguales a 0", "Iguales a bₙ", "Depende de la función"],
+      correcta: 1
+    },
+    {
+      pregunta: "La identidad de Parseval relaciona:",
+      opciones: [
+        "La derivada con los coeficientes de Fourier",
+        "La energía de la función con los cuadrados de sus coeficientes",
+        "La integral de Fourier con la de Laplace",
+        "Los coeficientes aₙ con bₙ"
+      ],
+      correcta: 1
+    },
+    {
+      pregunta: "La Transformada de Fourier de f(t) = e^(−a|t|) es:",
+      opciones: ["a/(a²+ω²)", "2a/(a²+ω²)", "1/(a+jω)", "a²/(a²+ω²)"],
+      correcta: 1
+    },
+    {
+      pregunta: "El teorema de convolución de Fourier establece que F{f*g} =",
+      opciones: ["F(ω) + G(ω)", "F(ω) − G(ω)", "F(ω)·G(ω)", "F(ω)/G(ω)"],
+      correcta: 2
+    }
   ]
 };
 

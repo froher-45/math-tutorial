@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fourier — MathGen</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Figtree:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+  <link rel="stylesheet" href="../tutorial.css">
+</head>
+<body>
+
+  <div class="bg-grid"></div>
+  <div class="bg-glow"></div>
+
+  <header></header>
+
+  <div class="layout">
+
+    <aside id="menu-lateral" class="sidebar"></aside>
+
+    <main class="content">
+      <h1>Series de Fourier</h1>
+      <p>
+        Una <strong>serie de Fourier</strong> descompone una función periódica en una suma
+        infinita de senos y cosenos. Es una herramienta esencial para analizar señales,
+        resolver ecuaciones diferenciales con condiciones periódicas y procesar imágenes.
+      </p>
+
+      <h2>Fórmulas de los coeficientes</h2>
+      <p>Para una función <em>f(x)</em> periódica en [−π, π]:</p>
+
+      <div class="example-box">
+        <div class="label">Coeficientes de Fourier</div>
+        <pre>a₀ = (1/π) ∫₋π^π f(x) dx
+
+aₙ = (1/π) ∫₋π^π f(x)·cos(nx) dx
+
+bₙ = (1/π) ∫₋π^π f(x)·sen(nx) dx
+
+Serie completa:
+f(x) = a₀/2 + Σₙ₌₁^∞ [ aₙ·cos(nx) + bₙ·sen(nx) ]</pre>
+      </div>
+
+      <h2>Simetría: funciones pares e impares</h2>
+
+      <div class="example-box">
+        <div class="label">Regla de simetría</div>
+        <pre>Función par  f(−x) = f(x)   →  solo coeficientes aₙ  (todos bₙ = 0)
+Función impar f(−x) = −f(x)  →  solo coeficientes bₙ  (todos aₙ = 0)
+
+Esto reduce a la mitad el trabajo de cálculo.</pre>
+      </div>
+
+      <div class="example-box">
+        <div class="label">Ejemplo — f(x) = x en [−π, π]</div>
+        <pre>f(x) = x  es impar  →  a₀ = 0, aₙ = 0 para todo n
+
+bₙ = (2/π) ∫₀^π x·sen(nx) dx
+
+    Integrando por partes:
+    bₙ = 2·(−1)^(n+1) / n
+
+Serie:  f(x) = 2[ sen(x) − sen(2x)/2 + sen(3x)/3 − sen(4x)/4 + … ]</pre>
+      </div>
+
+      <h2>Onda cuadrada</h2>
+
+      <div class="example-box">
+        <div class="label">Ejemplo — Onda cuadrada</div>
+        <pre>f(x) = +1  si  0 &lt; x &lt; π
+f(x) = −1  si −π &lt; x &lt; 0
+
+f(x) es impar  →  solo bₙ
+
+bₙ = (2/π)·[1 − cos(nπ)] / n
+   = 4/(nπ)  si n impar;   0  si n par
+
+Serie:  f(x) = (4/π)[sen(x) + sen(3x)/3 + sen(5x)/5 + …]</pre>
+      </div>
+
+      <h2>Identidad de Parseval</h2>
+
+      <div class="example-box">
+        <div class="label">Parseval y aplicación</div>
+        <pre>(1/π)∫₋π^π |f(x)|² dx  =  a₀²/2 + Σₙ₌₁^∞ (aₙ² + bₙ²)
+
+Aplicando con f(x) = x  →  bₙ = 2(−1)^(n+1)/n  →  bₙ² = 4/n²
+
+Lado izquierdo:  (1/π)·∫₋π^π x² dx  =  2π²/3
+
+Entonces:  2π²/3 = 4·Σ 1/n²   →   Σ 1/n² = π²/6  (Euler)</pre>
+      </div>
+
+      <hr style="border-color:var(--border); margin: 2.5rem 0;">
+
+      <h1>Transformada de Fourier</h1>
+      <p>
+        La <strong>Transformada de Fourier</strong> extiende las series de Fourier a funciones
+        no periódicas, convirtiendo una señal del dominio del tiempo al dominio de la frecuencia.
+      </p>
+
+      <div class="example-box">
+        <div class="label">Definición</div>
+        <pre>Directa:  F(ω) = ∫₋∞^∞ f(t)·e^(−jωt) dt
+
+Inversa:  f(t) = (1/2π) ∫₋∞^∞ F(ω)·e^(jωt) dω</pre>
+      </div>
+
+      <h2>Propiedades clave</h2>
+
+      <div class="example-box">
+        <div class="label">Propiedades</div>
+        <pre>Linealidad:              F{af + bg} = a·F(ω) + b·G(ω)
+
+Desplazamiento temporal: F{f(t − t₀)} = e^(−jωt₀)·F(ω)
+
+Derivada en tiempo:      F{f'(t)} = jω·F(ω)
+
+Convolución:             F{f * g} = F(ω)·G(ω)</pre>
+      </div>
+
+      <div class="example-box">
+        <div class="label">Par transformado fundamental</div>
+        <pre>f(t) = e^(−a|t|),   a > 0
+
+Separamos en dos integrales:
+  ∫₋∞^0 e^(at)·e^(−jωt) dt  +  ∫₀^∞ e^(−at)·e^(−jωt) dt
+= 1/(a − jω)  +  1/(a + jω)
+= 2a / (a² + ω²)
+
+→  F(ω) = 2a / (a² + ω²)</pre>
+      </div>
+
+      <!-- ══ GENERADOR ══ -->
+      <div id="generador-container" data-tema="fourier_series"></div>
+
+      <!-- ══ QUIZ ══ -->
+      <div class="gen-box">
+        <h2>Quiz — Pon a prueba lo que aprendiste</h2>
+        <p>Responde 3 preguntas para verificar tu comprensión del tema.</p>
+        <div id="quiz" data-topic="fourier"></div>
+      </div>
+
+      <!-- ══ NAVEGACIÓN ══ -->
+      <div class="nav-btns">
+        <a href="series_y_sucesiones.html" class="btn">❮ Anterior: Series y Sucesiones</a>
+      </div>
+    </main>
+
+  </div>
+
+  <script src="../components.js"></script>
+  <script src="../ejercicios.js"></script>
+  <script src="../quiz.js"></script>
+  <script src="../app.js"></script>
+  <script>
+    loadComponents("fourier");
+    initQuiz("fourier");
+  </script>
+</body>
+</html>

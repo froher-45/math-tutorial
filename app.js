@@ -13,9 +13,11 @@ const TOPICS = [
   { id: "limites",       label: "Límites",                 icon: "lim" },
   { id: "derivadas",     label: "Derivadas",               icon: "d/dx" },
   { id: "integrales",    label: "Integrales",              icon: "∫" },
-  { id: "series",        label: "Series y Sucesiones",     icon: "Σ" },
-  { id: "edo",           label: "Ec. Diferenciales",       icon: "y'" },
-  { id: "laplace",       label: "Transformada de Laplace", icon: "L" },
+  { id: "series",            label: "Series y Sucesiones",     icon: "Σ" },
+  { id: "edo",               label: "Ec. Diferenciales",       icon: "y'" },
+  { id: "laplace",           label: "Transformada de Laplace", icon: "ℒ" },
+  { id: "fourier_series",    label: "Series de Fourier",       icon: "∑cos" },
+  { id: "fourier_transform", label: "Transformada de Fourier", icon: "F(ω)" },
 ];
 
 let selectedTopic = null;
@@ -196,8 +198,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
   });
 
- function genFromTutorial() {
-      const topicId = document.getElementById("topicSelect").value;
+const TOPIC_ALIAS = {
+  series_y_sucesiones: "series",
+};
+
+function genFromTutorial() {
+      let topicId   = document.getElementById("topicSelect").value;
+      topicId       = TOPIC_ALIAS[topicId] || topicId;
       const diff    = document.getElementById("diffSelect").value;
       const area    = document.getElementById("tutorialExArea");
       const gen     = GENERATORS[topicId];
