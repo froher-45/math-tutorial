@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Derivadas — MathGen</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Figtree:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:          #0d0f14;
+      --bg2:         #13161e;
+      --bg3:         #1a1d27;
+      --border:      rgba(255,255,255,0.07);
+      --border-md:   rgba(255,255,255,0.13);
+      --accent:      #7c6af7;
+      --accent2:     #a78bfa;
+      --accent-glow: rgba(124,106,247,0.16);
+      --text:        #e8e6f0;
+      --text2:       #9896a8;
+      --text3:       #5f5d70;
+      --mono:        'DM Mono', monospace;
+      --serif:       'DM Serif Display', serif;
+      --sans:        'Figtree', sans-serif;
+      --radius:      12px;
+      --radius-sm:   8px;
+    }
+
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--sans); background: var(--bg); color: var(--text); min-height: 100vh; }
+
+    /* ── FONDO ── */
+    .bg-grid {
+      position: fixed; inset: 0; pointer-events: none; z-index: 0;
+      background-image:
+        linear-gradient(rgba(124,106,247,0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(124,106,247,0.025) 1px, transparent 1px);
+      background-size: 40px 40px;
+    }
+    .bg-glow {
+      position: fixed; top: -220px; left: 50%; transform: translateX(-50%);
+      width: 900px; height: 600px; pointer-events: none; z-index: 0;
+      background: radial-gradient(ellipse, rgba(124,106,247,0.07) 0%, transparent 68%);
+    }
+
+    /* ── HEADER ── */
+    header {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; gap: 24px;
+      padding: 0 1.5rem; height: 52px;
+      background: rgba(13,15,20,0.9);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+    }
+    .logo { display: flex; align-items: center; gap: 8px; text-decoration: none; }
+    .logo-symbol { font-family: var(--serif); font-size: 24px; color: var(--accent2); line-height: 1; }
+    .logo-text   { font-family: var(--serif); font-size: 18px; color: var(--text); }
+    header nav a {
+      font-size: 13px; color: var(--text3); text-decoration: none;
+      padding: 5px 10px; border-radius: var(--radius-sm);
+      transition: color 0.18s, background 0.18s;
+    }
+    header nav a:hover  { color: var(--text2); background: var(--bg3); }
+    header nav a.active { color: var(--accent2); }
+
+    /* ── LAYOUT ── */
+    .layout { display: flex; margin-top: 52px; position: relative; z-index: 10; }
+
+    /* ── SIDEBAR ── */
+    .sidebar {
+      width: 240px;
+      height: calc(100vh - 52px);
+      background: var(--bg2);
+      border-right: 1px solid var(--border);
+      padding: 20px 0 40px 0;
+      position: fixed;
+      top: 52px;
+      overflow-y: auto;
+    }
+    .sidebar-label {
+      font-size: 10px; font-weight: 600; color: var(--text3);
+      letter-spacing: 0.09em; text-transform: uppercase;
+      padding: 14px 16px 6px;
+    }
+    .sidebar a {
+      display: block; padding: 8px 16px;
+      color: var(--text2); text-decoration: none; font-size: 13px;
+      transition: color 0.15s, background 0.15s;
+      border-left: 2px solid transparent;
+    }
+    .sidebar a:hover  { color: var(--text); background: var(--bg3); }
+    .sidebar a.active {
+      color: var(--accent2); background: var(--accent-glow);
+      border-left-color: var(--accent); font-weight: 500;
+    }
+    .sidebar hr { border: none; border-top: 1px solid var(--border); margin: 8px 0; }
+
+    /* ── CONTENIDO ── */
+    .content {
+      margin-left: 240px; padding: 40px 52px;
+      width: calc(100% - 240px);
+      min-height: calc(100vh - 52px);
+    }
+    .content h1 {
+      font-family: var(--serif); font-size: 36px; font-style: italic;
+      color: var(--text); margin-bottom: 12px; line-height: 1.2;
+    }
+    .content h2 {
+      font-size: 16px; font-weight: 600; color: var(--text);
+      margin: 32px 0 10px; letter-spacing: -0.01em;
+    }
+    .content p { font-size: 14px; line-height: 1.8; margin-bottom: 16px; color: var(--text2); }
+    .content strong { color: var(--text); }
+    .content em { color: var(--accent2); font-style: italic; }
+
+    /* ── HERO TAG ── */
+    .hero-tag {
+      display: inline-block; font-size: 11px; font-weight: 600;
+      letter-spacing: 0.09em; text-transform: uppercase;
+      color: var(--accent2); background: var(--accent-glow);
+      border: 1px solid rgba(124,106,247,0.28);
+      padding: 4px 14px; border-radius: 999px; margin-bottom: 20px;
+    }
+
+    /* ── CAJA EJEMPLO ── */
+    .example-box {
+      background: var(--bg2); border: 1px solid var(--border);
+      border-left: 3px solid var(--accent);
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      padding: 16px 20px; margin: 20px 0;
+    }
+    .example-box .label {
+      font-size: 10px; font-weight: 600; color: var(--accent);
+      text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 10px;
+    }
+    .example-box pre {
+      font-family: var(--mono); font-size: 13px; color: var(--accent2);
+      background: var(--bg3); border: 1px solid var(--border);
+      padding: 14px; border-radius: var(--radius-sm);
+      overflow-x: auto; line-height: 1.7; white-space: pre-wrap;
+    }
+
+    /* ── CAJA NOTA ── */
+    .note-box {
+      background: rgba(251,191,36,0.06); border: 1px solid rgba(251,191,36,0.18);
+      border-left: 3px solid #fbbf24;
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      padding: 12px 16px; margin: 20px 0;
+      font-size: 13px; color: var(--text2); line-height: 1.7;
+    }
+
+    /* ── CARDS ── */
+    .cards-row { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 14px; margin: 20px 0; }
+    .info-card {
+      background: var(--bg2); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 20px;
+    }
+    .info-card-icon { font-size: 22px; margin-bottom: 10px; }
+    .info-card h3 { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 6px; }
+    .info-card p  { font-size: 13px; color: var(--text3); line-height: 1.6; margin: 0; }
+
+    /* ── TABLA ── */
+    .math-table {
+      width: 100%; border-collapse: collapse; margin: 20px 0;
+      font-size: 13px;
+    }
+    .math-table caption {
+      font-size: 11px; font-weight: 600; color: var(--text3);
+      letter-spacing: 0.07em; text-transform: uppercase;
+      margin-bottom: 8px; text-align: left;
+    }
+    .math-table th {
+      background: var(--bg3); color: var(--text2); font-weight: 600;
+      padding: 10px 14px; text-align: left;
+      border-bottom: 1px solid var(--border-md);
+    }
+    .math-table td {
+      padding: 9px 14px; font-family: var(--mono); color: var(--accent2);
+      border-bottom: 1px solid var(--border);
+    }
+    .math-table tr:last-child td { border-bottom: none; }
+
+    /* ── ACCORDION ── */
+    .accordion { margin: 20px 0; display: flex; flex-direction: column; gap: 8px; }
+    .accordion-item {
+      background: var(--bg2); border: 1px solid var(--border);
+      border-radius: var(--radius-sm); overflow: hidden;
+    }
+    .accordion-btn {
+      width: 100%; display: flex; align-items: center; justify-content: space-between;
+      padding: 12px 16px; background: transparent; border: none;
+      color: var(--text2); font-family: var(--sans); font-size: 13px;
+      cursor: pointer; text-align: left;
+      transition: background 0.15s, color 0.15s;
+    }
+    .accordion-btn:hover { background: var(--bg3); color: var(--text); }
+    .accordion-btn.open  { color: var(--accent2); }
+    .accordion-arrow { transition: transform 0.2s; font-size: 11px; }
+    .accordion-btn.open .accordion-arrow { transform: rotate(180deg); }
+    .accordion-body { display: none; padding: 0 16px 16px; }
+    .accordion-body.open { display: block; }
+    .accordion-body p { font-size: 13px; color: var(--text3); margin-top: 10px; margin-bottom: 0; }
+
+    /* ── GENERADOR ── */
+    .gen-box {
+      background: var(--bg2); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 24px; margin: 40px 0;
+    }
+    .gen-box h2 {
+      font-family: var(--serif); font-size: 20px; font-style: italic;
+      color: var(--text); margin-bottom: 6px; font-weight: 400;
+    }
+    .gen-box > p { font-size: 13px; color: var(--text3); margin-bottom: 0; }
+
+    /* ── HERRAMIENTAS ── */
+    .tool-controls { display: flex; flex-direction: column; gap: 12px; margin: 16px 0; }
+    .input-group { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+    .input-group label { font-size: 13px; color: var(--text2); white-space: nowrap; }
+    .input-group input[type="text"] {
+      flex: 1; min-width: 200px;
+      background: var(--bg3); border: 1px solid var(--border);
+      border-radius: var(--radius-sm); padding: 8px 12px;
+      font-family: var(--mono); font-size: 13px; color: var(--accent2);
+    }
+    .input-group input[type="text"]:focus { outline: none; border-color: var(--accent); }
+    .btn-tool {
+      background: var(--accent); border: none; border-radius: var(--radius-sm);
+      padding: 9px 22px; font-family: var(--sans); font-size: 13px;
+      font-weight: 600; color: white; cursor: pointer;
+      box-shadow: 0 0 20px rgba(124,106,247,0.25); transition: opacity 0.18s;
+    }
+    .btn-tool:hover { opacity: 0.88; }
+    .btn-secondary { background: transparent; border: 1px solid var(--border); color: var(--text2); box-shadow: none; }
+    .btn-secondary:hover { border-color: var(--border-md); color: var(--text); opacity: 1; }
+    .legend { display: flex; align-items: center; gap: 12px; font-size: 13px; color: var(--text3); }
+    .dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+    .dot-blue   { background: #7c6af7; }
+    .dot-orange { background: #f97316; }
+    .slider-group { display: flex; align-items: center; gap: 10px; }
+    .slider-group label { font-size: 13px; color: var(--text2); white-space: nowrap; }
+    .slider-group input[type="range"] { flex: 1; accent-color: var(--accent); }
+    .stat-chips { display: flex; gap: 10px; flex-wrap: wrap; }
+    .chip { background: var(--bg3); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 8px 14px; }
+    .chip-label { font-size: 10px; font-weight: 600; color: var(--text3); text-transform: uppercase; letter-spacing: 0.07em; display: block; margin-bottom: 4px; }
+    .chip-val   { font-family: var(--mono); font-size: 13px; color: var(--accent2); }
+    canvas { display: block; width: 100%; margin-top: 12px; border-radius: var(--radius-sm); border: 1px solid var(--border); background: var(--bg3); }
+    .error-msg { font-size: 12px; color: #f87171; margin-top: 8px; }
+
+    /* ── CALCULADORA ── */
+    .calc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 16px 0; }
+    .calc-input-area { display: flex; flex-direction: column; gap: 8px; }
+    .calc-input-area label { font-size: 13px; color: var(--text2); }
+    .calc-input-area input {
+      background: var(--bg3); border: 1px solid var(--border);
+      border-radius: var(--radius-sm); padding: 8px 12px;
+      font-family: var(--mono); font-size: 13px; color: var(--accent2);
+    }
+    .calc-input-area input:focus { outline: none; border-color: var(--accent); }
+    .calc-results { display: flex; flex-direction: column; gap: 10px; }
+    .calc-result-item { background: var(--bg3); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 12px 16px; }
+    .calc-result-label { font-size: 10px; font-weight: 600; color: var(--text3); text-transform: uppercase; letter-spacing: 0.07em; display: block; margin-bottom: 6px; }
+    .calc-result-val   { font-family: var(--mono); font-size: 14px; color: var(--accent2); }
+    .supported-box { background: var(--bg3); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 12px 16px; font-size: 12px; color: var(--text3); margin-top: 12px; }
+
+    /* ── QUIZ ── */
+    .quiz-container { display: flex; flex-direction: column; gap: 24px; margin: 16px 0; }
+    .quiz-item { border-bottom: 1px solid var(--border); padding-bottom: 20px; }
+    .quiz-item:last-child { border-bottom: none; }
+    .quiz-question { font-size: 14px; color: var(--text); margin-bottom: 12px; }
+    .quiz-options { display: flex; flex-direction: column; gap: 8px; }
+    .quiz-option {
+      display: flex; align-items: center; gap: 10px;
+      font-size: 13px; color: var(--text2); cursor: pointer;
+      padding: 8px 12px; border-radius: var(--radius-sm);
+      border: 1px solid transparent; transition: background 0.15s, border-color 0.15s;
+    }
+    .quiz-option:hover { background: var(--bg3); border-color: var(--border); }
+    .quiz-option input { accent-color: var(--accent); }
+    .quiz-feedback { font-size: 12px; margin-top: 8px; padding: 6px 12px; border-radius: var(--radius-sm); display: none; }
+    .quiz-feedback.correct { background: rgba(34,197,94,0.1); color: #4ade80; display: block; }
+    .quiz-feedback.wrong   { background: rgba(248,113,113,0.1); color: #f87171; display: block; }
+    .quiz-actions { display: flex; gap: 10px; margin-top: 20px; }
+    .quiz-score { font-size: 14px; color: var(--accent2); margin-top: 12px; font-weight: 600; }
+
+    /* ── BOTONES NAV ── */
+    .nav-btns { display: flex; justify-content: space-between; margin-top: 52px; padding-top: 24px; border-top: 1px solid var(--border); }
+    .btn { display: inline-block; padding: 10px 22px; background: var(--accent); color: white; text-decoration: none; border-radius: var(--radius-sm); font-size: 13px; font-weight: 600; transition: opacity 0.18s; }
+    .btn:hover { opacity: 0.85; }
+    .btn.outline { background: transparent; color: var(--accent2); border: 1px solid var(--accent); }
+    .btn.outline:hover { background: var(--accent-glow); }
+
+    /* ── SCROLLBAR ── */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--bg3); border-radius: 3px; }
+
+    /* ── MODO CLARO ── */
+    body.light-mode {
+      --bg:          #ffffff; --bg2: #f4f4f8; --bg3: #eaeaf0;
+      --border:      rgba(0,0,0,0.08); --border-md: rgba(0,0,0,0.15);
+      --text:        #1a1a2e; --text2: #4a4a6a; --text3: #8888aa;
+      --accent-glow: rgba(124,106,247,0.08);
+    }
+    body.light-mode .bg-grid {
+      background-image: linear-gradient(rgba(124,106,247,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(124,106,247,0.05) 1px, transparent 1px);
+    }
+    body.light-mode header { background: rgba(255,255,255,0.9); }
+    body.light-mode .bg-glow { opacity: 0.4; }
+
+    #theme-btn {
+      background: transparent; border: 1px solid var(--border);
+      border-radius: var(--radius-sm); padding: 5px 10px;
+      font-size: 16px; cursor: pointer; transition: background 0.18s; margin-left: auto;
+    }
+    #theme-btn:hover { background: var(--bg3); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      .sidebar { display: none; }
+      .content { margin-left: 0; padding: 24px 16px; width: 100%; }
+      .calc-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 580px) { .nav-btns { flex-direction: column; gap: 10px; } }
+  </style>
+</head>
+<body>
+
+  <div class="bg-grid"></div>
+  <div class="bg-glow"></div>
+
+  <!-- ══ HEADER ══ -->
+  <header>
+    <a class="logo" href="#">
+      <span class="logo-symbol">∂</span>
+      <span class="logo-text">MathGen</span>
+    </a>
+    <nav style="display:flex;gap:4px;">
+      <a href="#derivadas">Derivadas</a>
+      <a href="#reglas">Reglas</a>
+      <a href="#exponenciales">Exponenciales</a>
+      <a href="#trigonometricas">Trig.</a>
+      <a href="#tabla">Tabla</a>
+      <a href="#interactivo">Herramientas</a>
+    </nav>
+    <button id="theme-btn" title="Cambiar tema">🌙</button>
+  </header>
+
+  <div class="layout">
+
+    <!-- ══ SIDEBAR ══ -->
+    <aside class="sidebar">
+      <p class="sidebar-label">En esta página</p>
+      <a href="#derivadas">¿Qué es una derivada?</a>
+      <a href="#notacion">Notación</a>
+      <a href="#reglas">Reglas de derivación</a>
+      <a href="#exponenciales">Exponenciales</a>
+      <a href="#trigonometricas">Trigonométricas</a>
+      <a href="#tabla">Tabla resumen</a>
+      <hr>
+      <p class="sidebar-label">Herramientas</p>
+      <a href="#graficador">Graficador</a>
+      <a href="#tangente">Recta tangente</a>
+      <a href="#calculadora">Calculadora</a>
+      <a href="#quiz">Ejercicios</a>
+    </aside>
+
+    <!-- ══ CONTENIDO ══ -->
+    <main class="content">
+
+      <!-- HERO -->
+      <div class="hero-tag">Cálculo Diferencial</div>
+      <h1>Derivadas</h1>
+      <p style="font-size:15px;color:var(--text2);line-height:1.8;margin-bottom:32px;max-width:620px;">
+        La <strong>derivada</strong> mide cómo cambia una función en cada instante.
+        Es la herramienta central del cálculo diferencial y la base del análisis matemático moderno.
+      </p>
+
+      <!-- ══ SECCIÓN 1 — DERIVADAS ══ -->
+      <h2 id="derivadas">¿Qué es una Derivada?</h2>
+      <p>
+        La <strong>derivada</strong> de una función mide la <em>tasa de cambio instantánea</em> de esa función
+        en un punto dado. Geométricamente, representa la <strong>pendiente de la recta tangente</strong>
+        a la curva en ese punto.
+      </p>
+
+      <div class="cards-row">
+        <div class="info-card">
+          <div class="info-card-icon">📈</div>
+          <h3>Tasa de cambio</h3>
+          <p>¿Qué tan rápido cambia <em>f(x)</em> cuando <em>x</em> aumenta un poquito?</p>
+        </div>
+        <div class="info-card">
+          <div class="info-card-icon">📐</div>
+          <h3>Pendiente tangente</h3>
+          <p>La recta que "toca" la curva exactamente en un punto, sin cruzarla.</p>
+        </div>
+        <div class="info-card">
+          <div class="info-card-icon">⚡</div>
+          <h3>Cambio instantáneo</h3>
+          <p>No el promedio entre dos puntos, sino el valor exacto en un instante.</p>
+        </div>
+      </div>
+
+      <!-- ══ SECCIÓN 2 — NOTACIÓN ══ -->
+      <h2 id="notacion">Notación</h2>
+      <p>Existen varias formas equivalentes de escribir la derivada:</p>
+
+      <div class="example-box">
+        <div class="label">Notaciones equivalentes</div>
+        <pre>f'(x)          ← Notación de Lagrange (prima)
+dy/dx          ← Notación de Leibniz
+d/dx [f(x)]    ← Operador diferencial
+Ḟ(x)           ← Notación de Newton (punto)</pre>
+      </div>
+
+      <div class="example-box">
+        <div class="label">Definición formal (límite)</div>
+        <pre>f'(x) = lím  f(x + h) − f(x)
+        h→0  ─────────────────
+                    h</pre>
+      </div>
+
+      <!-- ══ SECCIÓN 3 — REGLAS ══ -->
+      <h2 id="reglas">Reglas Básicas de Derivación</h2>
+
+      <div class="accordion">
+
+        <div class="accordion-item">
+          <button class="accordion-btn">
+            <span>📌 Regla de la constante</span>
+            <span class="accordion-arrow">▼</span>
+          </button>
+          <div class="accordion-body">
+            <div class="example-box">
+              <div class="label">Fórmula</div>
+              <pre>Si f(x) = c  →  f'(x) = 0
+
+Ejemplo:
+f(x) = 7  →  f'(x) = 0</pre>
+            </div>
+            <p>Una constante no cambia, así que su tasa de cambio es cero.</p>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <button class="accordion-btn">
+            <span>📌 Regla de la potencia</span>
+            <span class="accordion-arrow">▼</span>
+          </button>
+          <div class="accordion-body">
+            <div class="example-box">
+              <div class="label">Fórmula</div>
+              <pre>d/dx [xⁿ] = n · xⁿ⁻¹
+
+Ejemplos:
+f(x) = x⁴  →  f'(x) = 4x³
+f(x) = x   →  f'(x) = 1
+f(x) = x⁻² →  f'(x) = −2x⁻³</pre>
+            </div>
+            <p>Baja el exponente y resta 1. La regla más usada en cálculo.</p>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <button class="accordion-btn">
+            <span>📌 Suma y resta</span>
+            <span class="accordion-arrow">▼</span>
+          </button>
+          <div class="accordion-body">
+            <div class="example-box">
+              <div class="label">Fórmula</div>
+              <pre>d/dx [f(x) ± g(x)] = f'(x) ± g'(x)
+
+Ejemplo:
+f(x) = x³ + 5x² − 2x + 1
+f'(x) = 3x² + 10x − 2</pre>
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <button class="accordion-btn">
+            <span>📌 Regla del producto</span>
+            <span class="accordion-arrow">▼</span>
+          </button>
+          <div class="accordion-body">
+            <div class="example-box">
+              <div class="label">Fórmula</div>
+              <pre>d/dx [f·g] = f'·g + f·g'
+
+Ejemplo:
+h(x) = x² · sin(x)
+h'(x) = 2x·sin(x) + x²·cos(x)</pre>
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <button class="accordion-btn">
+            <span>📌 Regla del cociente</span>
+            <span class="accordion-arrow">▼</span>
+          </button>
+          <div class="accordion-body">
+            <div class="example-box">
+              <div class="label">Fórmula</div>
+              <pre>d/dx [f/g] = (f'·g − f·g') / g²
+
+Ejemplo:
+h(x) = sin(x) / x
+h'(x) = (cos(x)·x − sin(x)·1) / x²
+       = (x·cos(x) − sin(x)) / x²</pre>
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <button class="accordion-btn">
+            <span>📌 Regla de la cadena</span>
+            <span class="accordion-arrow">▼</span>
+          </button>
+          <div class="accordion-body">
+            <div class="example-box">
+              <div class="label">Fórmula</div>
+              <pre>d/dx [f(g(x))] = f'(g(x)) · g'(x)
+
+Ejemplo:
+h(x) = (3x + 1)⁵
+h'(x) = 5(3x + 1)⁴ · 3 = 15(3x + 1)⁴</pre>
+            </div>
+            <p>Deriva la función exterior manteniendo la interior intacta, luego multiplica por la derivada de la interior.</p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ══ SECCIÓN 4 — EXPONENCIALES ══ -->
+      <h2 id="exponenciales">Derivadas de Funciones Exponenciales</h2>
+
+      <div class="example-box">
+        <div class="label">Paso a paso — e^(2x)</div>
+        <pre>f(x) = e^(2x)
+
+Paso 1: Identificar la función exterior: eˣ
+Paso 2: Identificar la función interior: g(x) = 2x
+Paso 3: Aplicar regla de la cadena
+f'(x) = e^(2x) · 2 = 2e^(2x)</pre>
+      </div>
+
+      <table class="math-table">
+        <thead><tr><th>Función</th><th>Derivada</th></tr></thead>
+        <tbody>
+          <tr><td>eˣ</td><td>eˣ</td></tr>
+          <tr><td>e^(kx)</td><td>k · e^(kx)</td></tr>
+          <tr><td>aˣ</td><td>aˣ · ln(a)</td></tr>
+          <tr><td>ln(x)</td><td>1/x</td></tr>
+          <tr><td>log_a(x)</td><td>1 / (x · ln a)</td></tr>
+        </tbody>
+      </table>
+
+      <div class="note-box">
+        💡 <strong>Nota:</strong> La función <em>eˣ</em> es la única función que es su propia derivada.
+        Es por eso que <em>e</em> es tan especial en matemáticas.
+      </div>
+
+      <!-- ══ SECCIÓN 5 — TRIGONOMÉTRICAS ══ -->
+      <h2 id="trigonometricas">Derivadas de Funciones Trigonométricas</h2>
+
+      <table class="math-table">
+        <thead><tr><th>Función</th><th>Derivada</th><th>Regla clave</th></tr></thead>
+        <tbody>
+          <tr><td>sin(x)</td><td>cos(x)</td><td>Gira +90°</td></tr>
+          <tr><td>cos(x)</td><td>−sin(x)</td><td>Gira +90° con signo −</td></tr>
+          <tr><td>tan(x)</td><td>sec²(x)</td><td>= 1/cos²(x)</td></tr>
+          <tr><td>sec(x)</td><td>sec(x)·tan(x)</td><td></td></tr>
+          <tr><td>csc(x)</td><td>−csc(x)·cot(x)</td><td></td></tr>
+          <tr><td>cot(x)</td><td>−csc²(x)</td><td></td></tr>
+        </tbody>
+      </table>
+
+      <div class="example-box">
+        <div class="label">Paso a paso — sin(3x²)</div>
+        <pre>f(x) = sin(3x²)
+
+Paso 1: Función exterior: sin(u) → derivada: cos(u)
+Paso 2: Función interior: u = 3x² → u' = 6x
+Paso 3: Regla de la cadena:
+f'(x) = cos(3x²) · 6x = 6x·cos(3x²)</pre>
+      </div>
+
+      <!-- ══ TABLA RESUMEN ══ -->
+      <table class="math-table" id="tabla">
+        <caption>Tabla Resumen — Función y su Derivada</caption>
+        <thead><tr><th>Función f(x)</th><th>Derivada f'(x)</th></tr></thead>
+        <tbody>
+          <tr><td>c (constante)</td><td>0</td></tr>
+          <tr><td>xⁿ</td><td>n·xⁿ⁻¹</td></tr>
+          <tr><td>eˣ</td><td>eˣ</td></tr>
+          <tr><td>e^(kx)</td><td>k·e^(kx)</td></tr>
+          <tr><td>ln(x)</td><td>1/x</td></tr>
+          <tr><td>sin(x)</td><td>cos(x)</td></tr>
+          <tr><td>cos(x)</td><td>−sin(x)</td></tr>
+          <tr><td>tan(x)</td><td>sec²(x)</td></tr>
+          <tr><td>aˣ</td><td>aˣ·ln(a)</td></tr>
+          <tr><td>1/x</td><td>−1/x²</td></tr>
+        </tbody>
+      </table>
+
+      <!-- ══ HERRAMIENTAS ══ -->
+      <h2 id="interactivo" style="font-size:18px;margin-top:48px;">Herramientas Interactivas</h2>
+
+      <!-- GRAFICADOR -->
+      <div class="gen-box" id="graficador">
+        <h2>📊 Graficador — Función y su Derivada</h2>
+        <p>Ingresa una función para ver su gráfica y la de su derivada simultáneamente.</p>
+        <div class="tool-controls">
+          <div class="input-group">
+            <label for="funcInput">f(x) =</label>
+            <input type="text" id="funcInput" placeholder="Ej: x^2, sin(x), exp(x)" value="x^2">
+            <button class="btn-tool" id="graficarBtn">Graficar</button>
+          </div>
+          <div class="legend">
+            <span class="dot dot-blue"></span> f(x)
+            <span class="dot dot-orange"></span> f'(x) (derivada numérica)
+          </div>
+        </div>
+        <canvas id="graficaCanvas" style="height:280px;"></canvas>
+        <p id="graficaError" class="error-msg"></p>
+      </div>
+
+      <!-- RECTA TANGENTE -->
+      <div class="gen-box" id="tangente">
+        <h2>📐 Recta Tangente Dinámica</h2>
+        <p>Mueve el slider para ver la recta tangente moverse en tiempo real sobre la función.</p>
+        <div class="tool-controls">
+          <div class="input-group">
+            <label for="tanFunc">f(x) =</label>
+            <input type="text" id="tanFunc" value="x^2" placeholder="Ej: x^2, sin(x)">
+          </div>
+          <div class="slider-group">
+            <label for="xSlider">x = <strong id="xValDisplay">0</strong></label>
+            <input type="range" id="xSlider" min="-3" max="3" step="0.1" value="0">
+          </div>
+          <div class="stat-chips">
+            <div class="chip"><span class="chip-label">f(x)</span><span class="chip-val" id="fyVal">—</span></div>
+            <div class="chip"><span class="chip-label">Pendiente f'(x)</span><span class="chip-val" id="slopeVal">—</span></div>
+            <div class="chip"><span class="chip-label">Ecuación tangente</span><span class="chip-val" id="tanEq">—</span></div>
+          </div>
+        </div>
+        <canvas id="tanCanvas" style="height:280px;"></canvas>
+      </div>
+
+      <!-- CALCULADORA -->
+      <div class="gen-box" id="calculadora">
+        <h2>🧮 Calculadora de Derivadas</h2>
+        <p>Ingresa una función básica y obtén su derivada simbólica.</p>
+        <div class="calc-grid">
+          <div class="calc-input-area">
+            <label for="calcFunc">f(x) =</label>
+            <input type="text" id="calcFunc" placeholder="Ej: x^3, sin(x), exp(x), x^2+3x">
+            <button class="btn-tool" id="calcBtn" style="margin-top:4px;">Calcular</button>
+          </div>
+          <div class="calc-results">
+            <div class="calc-result-item">
+              <span class="calc-result-label">Derivada f'(x)</span>
+              <span class="calc-result-val" id="derivResult">—</span>
+            </div>
+          </div>
+        </div>
+        <div class="supported-box">
+          <strong>Funciones soportadas:</strong> xⁿ, sin(x), cos(x), tan(x), exp(x), ln(x), constantes, sumas/restas, múltiplos
+        </div>
+      </div>
+
+      <!-- ══ QUIZ ══ -->
+      <div class="gen-box" id="quiz">
+        <h2>✏️ Ejercicios — Pon a prueba lo que aprendiste</h2>
+        <p>Responde los ejercicios y verifica tus respuestas.</p>
+
+        <div class="quiz-container" id="quizContainer">
+
+          <div class="quiz-item" data-correct="b">
+            <p class="quiz-question"><strong>1.</strong> ¿Cuál es la derivada de f(x) = 4x³ − 2x + 7?</p>
+            <div class="quiz-options">
+              <label class="quiz-option"><input type="radio" name="q1" value="a"> 12x² − 2x</label>
+              <label class="quiz-option"><input type="radio" name="q1" value="b"> 12x² − 2</label>
+              <label class="quiz-option"><input type="radio" name="q1" value="c"> 4x² − 2 + 7</label>
+              <label class="quiz-option"><input type="radio" name="q1" value="d"> 12x³ − 2</label>
+            </div>
+            <div class="quiz-feedback" id="fb1"></div>
+          </div>
+
+          <div class="quiz-item" data-correct="a">
+            <p class="quiz-question"><strong>2.</strong> Si f(x) = sin(x), ¿cuál es f'(x)?</p>
+            <div class="quiz-options">
+              <label class="quiz-option"><input type="radio" name="q2" value="a"> cos(x)</label>
+              <label class="quiz-option"><input type="radio" name="q2" value="b"> −cos(x)</label>
+              <label class="quiz-option"><input type="radio" name="q2" value="c"> −sin(x)</label>
+              <label class="quiz-option"><input type="radio" name="q2" value="d"> tan(x)</label>
+            </div>
+            <div class="quiz-feedback" id="fb2"></div>
+          </div>
+
+          <div class="quiz-item" data-correct="d">
+            <p class="quiz-question"><strong>3.</strong> Usando la regla de la cadena, ¿cuál es la derivada de f(x) = e^(5x)?</p>
+            <div class="quiz-options">
+              <label class="quiz-option"><input type="radio" name="q3" value="a"> e^(5x)</label>
+              <label class="quiz-option"><input type="radio" name="q3" value="b"> 5 · e^(x)</label>
+              <label class="quiz-option"><input type="radio" name="q3" value="c"> e^(5)</label>
+              <label class="quiz-option"><input type="radio" name="q3" value="d"> 5 · e^(5x)</label>
+            </div>
+            <div class="quiz-feedback" id="fb3"></div>
+          </div>
+
+          <div class="quiz-item" data-correct="b">
+            <p class="quiz-question"><strong>4.</strong> ¿Qué representa geométricamente la derivada en un punto?</p>
+            <div class="quiz-options">
+              <label class="quiz-option"><input type="radio" name="q4" value="a"> El área bajo la curva</label>
+              <label class="quiz-option"><input type="radio" name="q4" value="b"> La pendiente de la recta tangente</label>
+              <label class="quiz-option"><input type="radio" name="q4" value="c"> El valor de la función en ese punto</label>
+              <label class="quiz-option"><input type="radio" name="q4" value="d"> El intercepto en y</label>
+            </div>
+            <div class="quiz-feedback" id="fb4"></div>
+          </div>
+
+          <div class="quiz-item" data-correct="c">
+            <p class="quiz-question"><strong>5.</strong> ¿Cuál es la derivada de f(x) = ln(x)?</p>
+            <div class="quiz-options">
+              <label class="quiz-option"><input type="radio" name="q5" value="a"> ln(x)</label>
+              <label class="quiz-option"><input type="radio" name="q5" value="b"> 1/x²</label>
+              <label class="quiz-option"><input type="radio" name="q5" value="c"> 1/x</label>
+              <label class="quiz-option"><input type="radio" name="q5" value="d"> x · ln(x)</label>
+            </div>
+            <div class="quiz-feedback" id="fb5"></div>
+          </div>
+
+        </div>
+
+        <div class="quiz-actions">
+          <button class="btn-tool" id="checkQuiz">Verificar respuestas</button>
+          <button class="btn-tool btn-secondary" id="resetQuiz">Reiniciar</button>
+        </div>
+        <div class="quiz-score" id="quizScore"></div>
+      </div>
+
+      <!-- ══ NAVEGACIÓN ══ -->
+      <div class="nav-btns">
+        <a href="funciones.html" class="btn outline">❮ Anterior: Funciones</a>
+        <a href="limites.html" class="btn">Siguiente: Límites ❯</a>
+      </div>
+
+    </main>
+  </div>
+
+  <script>
+    // ── Tema ──
+    document.getElementById('theme-btn').addEventListener('click', function() {
+      document.body.classList.toggle('light-mode');
+      this.textContent = document.body.classList.contains('light-mode') ? '🌕' : '🌙';
+    });
+
+    // ── Accordion ──
+    document.querySelectorAll('.accordion-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const body = btn.nextElementSibling;
+        const isOpen = body.classList.contains('open');
+        document.querySelectorAll('.accordion-body').forEach(b => b.classList.remove('open'));
+        document.querySelectorAll('.accordion-btn').forEach(b => b.classList.remove('open'));
+        if (!isOpen) { body.classList.add('open'); btn.classList.add('open'); }
+      });
+    });
+
+    // ── Evaluador seguro ──
+    function evalFunc(expr, x) {
+      try {
+        const safe = expr
+          .replace(/\^/g, '**').replace(/sin/g, 'Math.sin').replace(/cos/g, 'Math.cos')
+          .replace(/tan/g, 'Math.tan').replace(/exp/g, 'Math.exp').replace(/ln/g, 'Math.log')
+          .replace(/sqrt/g, 'Math.sqrt').replace(/abs/g, 'Math.abs')
+          .replace(/\bpi\b/g, 'Math.PI').replace(/\be\b/g, 'Math.E');
+        return Function('x', `"use strict"; return (${safe})`)(x);
+      } catch { return NaN; }
+    }
+
+    function numDeriv(expr, x, h=1e-5) {
+      return (evalFunc(expr, x+h) - evalFunc(expr, x-h)) / (2*h);
+    }
+
+    // ── Setup canvas ──
+    function setupCanvas(canvas) {
+      const dpr = window.devicePixelRatio || 1;
+      const rect = canvas.getBoundingClientRect();
+      canvas.width  = rect.width * dpr;
+      canvas.height = rect.height * dpr;
+      const ctx = canvas.getContext('2d');
+      ctx.scale(dpr, dpr);
+      return { ctx, W: rect.width, H: rect.height };
+    }
+
+    function drawAxes(ctx, W, H, xMin, xMax, yMin, yMax) {
+      const toX = x => (x-xMin)/(xMax-xMin)*W;
+      const toY = y => H-(y-yMin)/(yMax-yMin)*H;
+      ctx.strokeStyle = 'rgba(255,255,255,0.07)'; ctx.lineWidth = 1;
+      for (let gx=Math.ceil(xMin); gx<=xMax; gx++) { ctx.beginPath(); ctx.moveTo(toX(gx),0); ctx.lineTo(toX(gx),H); ctx.stroke(); }
+      for (let gy=Math.ceil(yMin); gy<=yMax; gy++) { ctx.beginPath(); ctx.moveTo(0,toY(gy)); ctx.lineTo(W,toY(gy)); ctx.stroke(); }
+      ctx.strokeStyle = 'rgba(255,255,255,0.22)'; ctx.lineWidth = 1.5;
+      if (yMin<0&&yMax>0) { ctx.beginPath(); ctx.moveTo(0,toY(0)); ctx.lineTo(W,toY(0)); ctx.stroke(); }
+      if (xMin<0&&xMax>0) { ctx.beginPath(); ctx.moveTo(toX(0),0); ctx.lineTo(toX(0),H); ctx.stroke(); }
+    }
+
+    function drawCurve(ctx, expr, W, H, xMin, xMax, yMin, yMax, color, deriv=false) {
+      const toX = x => (x-xMin)/(xMax-xMin)*W;
+      const toY = y => H-(y-yMin)/(yMax-yMin)*H;
+      ctx.beginPath(); ctx.strokeStyle = color; ctx.lineWidth = 2;
+      let first = true;
+      for (let i=0; i<=500; i++) {
+        const x = xMin + (xMax-xMin)*i/500;
+        const y = deriv ? numDeriv(expr,x) : evalFunc(expr,x);
+        if (!isFinite(y)||y<yMin*2||y>yMax*2) { first=true; continue; }
+        if (first) { ctx.moveTo(toX(x),toY(y)); first=false; } else ctx.lineTo(toX(x),toY(y));
+      }
+      ctx.stroke();
+    }
+
+    // ── Graficador ──
+    function graficar() {
+      const canvas = document.getElementById('graficaCanvas');
+      const expr = document.getElementById('funcInput').value.trim();
+      document.getElementById('graficaError').textContent = '';
+      const {ctx,W,H} = setupCanvas(canvas);
+      ctx.clearRect(0,0,W,H);
+      drawAxes(ctx,W,H,-5,5,-6,6);
+      drawCurve(ctx,expr,W,H,-5,5,-6,6,'#7c6af7');
+      drawCurve(ctx,expr,W,H,-5,5,-6,6,'#f97316',true);
+    }
+    document.getElementById('graficarBtn').addEventListener('click', graficar);
+
+    // ── Recta Tangente ──
+    function dibujarTangente() {
+      const canvas = document.getElementById('tanCanvas');
+      const expr = document.getElementById('tanFunc').value.trim();
+      const xVal = parseFloat(document.getElementById('xSlider').value);
+      document.getElementById('xValDisplay').textContent = xVal.toFixed(1);
+      const fy = evalFunc(expr,xVal);
+      const slope = numDeriv(expr,xVal);
+      document.getElementById('fyVal').textContent    = isFinite(fy)    ? fy.toFixed(4)    : '—';
+      document.getElementById('slopeVal').textContent = isFinite(slope) ? slope.toFixed(4) : '—';
+      document.getElementById('tanEq').textContent    = isFinite(slope) ? `y = ${slope.toFixed(2)}(x − ${xVal}) + ${fy.toFixed(2)}` : '—';
+      const {ctx,W,H} = setupCanvas(canvas);
+      ctx.clearRect(0,0,W,H);
+      const toX = x => (x+5)/10*W, toY = y => H-(y+6)/12*H;
+      drawAxes(ctx,W,H,-5,5,-6,6);
+      drawCurve(ctx,expr,W,H,-5,5,-6,6,'#7c6af7');
+      if (isFinite(slope)&&isFinite(fy)) {
+        ctx.beginPath(); ctx.strokeStyle='#f97316'; ctx.lineWidth=1.5; ctx.setLineDash([6,3]);
+        ctx.moveTo(toX(-5), toY(slope*(-5-xVal)+fy));
+        ctx.lineTo(toX(5),  toY(slope*(5-xVal)+fy));
+        ctx.stroke(); ctx.setLineDash([]);
+        ctx.beginPath(); ctx.arc(toX(xVal),toY(fy),5,0,Math.PI*2);
+        ctx.fillStyle='#f97316'; ctx.fill();
+      }
+    }
+    document.getElementById('xSlider').addEventListener('input', dibujarTangente);
+    document.getElementById('tanFunc').addEventListener('change', dibujarTangente);
+
+    window.addEventListener('load', () => { graficar(); dibujarTangente(); });
+
+    // ── Calculadora ──
+    function calcDerivada(expr) {
+      expr = expr.trim().replace(/\s+/g,'');
+      const rules = [
+        [/^(\d+(\.\d+)?)$/,              () => '0'],
+        [/^x$/,                           () => '1'],
+        [/^(\d+(\.\d+)?)x$/,             (m,c) => c],
+        [/^x\^(\d+(\.\d+)?)$/,           (m,n) => n==2 ? '2x' : `${n}x^${parseFloat(n)-1}`],
+        [/^(\d+(\.\d+)?)\*?x\^(\d+(\.\d+)?)$/, (m,c,_,n) => { const nc=parseFloat(c)*parseFloat(n),nn=parseFloat(n)-1; return nn===0?`${nc}`:nn===1?`${nc}x`:`${nc}x^${nn}`; }],
+        [/^sin\(x\)$/,                    () => 'cos(x)'],
+        [/^cos\(x\)$/,                    () => '-sin(x)'],
+        [/^tan\(x\)$/,                    () => 'sec²(x)'],
+        [/^exp\(x\)$/,                    () => 'exp(x)'],
+        [/^ln\(x\)$/,                     () => '1/x'],
+        [/^exp\((\d+)x\)$/,              (m,k) => `${k}·exp(${k}x)`],
+        [/^(\d+)\*?sin\(x\)$/,           (m,c) => `${c}cos(x)`],
+        [/^(\d+)\*?cos\(x\)$/,           (m,c) => `-${c}sin(x)`],
+        [/^(\d+)\*?exp\(x\)$/,           (m,c) => `${c}exp(x)`],
+      ];
+      for (const [re,fn] of rules) { const m=expr.match(re); if(m) return fn(...m); }
+      return 'Usa las reglas de derivación correspondientes';
+    }
+    document.getElementById('calcBtn').addEventListener('click', () => {
+      document.getElementById('derivResult').textContent = calcDerivada(document.getElementById('calcFunc').value);
+    });
+
+    // ── Quiz ──
+    document.getElementById('checkQuiz').addEventListener('click', () => {
+      const items = document.querySelectorAll('.quiz-item');
+      let correct = 0;
+      items.forEach((item,i) => {
+        const ans = item.dataset.correct;
+        const sel = item.querySelector(`input[name="q${i+1}"]:checked`);
+        const fb  = document.getElementById(`fb${i+1}`);
+        fb.className = 'quiz-feedback';
+        if (!sel) { fb.textContent='⚠️ Selecciona una opción.'; fb.classList.add('wrong'); return; }
+        if (sel.value===ans) { fb.textContent='✓ ¡Correcto!'; fb.classList.add('correct'); correct++; }
+        else {
+          const label = item.querySelector(`input[value="${ans}"]`).parentElement.textContent.trim();
+          fb.textContent=`✗ Incorrecto. Respuesta: ${label}`; fb.classList.add('wrong');
+        }
+      });
+      document.getElementById('quizScore').textContent = `Resultado: ${correct} / ${items.length} correctas`;
+    });
+    document.getElementById('resetQuiz').addEventListener('click', () => {
+      document.querySelectorAll('.quiz-feedback').forEach(fb => { fb.className='quiz-feedback'; fb.textContent=''; });
+      document.querySelectorAll('input[type="radio"]').forEach(r => r.checked=false);
+      document.getElementById('quizScore').textContent='';
+    });
+
+    // ── Sidebar activo ──
+    const sections = document.querySelectorAll('[id]');
+    const links    = document.querySelectorAll('.sidebar a');
+    window.addEventListener('scroll', () => {
+      let cur='';
+      sections.forEach(s => { if(window.scrollY>=s.offsetTop-80) cur=s.id; });
+      links.forEach(a => { a.classList.remove('active'); if(a.getAttribute('href')===`#${cur}`) a.classList.add('active'); });
+    });
+  </script>
+</body>
+</html>
