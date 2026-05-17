@@ -126,27 +126,8 @@ Enfriamiento de Newton:      T(t) = T_amb + (T₀ − T_amb) · e^(−kt)
       <h2>Base para la Transformada de Laplace</h2>
       <p>
         La Transformada de Laplace usa una exponencial como núcleo para convertir
-        funciones del dominio del tiempo en funciones algebraicas más simples:
+        funciones del dominio del tiempo en funciones algebraicas más simples.
       </p>
-
-      <div class="example-box">
-        <div class="label">Definición y resultado clave</div>
-        <pre>L{f(t)} = ∫₀^∞ f(t) · e^(−st) dt = F(s)
-
-Propiedad fundamental:
-  L{e^(at)} = 1 / (s − a)     (requiere s > a)
-
-Tabla básica:
-  f(t)              F(s)                  Condición
-  ─────────────────────────────────────────────────
-  1                 1/s                   s > 0
-  t                 1/s²                  s > 0
-  tⁿ                n! / s^(n+1)          s > 0
-  e^(at)            1 / (s − a)           s > a
-  t · e^(at)        1 / (s − a)²          s > a
-  sin(ωt)           ω / (s² + ω²)         s > 0
-  cos(ωt)           s / (s² + ω²)         s > 0</pre>
-      </div>
 
       <h2>Ejemplo paso a paso</h2>
       <p>Calcula la vida media de una sustancia con k = 0.3:</p>
@@ -189,7 +170,7 @@ t½ = ln(2) / 0.3 = 0.693 / 0.3 ≈ 2.31 unidades de tiempo</pre>
       <!-- ══ NAVEGACIÓN ══ -->
       <div class="nav-btns">
         <a href="funciones.html" class="btn">❮ Anterior: Funciones</a>
-        <a href="series_y_sucesiones.html" class="btn">Siguiente: Series y Sucesiones ❯</a>
+        <a href="limites.html" class="btn">Siguiente: Limites ❯</a>
       </div>
     </main>
 
