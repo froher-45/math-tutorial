@@ -255,7 +255,59 @@ const QUIZ_BANK = {
       opciones: ["F(ω) + G(ω)", "F(ω) − G(ω)", "F(ω)·G(ω)", "F(ω)/G(ω)"],
       correcta: 2
     }
-  ]
+  ],
+  ecuacionesDiferenciales: [
+  {
+    pregunta: "¿Qué caracteriza a una ecuación diferencial ordinaria (EDO)?",
+    opciones: [
+      "Contiene derivadas parciales",
+      "Tiene más de una variable independiente",
+      "Contiene derivadas respecto a una sola variable independiente",
+      "No contiene derivadas"
+    ],
+    correcta: 2
+  },
+  {
+    pregunta: "La ecuación dy/dx = ky representa un modelo de:",
+    opciones: [
+      "Movimiento armónico",
+      "Crecimiento o decaimiento exponencial",
+      "Ecuación de onda",
+      "Serie de Fourier"
+    ],
+    correcta: 1
+  },
+  {
+    pregunta: "¿Cuál es el orden de la ecuación d²y/dx² + 3dy/dx + y = 0?",
+    opciones: [
+      "Primer orden",
+      "Segundo orden",
+      "Tercer orden",
+      "Orden indefinido"
+    ],
+    correcta: 1
+  },
+  {
+    pregunta: "Una ecuación diferencial lineal cumple que:",
+    opciones: [
+      "La variable dependiente aparece elevada a potencias mayores que 1",
+      "Las derivadas se multiplican entre sí",
+      "La variable dependiente y sus derivadas aparecen de forma lineal",
+      "Siempre tiene solución exponencial"
+    ],
+    correcta: 2
+  },
+  {
+    pregunta: "El método de separación de variables se utiliza cuando:",
+    opciones: [
+      "La ecuación puede escribirse como f(y)dy = g(x)dx",
+      "La ecuación tiene derivadas parciales",
+      "La ecuación es de segundo orden",
+      "No existen condiciones iniciales"
+    ],
+    correcta: 0
+  }
+]
 };
 
 // ── Inicializar quiz ───────────────────────────────

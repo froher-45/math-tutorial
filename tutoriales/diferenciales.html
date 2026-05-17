@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Transformada de Laplace — MathGen</title>
+  <title>Ecuaciones Diferenciales — MathGen</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Figtree:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -28,139 +28,183 @@
     <aside id="menu-lateral" class="sidebar"></aside>
 
     <main class="content">
-      <h1>Transformada de Laplace</h1>
-      
+     
+      <h1>Ecuaciones Diferenciales (EDO)</h1>
+
       <div class="note-box" style="margin-bottom: 2rem;">
         <strong style="color: var(--accent); text-transform: uppercase; font-size: 11px; letter-spacing: 1px;">Contenido de esta lección</strong>
         <ul class="toc-list">
-          <li><a href="#introduccion">1. Introducción (El Traductor)</a></li>
-          <li><a href="#dos-mundos">2. Los Dos Mundos</a></li>
-          <li><a href="#la-maquina">3. Conociendo a la Máquina (La Fórmula Oficial)</a></li>
-          <li><a href="#ejemplos-formula">4. Ejemplos resueltos paso a paso por fórmula</a></li>
-          <li><a href="#atajos">5. Los Atajos (Tabla Básica)</a></li>
-          <li><a href="#reglas">6. Las Reglas del Juego</a></li>
+          <li><a href="#concepto">1. ¿Qué es una Ecuación Diferencial?</a></li>
+          <li><a href="#anatomia">2. Clasificando al Monstruo (Orden y Linealidad)</a></li>
+          <li><a href="#separables">3. Método 1: Variables Separables</a></li>
+          <li><a href="#factor-integrante">4. Método 2: Factor Integrante (Ecuaciones Lineales)</a></li>
         </ul>
       </div>
 
-      <h2 id="introduccion">El Traductor Matemático</h2>
       <p>
-        Imagina que compraste un mueble increíble, pero las instrucciones vienen completamente en ruso. Intentar armarlo así sería una pesadilla. Lo lógico sería usar un traductor para pasarlas a español, armar tu mueble tranquilamente y listo.
-      </p>
-      <p>
-        ¡La <strong>Transformada de Laplace</strong> hace exactamente eso en las matemáticas! Es una herramienta "traductora" que toma un problema muy difícil y lo pasa a un idioma donde es súper fácil de resolver.
+        En el álgebra tradicional, tu misión siempre fue encontrar el valor de un número oculto (la famosa 𝓍). Pero en el cálculo avanzado, las reglas del juego cambian. Las Ecuaciones Diferenciales son como la escena de un crimen: no estás buscando un número, <strong>estás buscando una función entera</strong> que dejó sus huellas dactilares (sus derivadas) por toda la ecuación.
       </p>
 
-      <h2 id="dos-mundos">Los Dos Mundos</h2>
-      <p>Para entender a Laplace, debes imaginar que existen dos universos paralelos:</p>
-      <ul>
-        <li><strong>El Mundo del Tiempo \( (t) \):</strong> Aquí vivimos nosotros. Es el mundo real donde ocurren problemas físicos, pero resolver ecuaciones aquí a veces requiere cálculo avanzado complejo.</li>
-        <li><strong>El Mundo de la Frecuencia \( (s) \):</strong> El universo alterno. En este mundo mágico, el cálculo difícil desaparece y las ecuaciones se resuelven con álgebra básica (sumas, restas, multiplicaciones y divisiones).</li>
-      </ul>
+      <div class="divider"></div>
 
-      <h2 id="la-maquina">Conociendo a la Máquina</h2>
-      <p>Ya sabemos que es un traductor, pero ¿cómo se ve por dentro? Esta es su maquinaria oficial:</p>
+      <h2 id="concepto">1. ¿Qué es una Ecuación Diferencial?</h2>
+      <p>
+        Una Ecuación Diferencial es simplemente cualquier ecuación matemática que contiene a una función desconocida y a una o más de sus derivadas.
+      </p>
 
       <div class="example-box">
-        <div class="label">La Fórmula Oficial</div>
-        $$ \mathcal{L}\{f(t)\} = \int_{0}^{\infty} e^{-st} f(t) \, dt $$
-      </div>
-
-      <p>No te asustes, cada pieza tiene un trabajo sencillo:</p>
-      <ul>
-        <li>\( f(t) \) es el <strong>paciente</strong> que queremos traducir.</li>
-        <li>La integral de \( 0 \) a \( \infty \) significa que a la máquina solo le importa el <strong>futuro</strong>, no el pasado.</li>
-        <li>\( e^{-st} \) es el <strong>filtro traductor</strong>. Su trabajo es transformar la función para que podamos cruzar al mundo de \( s \).</li>
-      </ul>
-
-      <h2 id="ejemplos-formula">Ejemplos resueltos por Fórmula</h2>
-      <p>Antes de conocer los atajos, vamos a meter un par de funciones a la máquina para que veas cómo la integral hace su magia de traducción de \( t \) hacia \( s \).</p>
-
-      <div class="example-box">
-        <div class="label">Ejemplo 1: Transformar una constante f(t) = 1</div>
-        <p>Sustituimos nuestra función en la fórmula oficial:</p>
-        $$ \mathcal{L}\{1\} = \int_{0}^{\infty} e^{-st} (1) \, dt $$
-        <p>Resolvemos la integral con respecto al tiempo \( t \) (asumiendo que \( s > 0 \)):</p>
-        $$ = \left[ -\frac{1}{s} e^{-st} \right]_{0}^{\infty} $$
-        <p>Evaluamos los límites. Recuerda que al evaluar infinito \( e^{-\infty} = 0 \), y al evaluar cero \( e^{0} = 1 \):</p>
-        $$ = \left( 0 \right) - \left( -\frac{1}{s} \cdot 1 \right) $$
-        <p><strong>Resultado Final:</strong></p>
-        $$ \mathcal{L}\{1\} = \frac{1}{s} $$
-      </div>
-
-      <div class="example-box">
-        <div class="label">Ejemplo 2: Transformar una exponencial f(t) = e^{at}</div>
-        <p>Sustituimos nuestra función en la fórmula oficial:</p>
-        $$ \mathcal{L}\{e^{at}\} = \int_{0}^{\infty} e^{-st} e^{at} \, dt $$
-        <p>Por leyes de los exponentes, podemos sumar las potencias e integrar:</p>
-        $$ = \int_{0}^{\infty} e^{-(s-a)t} \, dt $$
-        <p>Resolvemos la integral y evaluamos los límites de \( 0 \) a \( \infty \) (asumiendo que \( s > a \)):</p>
-        $$ = \left[ -\frac{1}{s-a} e^{-(s-a)t} \right]_{0}^{\infty} $$
-        $$ = (0) - \left( -\frac{1}{s-a} \cdot 1 \right) $$
-        <p><strong>Resultado Final:</strong></p>
-        $$ \mathcal{L}\{e^{at}\} = \frac{1}{s-a} $$
+        <div class="label">La Diferencia Clave</div>
+        <p><strong>Ecuación Normal (Álgebra):</strong></p>
+        $$ x^2 - 4 = 0 $$
+        <p><em>Resolución:</em> Buscamos un número. La respuesta es \( x = 2 \).</p>
+        
+        <p><strong>Ecuación Diferencial (Cálculo):</strong></p>
+        $$ \frac{dy}{dx} = 2x $$
+        <p><em>Resolución:</em> Nos preguntan "¿Qué función, al derivarla, nos da \( 2x \)?". Buscamos una función. La respuesta es \( y = x^2 + C \).</p>
       </div>
 
       <div class="note-box">
-        💡 <strong>El Secreto:</strong> Si tuviéramos que integrar desde cero cada vez, nunca terminaríamos. ¡Por suerte, podemos memorizar las respuestas finales en una tabla!
+        💡 <strong>Notación importante:</strong> En los libros verás la derivada escrita de diferentes formas. Todas significan lo mismo, pero para resolver EDOs, la notación de Leibniz suele ser la más útil para manipular la ecuación:
+        <ul>
+          <li><strong>Notación de Newton/Lagrange:</strong> \( y' \), \( y'' \)</li>
+          <li><strong>Notación de Leibniz:</strong> \( \frac{dy}{dx} \), \( \frac{d^2y}{dx^2} \)</li>
+
+        </ul>
       </div>
 
-      <h2 id="atajos">Los Atajos (Tabla Básica)</h2>
-      <p>Los matemáticos ya hicieron esas integrales infinitas por nosotros. En la vida real, casi siempre usamos este diccionario de traducción directa:</p>
+      <h2 id="anatomia">2. Clasificando al Monstruo (Orden y Linealidad)</h2>
+      <p>
+        Antes de intentar resolver una EDO, tienes que saber a qué te enfrentas. Existen decenas de métodos de resolución, y si aplicas el método equivocado, el problema se volverá imposible. Para elegir el "arma" correcta, primero clasificamos la ecuación mirando su orden.
+      </p>
+
+      <h3>El Orden de la Ecuación</h3>
+      <p>
+        El orden es simplemente <strong>la derivada más alta</strong> que aparece en la ecuación. No te confundas con los exponentes; fíjate en cuántas comillas tiene la y.
+      </p>
 
       <div class="example-box">
-        <div class="label">Diccionario VIP de Laplace</div>
-        <p><strong>1. La Constante:</strong></p>
-        $$ \mathcal{L}\{1\} = \frac{1}{s} $$
-        <p><strong>2. La Rampa (tiempo):</strong></p>
-        $$ \mathcal{L}\{t\} = \frac{1}{s^2} $$
-        <p><strong>3. Función Exponencial:</strong></p>
-        $$ \mathcal{L}\{e^{at}\} = \frac{1}{s - a} $$
-        <p><strong>4. Ondas (Seno):</strong></p>
-        $$ \mathcal{L}\{\sin(\omega t)\} = \frac{\omega}{s^2 + \omega^2} $$
+        <div class="label">Identificando el Orden</div>
+        <p><strong>Primer Orden:</strong> La derivada más alta es la primera derivada.</p>
+        $$ y' + 3y = \sin(x) $$
+        <p><strong>Segundo Orden:</strong> La derivada más alta es la segunda derivada (típico en física, como la aceleración).</p>
+        $$ y'' - 5y' + 6y = 0 $$
+        <p><strong>Tercer Orden:</strong> (Aquí fíjate que la primera derivada está elevada al cuadrado, pero eso es un exponente. La derivada más alta de toda la ecuación sigue siendo la tercera derivada y''').</p>
+        $$ y''' + 4\left(\frac{dy}{dx}\right)^2 = x $$
       </div>
 
-      <h2 id="reglas">Las Reglas del Juego</h2>
-      <p>¿Qué pasa si tienes ecuaciones más grandes? Solo necesitas aplicar dos reglas simples para armar y desarmar funciones sin tener que volver a integrar.</p>
+      <p>
+        <em>Nota: Para este curso introductorio, nos enfocaremos exclusivamente en derrotar a las Ecuaciones Diferenciales de <strong>Primer Orden</strong>.</em>
+      </p>
 
-      <h3 id="linealidad">1. Linealidad (La Regla del Supermercado)</h3>
-      <p>Funciona igual que la caja de cobro: procesa las cosas por separado. Las sumas se separan, y los números constantes que multiplican esperan afuera de la máquina.</p>
+      <h2 id="separables">3. Método 1: Variables Separables (Divide y Vencerás)</h2>
+      <p>
+        Este es el método más noble y amigable de todos. Como su nombre indica, el objetivo es aplicar álgebra básica para "separar" la ecuación en dos bandos: enviar a todas las \( y \) (junto con su diferencial \( dy \)) del lado izquierdo del signo igual, y a todas las \( x \) (con su diferencial \( dx \)) del lado derecho.
+      </p>
+      <p>
+        Si logras hacer esta separación, ¡felicidades! Has hackeado la EDO y la has convertido en dos integrales comunes y corrientes de una sola variable.
+      </p>
+
+      <div class="note-box">
+        <strong>Algoritmo de Resolución en 4 Pasos:</strong>
+        <ol>
+          <li><strong>Reescribir:</strong> Si la derivada dice \( y' \), cámbiala a la notación de fracción \( \frac{dy}{dx} \). Esto es la llave para poder separar los diferenciales.</li>
+          <li><strong>Separar:</strong> Multiplica y divide hasta que el bando izquierdo solo tenga términos con \( y \) y el bando derecho solo tenga términos con \( x \).</li>
+          <li><strong>Integrar:</strong> Aplica el símbolo de integral \( \int \) a ambos lados de la ecuación y resuélvelas usando tu tabla básica.</li>
+          <li><strong>Despejar:</strong> Si es posible, usa álgebra para despejar la \( y \) y dejarla completamente sola. Recuerda agregar la constante de integración \( C \) de un solo lado (usualmente del lado de las \( x \)).</li>
+        </ol>
+      </div>
+
+      <h3>Ejemplo Resuelto Paso a Paso</h3>
+
       <div class="example-box">
-        <div class="label">Ejemplo de Linealidad</div>
-        <p><strong>Problema a resolver:</strong></p>
-        $$ \mathcal{L}\{ 3 + 5t \} $$
-        <p><strong>Paso 1:</strong> Separar sumas y dejar los números afuera.</p>
-        $$ 3 \mathcal{L}\{ 1 \} + 5 \mathcal{L}\{ t \} $$
-        <p><strong>Paso 2:</strong> Usar la tabla de atajos.</p>
-        $$ 3 \left( \frac{1}{s} \right) + 5 \left( \frac{1}{s^2} \right) $$
-        <p><strong>Resultado final:</strong></p>
-        $$ \frac{3}{s} + \frac{5}{s^2} $$
+        <div class="label">El Clásico de Separación</div>
+        <p><strong>Problema:</strong> Encontrar la función \( y \) que satisface la ecuación \( \frac{dy}{dx} = 2xy \)</p>
+        
+        <p><strong>Paso 1 y 2 (Reescribir y Separar):</strong> Ya tenemos la notación correcta. Ahora, tenemos que quitar esa \( y \) del lado derecho y mandar el \( dx \) junto a las \( x \). Pasamos la \( y \) dividiendo al lado izquierdo y el \( dx \) multiplicando al lado derecho:</p>
+        $$ \frac{1}{y} \, dy = 2x \, dx $$
+        
+        <p><strong>Paso 3 (Integrar ambos lados):</strong> Ahora que las variables están en sus respectivas esquinas, aplicamos la operación integral a ambos bandos:</p>
+        $$ \int \frac{1}{y} \, dy = \int 2x \, dx $$
+        <p>Buscamos en nuestro diccionario de integrales. La de la izquierda es el logaritmo natural, y la de la derecha es la regla de la potencia:</p>
+        $$ \ln|y| = x^2 + C $$
+        <p><em>(Nota: Aunque integramos dos veces, solo ponemos una constante \( C \) al final, porque la suma o resta de dos constantes misteriosas sigue siendo simplemente otra constante misteriosa).</em></p>
+        
+        <p><strong>Paso 4 (Despejar la "y"):</strong> Para eliminar el logaritmo natural (\( \ln \)) y liberar a nuestra función \( y \), aplicamos su enemigo natural, la función exponencial (\( e \)), a ambos lados de la ecuación:</p>
+        $$ e^{\ln|y|} = e^{x^2 + C} $$
+        <p>El exponencial y el logaritmo se neutralizan del lado izquierdo:</p>
+        $$ y = e^{x^2 + C} $$
+        
+        <p><strong>Resultado Final (El toque profesional):</strong> Por leyes de los exponentes, una suma en el exponente se puede separar como una multiplicación con la misma base: \( e^{x^2} \cdot e^C \). Como el número \( e \) elevado a una constante \( C \) es simplemente otro número constante, lo renombramos como una gran \( C \) multiplicando al frente:</p>
+        $$ y = C e^{x^2} $$
+        <p>¡Listo! Acabamos de descubrir la familia exacta de funciones que originó nuestra ecuación diferencial.</p>
       </div>
 
-      <h3 id="traslacion">2. Primer Teorema de Traslación (Efecto Teletransportador)</h3>
-      <p>Cuando veas que tu función está multiplicada por un exponencial \( e^{at} \), ese exponencial actúa como un pase VIP que "empuja" o desplaza a la letra \( s \).</p>
+<h2 id="factor-integrante">4. Método 2: Factor Integrante (El "Hack" Lineal)</h2>
+      <p>
+        A veces, la ecuación está tan mezclada que es matemáticamente imposible separar a las \( x \) de las \( y \) usando solo divisiones o multiplicaciones. Cuando el método de variables separables falla, buscamos si la ecuación tiene un formato específico llamado <strong>Ecuación Lineal de Primer Orden</strong>.
+      </p>
+      
       <div class="example-box">
-        <div class="label">Ejemplo de Traslación</div>
-        <p><strong>Problema a resolver:</strong></p>
-        $$ \mathcal{L}\{ e^{2t} \cdot t \} $$
-        <p><strong>Paso 1:</strong> Ignora la exponencial "e" por un segundo y transforma la "t" basándote en la tabla.</p>
-        $$ \mathcal{L}\{ t \} = \frac{1}{s^2} $$
-        <p><strong>Paso 2:</strong> Reemplaza cada letra \( s \) por \( (s - a) \). En nuestro problema, el exponente es 2 (\( a=2 \)), así que cambiamos \( s \) por \( (s - 2) \).</p>
-        $$ \left. \frac{1}{s^2} \right|_{s \to s-2} $$
-        <p><strong>Resultado final:</strong></p>
-        $$ \frac{1}{(s - 2)^2} $$
+        <div class="label">El Formato Estándar Lineal</div>
+        <p>Para usar este método, tu ecuación debe verse exactamente así (o debes obligarla algebraicamente a verse así):</p>
+        $$ \frac{dy}{dx} + P(x)y = Q(x) $$
+        <p>Donde \( P(x) \) y \( Q(x) \) son funciones que dependen <strong>exclusivamente</strong> de la letra \( x \) (o son simples números).</p>
       </div>
 
-      <div id="generador-container" data-tema="laplace"></div>
+      <p>
+        Si logras acomodar la ecuación en ese formato, puedes usar un "comodín" matemático llamado <strong>Factor Integrante</strong> (representado por la letra griega \( \mu \) o "mu"). Al multiplicar toda tu ecuación por este factor mágico, el lado izquierdo colapsará y se convertirá mágicamente en la derivada de una multiplicación perfecta.
+      </p>
+
+      <div class="note-box">
+        <strong>Los 4 pasos del Factor Integrante:</strong>
+        <ol>
+          <li><strong>Acomodar:</strong> Asegúrate de que la ecuación esté en el formato estándar. La derivada \( \frac{dy}{dx} \) debe estar completamente sola, sin números ni letras multiplicándola.</li>
+          <li><strong>Fabricar el Factor (\( \mu \)):</strong> Identifica quién es \( P(x) \) (lo que sea que esté multiplicando a la \( y \)) y mételo en esta fórmula creadora:
+             $$ \mu(x) = e^{\int P(x) \, dx} $$
+          </li>
+          <li><strong>El Truco de Magia:</strong> Multiplica toda la ecuación por ese \( \mu(x) \). Automáticamente, todo el lado izquierdo se comprime y se convierte en:
+             $$ \frac{d}{dx} \left[ y \cdot \mu(x) \right] $$
+          </li>
+          <li><strong>Integrar y Despejar:</strong> Como el lado izquierdo ahora es una derivada exacta \( \frac{d}{dx} \), al aplicar una integral, la derivada simplemente desaparece. Solo te queda integrar el lado derecho y despejar la \( y \).</li>
+        </ol>
+      </div>
+
+      <h3>Ejemplo Resuelto Paso a Paso</h3>
+
+      <div class="example-box">
+        <div class="label">Ejemplo de Factor Integrante</div>
+        <p><strong>Problema:</strong> Resolver la ecuación diferencial \( \frac{dy}{dx} + 3y = e^{2x} \)</p>
+        
+        <p><strong>Paso 1 (Acomodar):</strong> Revisamos el formato. La derivada está sola, hay un término con \( y \) sumando, y del otro lado solo hay \( x \). ¡Está perfecta! Aquí, nuestro \( P(x) \) es simplemente el número 3.</p>
+        
+        <p><strong>Paso 2 (Fabricar el Factor):</strong> Usamos nuestra fórmula de \( \mu \) integrando el 3:</p>
+        $$ \mu(x) = e^{\int 3 \, dx} = e^{3x} $$
+        
+        <p><strong>Paso 3 (El Truco de Magia):</strong> Multiplicamos toda la ecuación original por \( e^{3x} \):</p>
+        $$ e^{3x} \frac{dy}{dx} + 3e^{3x} y = e^{3x} \cdot e^{2x} $$
+        <p>Del lado derecho, sumamos los exponentes: \( e^{3x} \cdot e^{2x} = e^{5x} \). Del lado izquierdo, aplicamos el truco de comprimirlo (siempre será la \( y \) multiplicada por nuestro factor \( \mu \)):</p>
+        $$ \frac{d}{dx} \left[ y \cdot e^{3x} \right] = e^{5x} $$
+        
+        <p><strong>Paso 4 (Integrar y Despejar):</strong> Integramos ambos lados con respecto a \( x \). Al lado izquierdo, la integral cancela a la derivada inmediatamente. Al lado derecho, integramos normalmente (usando un pequeño cambio de variable mental):</p>
+        $$ y \cdot e^{3x} = \int e^{5x} \, dx $$
+        $$ y \cdot e^{3x} = \frac{1}{5}e^{5x} + C $$
+        <p>Por último, despejamos la \( y \) pasando el \( e^{3x} \) a dividir a todos los términos (recuerda que al dividir exponenciales de misma base, se restan los exponentes):</p>
+        $$ y = \frac{\frac{1}{5}e^{5x}}{e^{3x}} + \frac{C}{e^{3x}} $$
+        <p><strong>Resultado Final:</strong></p>
+        $$ y = \frac{1}{5}e^{2x} + C e^{-3x} $$
+      </div>
+
+      <div id="generador-container" data-tema="edo"></div>
 
       <div class="gen-box">
         <h2>Quiz — Pon a prueba lo que aprendiste</h2>
         <p>Responde 3 preguntas para verificar tu comprensión del tema.</p>
-        <div id="quiz" data-topic="laplace"></div>
+        <div id="quiz" data-topic="ecuacionesDiferenciales"></div>
       </div>
 
       <div class="nav-btns">
-        <a href="diferenciales.html" class="btn outline">❮ Anterior: Ec. Diferenciales </a>
-        <a href="fourier.html" class="btn">Siguiente: Transformada de fourier ❯</a>
+        <a href="series_y_sucesiones.html" class="btn outline">❮ Anterior: Series y sucesiones </a>
+        <a href="laplace.html" class="btn">Siguiente: Transformada de Laplace ❯</a>
       </div>
     </main>
 
@@ -172,8 +216,8 @@
   <script src="../app.js"></script>
   <script>
     // Inicialización de los componentes modulares
-    if(typeof loadComponents === "function") loadComponents("laplace");
-    if(typeof initQuiz === "function") initQuiz("laplace");
+    if(typeof loadComponents === "function") loadComponents("ecuacionesDiferenciales");
+    if(typeof initQuiz === "function") initQuiz("ecuacionesDiferenciales");
   </script>
   
   <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
