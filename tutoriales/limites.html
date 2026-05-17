@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Limites — MathGen</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Figtree:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../tutorial.css">
+  <style>
+    /* Estilos para que el índice se vea limpio */
+    .toc-list { list-style: none; padding-left: 0; margin-top: 10px; }
+    .toc-list li { margin-bottom: 6px; }
+    .toc-list a { color: var(--accent2); text-decoration: none; font-size: 14px; transition: opacity 0.2s; }
+    .toc-list a:hover { opacity: 0.7; text-decoration: underline; }
+  </style>
+</head>
+<body>
+
+  <div class="bg-grid"></div>
+  <div class="bg-glow"></div>
+
+  <header></header>
+
+  <div class="layout">
+
+    <aside id="menu-lateral" class="sidebar"></aside>
+
+    <main class="content">
+      <h1>Limites</h1>
+      
+      <div class="note-box" style="margin-bottom: 2rem;">
+        <strong style="color: var(--accent); text-transform: uppercase; font-size: 11px; letter-spacing: 1px;">Contenido de esta lección</strong>
+        <ul class="toc-list">
+          <li><a href="#concepto">1. ¿Qué es un Límite?</a></li>
+          <li><a href="#laterales">2. Límites Laterales (Izquierda y Derecha)</a></li>
+          <li><a href="#indeterminaciones">3. Resolviendo Límites (Indeterminaciones 0/0)</a></li>
+          <li><a href="#infinito">4. Límites al Infinito</a></li>
+        </ul>
+      </div>
+
+      <h1>Límites: Acercarse sin tocar</h1>
+
+      <p>
+        En el mundo de las matemáticas, al igual que en la informática, hay operaciones prohibidas. Si intentas dividir un número entre cero, la calculadora te marca un error o tu programa simplemente colapsa. Pero, ¿qué pasaría si en lugar de caer exactamente en el cero, nos acercamos muchísimo, digamos a 0.0000001? 
+      </p>
+      <p>
+        Para eso existen los <strong>límites</strong>. Son como un entorno de pruebas (un "sandbox") que nos permite estudiar el comportamiento de una función cuando se acerca peligrosamente a un punto crítico, sin tener que evaluar la función exactamente en ese punto.
+      </p>
+
+      <div class="divider"></div>
+
+      <h2 id="concepto">1. ¿Qué es un Límite?</h2>
+      <p>
+        El límite de una función nos dice hacia qué valor (en el eje 𝑦) se está dirigiendo nuestra gráfica cuando la variable (en el eje 𝑥) se acerca a un número específico.
+      </p>
+
+      <div class="example-box">
+        <div class="label">La Notación Oficial</div>
+        $$ \lim_{x \to a} f(x) = L $$
+        <p>Se lee como: <em>"El límite de la función f(𝑥) cuando 𝑥 tiende a 𝒶, es igual a L."</em></p>
+        <ul>
+          <li>\( \lim \text{: Es la instrucción matemática.} \)</li>
+          <li><strong>\(x \to a\):</strong> Significa que la variable \(x\) se está acercando al valor \(a\), pero <strong>nunca es exactamente \(a\)</strong>.</li>
+          <li><strong>L:</strong> Es la respuesta, el destino final al que apunta la función.</li>
+        </ul>
+      </div>
+
+      <h2 id="laterales">2. Límites Laterales (Izquierda y Derecha)</h2>
+      <p>
+        Para que un límite realmente exista y tenga sentido, la función debe dirigirse al mismo destino sin importar por qué lado te acerques. Imagina que dos amigos caminan por un puente que está roto en el centro. Uno viene caminando desde la izquierda y el otro desde la derecha. Si ambos llegan al mismo borde del agujero, entonces el límite existe. Si el puente estuviera a diferentes alturas, no se encontrarían.
+      </p>
+      <p>Matemáticamente, evaluamos esto usando signos pequeños como "superíndices":</p>
+
+      <div class="note-box">
+        <p><strong>Acercarse por la izquierda (valores más pequeños):</strong> Se anota con un signo negativo arriba.</p>
+        $$ \lim_{x \to a^-} f(x) $$
+        <p><strong>Acercarse por la derecha (valores más grandes):</strong> Se anota con un signo positivo arriba.</p>
+        $$ \lim_{x \to a^+} f(x) $$
+      </div>
+
+      <div class="example-box">
+        <div class="label">La Regla de Oro de los Laterales</div>
+        <p>El límite principal \( \lim_{x \to a} f(x) \) <strong>solo existe</strong> si los dos límites laterales son exactamente iguales.</p>
+        <p>Si \( \lim_{x \to a^-} f(x) = L \) y \( \lim_{x \to a^+} f(x) = L \), entonces el límite total es \( L \).</p>
+        <p>Si la izquierda te da \( 5 \) y la derecha te da \( 3 \), decimos que el límite <strong>no existe</strong>.</p>
+      </div>
+
+      <div class="example-box">
+        <div class="label">Ejemplo Práctico de Límites Laterales</div>
+        <p>Imagina que tenemos una función dividida en dos partes (una función a trozos):</p>
+        $$ f(x) = \begin{cases} x + 1 & \text{si } x < 2 \\ 5 & \text{si } x \ge 2 \end{cases} $$
+        <p>Queremos averiguar si existe el límite general cuando \( x \) se acerca a \( 2 \). Para ello, obligatoriamente debemos evaluar ambos lados:</p>
+        
+        <p><strong>1. Por la izquierda (\( x \to 2^- \)):</strong> Nos acercamos usando valores un poco menores a 2 (como 1.99). La regla dice que para los números menores a 2 debemos usar la fórmula \( x + 1 \):</p>
+        $$ \lim_{x \to 2^-} (x + 1) = 2 + 1 = 3 $$
+        
+        <p><strong>2. Por la derecha (\( x \to 2^+ \)):</strong> Nos acercamos usando valores un poco mayores a 2 (como 2.01). La regla dice que para cualquier número mayor o igual a 2, el resultado es directamente una constante, es decir, 5:</p>
+        $$ \lim_{x \to 2^+} 5 = 5 $$
+        
+        <p><strong>Conclusión:</strong> Como el camino de la izquierda nos lleva al valor \( 3 \) y el de la derecha nos lleva al \( 5 \), los dos amigos nunca se encuentran en el puente. Los límites laterales son diferentes, por lo tanto, el límite general <strong>no existe</strong>:</p>
+        $$ \lim_{x \to 2} f(x) = \text{No existe} $$
+      </div>
+
+      <div class="example-box">
+        <div class="label">Ejemplo Práctico 2: Cuando los amigos sí se encuentran (El límite existe)</div>
+        <p>Veamos otra función a trozos para analizar qué pasa cuando nos acercamos a \( x = 2 \):</p>
+        $$ f(x) = \begin{cases} x^2 & \text{si } x < 2 \\ 2x & \text{si } x \ge 2 \end{cases} $$
+        <p>Aplicamos nuestra regla de oro y evaluamos ambos caminos por separado:</p>
+        
+        <p><strong>1. Por la izquierda (\( x \to 2^- \)):</strong> Nos acercamos con valores menores a 2, por lo que usamos la regla de arriba (\( x^2 \)):</p>
+        $$ \lim_{x \to 2^-} (x^2) = (2)^2 = 4 $$
+        
+        <p><strong>2. Por la derecha (\( x \to 2^+ \)):</strong> Nos acercamos con valores mayores a 2, así que usamos la regla de abajo (\( 2x \)):</p>
+        $$ \lim_{x \to 2^+} (2x) = 2(2) = 4 $$
+        
+        <p><strong>Conclusión:</strong> En este caso, el camino de la izquierda nos lleva a la altura 4, y el camino de la derecha también nos lleva exactamente a la misma altura 4. Como ambos amigos llegan al mismo punto y se encuentran, declaramos oficialmente que el límite <strong>sí existe</strong>:</p>
+        $$ \lim_{x \to 2} f(x) = 4 $$
+      </div>
+
+      <h2 id="indeterminaciones">3. Resolviendo Límites y Evitando el "Crash" (El temido \( 0/0 \))</h2>
+      <p>
+        La forma más rápida y directa de resolver cualquier límite es la <strong>sustitución directa</strong>: simplemente cambias la letra \( x \) por el número al que tiende y calculas el resultado. La gran mayoría de las veces esto funciona a la primera, pero hay ocasiones especiales donde el sistema colapsa.
+      </p>
+      <p>
+        Si al sustituir el número obtienes una fracción como \( \frac{0}{0} \), has llegado a una <strong>indeterminación</strong>. En la programación esto provocaría un error fatal de división por cero interrumpiendo el sistema. Sin embargo, en el cálculo, una indeterminación no significa que el límite no exista; solo significa que la respuesta real está "oculta" detrás de un bloqueo algebraico. Podemos "hackear" la función usando factorización para eliminar el peligro y revelar el resultado.
+      </p>
+
+        <div class="note-box">
+          <strong>El plan de ataque para vencer al \( 0/0 \):</strong>
+          <ol>
+            <li><strong>Sustituye:</strong> Evalúa el número. Si te da un valor normal, ¡ya terminaste! Si da \( 0/0 \), pasa al paso 2.</li>
+            <li><strong>Factoriza:</strong> Aplica álgebra para reescribir la ecuación de una forma diferente (factor común, diferencia de cuadrados, etc.).</li>
+            <li><strong>Cancelar:</strong> Elimina los términos idénticos que aparecen tanto arriba como abajo de la fracción. Ellos son los culpables del cero.</li>
+            <li><strong>Vuelve a sustituir:</strong> Ahora que la división entre cero desapareció, evalúa el número original con total confianza.</li>
+          </ol>
+        </div>
+
+      <h3>Ejemplos Resueltos Paso a Paso</h3>
+
+      <div class="example-box">
+        <div class="label">Ejemplo 1: Sustitución Directa (Caso sin problemas)</div>
+        <p><strong>Problema:</strong> Calcular \( \lim_{x \to 3} (x^2 - 2x) \)</p>
+        <p>Como no hay fracciones ni peligro de dividir entre cero, cambiamos la \( x \) por el \( 3 \) inmediatamente:</p>
+        $$ = (3)^2 - 2(3) $$
+        $$ = 9 - 6 = 3 $$
+        <p><strong>Resultado:</strong> El límite es \( 3 \). Gráficamente, cuando la curva se acerca a la coordenada 3 en \( x \), su altura en \( y \) apunta al 3.</p>
+      </div>
+
+      <div class="example-box">
+        <div class="label">Ejemplo 2: Destruyendo la Indeterminación por Factorización</div>
+        <p><strong>Problema:</strong> Calcular \( \lim_{x \to 2} \frac{x^2 - 4}{x - 2} \)</p>
+        
+        <p><strong>Paso 1 (Sustituyendo):</strong> Si intentamos resolverlo directamente reemplazando la \( x \) por el 2, la matemática colapsa:</p>
+        $$ \frac{2^2 - 4}{2 - 2} = \frac{4 - 4}{0} = \frac{0}{0} \quad \text{(¡Crash! Indeterminación)} $$
+        
+        <p><strong>Paso 2 (Factorizando):</strong> Miramos la parte de arriba: \( x^2 - 4 \) es una "Diferencia de Cuadrados Perfectos". El álgebra nos dice que podemos reescribirla abriendo dos paréntesis conjugados:</p>
+        $$ x^2 - 4 = (x - 2)(x + 2) $$
+        <p>Colocamos esta nueva versión en nuestro límite original:</p>
+        $$ \lim_{x \to 2} \frac{(x - 2)(x + 2)}{x - 2} $$
+        
+        <p><strong>Paso 3 (Cancelar):</strong> Nota cómo el bloque \( (x - 2) \) se encuentra multiplicando arriba y también dividiendo abajo. Al ser idénticos, los simplificamos eliminándolos por completo de la ecuación:</p>
+        $$ \lim_{x \to 2} (x + 2) $$
+        
+        <p><strong>Paso 4 (Volver a sustituir):</strong> Con la división por cero completamente eliminada, volvemos a intentar la sustitución directa introduciendo el 2:</p>
+        $$ = 2 + 2 = 4 $$
+        <p><strong>Resultado Final:</strong> El límite es \( 4 \). Aunque la función original tenía un "agujero" prohibido exactamente en el punto 2, acabamos de descubrir que la gráfica por ambos lados se dirigía con precisión hacia la altura 4.</p>
+      </div>
+
+      <div class="divider"></div>
+      <h2 id="infinito">4. Límites al Infinito (El horizonte matemático)</h2>
+      <p>
+        Hasta ahora hemos visto qué pasa cuando nos acercamos a un número específico, pero ¿qué ocurre si dejamos que nuestra variable \( x \) crezca sin control hacia el infinito positivo (\( \infty \)) o negativo (\( -\infty \))?
+      </p>
+      <p>
+        En la vida real, esto es como preguntarnos: si un sistema sigue funcionando para siempre, ¿hacia dónde se estabiliza? Visualmente, estamos buscando las <strong>asíntotas horizontales</strong> de una gráfica.
+      </p>
+
+      <div class="example-box">
+        <div class="label">La Regla de la Pizza (El límite más importante)</div>
+        <p>Imagina que tienes 1 pizza y la divides entre 2 personas, les toca media pizza. Si la divides entre 100 personas, les toca una migaja. ¿Qué pasa si divides 1 pizza entre infinitas personas?</p>
+        $$ \lim_{x \to \infty} \frac{1}{x} = 0 $$
+        <p>¡Les toca prácticamente nada! Cualquier número dividido entre un número infinitamente grande, siempre tiende a cero.</p>
+      </div>
+
+      <div class="note-box">
+        💡 <strong>El Truco de los Polinomios</strong><br>
+        Cuando tienes un límite al infinito con una fracción de polinomios, solo te importan los términos con el <strong>exponente más grande</strong> (los "jefes" de la ecuación). Los demás números se vuelven insignificantes ante el infinito.
+      </div>
+
+      <h3>Ejemplos Resueltos</h3>
+
+      <div class="example-box">
+        <div class="label">Ejemplo 1: Los jefes son iguales</div>
+        <p><strong>Problema:</strong> Calcular \( \lim_{x \to \infty} \frac{3x^2 + 5x - 7}{2x^2 - x} \)</p>
+        <p><strong>Paso 1:</strong> Identificamos a los "jefes" (los términos con el exponente mayor). Arriba es \( 3x^2 \) y abajo es \( 2x^2 \).</p>
+        <p><strong>Paso 2:</strong> Ignoramos a los demás, porque el infinito de \( x^2 \) aplasta a todos los demás números pequeños:</p>
+        $$ \lim_{x \to \infty} \frac{3x^2}{2x^2} $$
+        <p><strong>Paso 3:</strong> Cancelamos \( x^2 \) arriba y abajo:</p>
+        $$ = \frac{3}{2} $$
+        <p><strong>Resultado:</strong> La gráfica se estabiliza en la altura 1.5.</p>
+      </div>
+
+      <div class="example-box">
+        <div class="label">Ejemplo 2: El jefe de abajo es mayor</div>
+        <p><strong>Problema:</strong> Calcular \( \lim_{x \to \infty} \frac{4x}{x^3 + 1} \)</p>
+        <p>Aquí el jefe de abajo (\( x^3 \)) es mucho más poderoso que el jefe de arriba (\( 4x \)). Como el denominador crece infinitamente más rápido que el numerador, toda la fracción se desploma hacia cero (aplicando la regla de la pizza):</p>
+        $$ \lim_{x \to \infty} \frac{4x}{x^3} = \lim_{x \to \infty} \frac{4}{x^2} = 0 $$
+      </div>
+
+      <div class="example-box">
+        <div class="label">Ejemplo 3: Esquivando la Indeterminación ∞ / ∞ (El método formal)</div>
+        <p><strong>Problema:</strong> Calcular \( \lim_{x \to \infty} \frac{5x^2 + 2x}{3x^2 - 7} \)</p>
+        
+        <p><strong>Paso 1 (El choque de titanes):</strong> Si sustituimos el infinito directamente, nos queda un infinito gigante arriba y otro infinito gigante abajo. ¡El sistema colapsa porque no sabe qué infinito gana!</p>
+        $$ \frac{\infty}{\infty} \quad \text{(¡Crash! Indeterminación)} $$
+        
+        <p><strong>Paso 2 (El "Hack" Algebraico):</strong> La regla matemática oficial para vencer esto es dividir absolutamente <strong>todos los términos</strong> de la fracción entre la \( x \) que tenga el exponente más grande. En este problema, la mayor es \( x^2 \):</p>
+        $$ \lim_{x \to \infty} \frac{\frac{5x^2}{x^2} + \frac{2x}{x^2}}{\frac{3x^2}{x^2} - \frac{7}{x^2}} $$
+        
+        <p><strong>Paso 3 (Simplificar las letras):</strong> Cancelamos las \( x \) donde sea posible aplicando leyes de los exponentes:</p>
+        $$ \lim_{x \to \infty} \frac{5 + \frac{2}{x}}{3 - \frac{7}{x^2}} $$
+        
+        <p><strong>Paso 4 (Aplicar la Regla de la Pizza):</strong> Ahora volvemos a aplicar el límite hacia el infinito. Cualquier número dividido entre infinito (como repartir 2 o 7 pizzas entre infinitas personas) se vuelve directamente cero y desaparece:</p>
+        $$ = \frac{5 + 0}{3 - 0} = \frac{5}{3} $$
+        
+        <p><strong>Resultado Final:</strong> El límite es \( \frac{5}{3} \). Al usar álgebra, esquivamos la indeterminación y demostramos matemáticamente por qué el truco de "solo fijarse en los jefes" funciona a la perfección en la vida real.</p>
+      </div>
+
+      <div id="generador-container" data-tema="limites"></div>
+
+      <div class="gen-box">
+        <h2>Quiz — Pon a prueba lo que aprendiste</h2>
+        <p>Responde 3 preguntas para verificar tu comprensión del tema.</p>
+        <div id="quiz" data-topic="limites"></div>
+      </div>
+
+      <div class="nav-btns">
+        <a href="exponenciales.html" class="btn outline">❮ Anterior: Exponenciales </a>
+        <a href="derivadas.html" class="btn">Siguiente: Derivadas ❯</a>
+      </div>
+    </main>
+
+  </div>
+
+  <script src="../components.js"></script>
+  <script src="../ejercicios.js"></script>
+  <script src="../quiz.js"></script>
+  <script src="../app.js"></script>
+  <script>
+    // Inicialización de los componentes modulares
+    if(typeof loadComponents === "function") loadComponents("limites");
+    if(typeof initQuiz === "function") initQuiz("limites");
+  </script>
+  
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</body>
+</html>
