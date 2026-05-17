@@ -38,25 +38,93 @@
         </ul>
       </div>
 
+    <h2 id="indefinidas">1. Integrales Indefinidas (La Antiderivada)</h2>
       <p>
-        Si la <strong>derivada</strong> es la herramienta para medir el cambio instantáneo, la <strong>integral</strong> es la herramienta para medir la acumulación. Es, en esencia, la operación inversa a la derivación.
+        Si la derivada nos dice a qué velocidad está cambiando algo en un instante preciso, la integral indefinida es el proceso de retroceder el tiempo para descubrir de dónde vino ese cambio. Por eso, en los libros de texto a menudo se le llama la <strong>"antiderivada"</strong>.
       </p>
 
-      <h2 id="indefinidas">1. Integrales Indefinidas</h2>
+      <h3>El Misterio de la constante "+ C"</h3>
       <p>
-        Una integral indefinida es el proceso de encontrar la función original a partir de su derivada. Se le llama "antiderivada". 
+        Cuando derivamos una función, cualquier número constante que esté sumando o restando (como un 5, un -10 o π) se vuelve cero y desaparece por completo de la ecuación. Mira lo que pasa con estas tres funciones distintas:
       </p>
+      <ul>
+        <li>Si \( f(x) = x^2 + 5 \), su derivada es \( f'(x) = 2x \)</li>
+        <li>Si \( f(x) = x^2 - 10 \), su derivada es \( f'(x) = 2x \)</li>
+        <li>Si \( f(x) = x^2 \), su derivada sigue siendo \( f'(x) = 2x \)</li>
+      </ul>
+      <p>
+        Piensa en la derivación como un proceso que destruye las constantes. Es como cuando compilas tu código fuente y el compilador elimina todos los comentarios. Si luego intentas hacer ingeniería inversa (integrar) para recuperar el código original a partir del ejecutable, la estructura lógica ahí estará, pero esos comentarios específicos ya son imposibles de adivinar.
+      </p>
+      <p>
+        Esa <strong>\( + C \)</strong> (Constante de Integración) representa ese "dato fantasma" que se perdió en el proceso. Siempre la escribimos al final de nuestra respuesta para reconocer que pudo haber existido una constante ahí.
+      </p>
+
       <div class="example-box">
-        <div class="label">La constante mágica C</div>
+        <div class="label">Notación Oficial</div>
         $$ \int f(x) \, dx = F(x) + C $$
-        <p>Añadimos siempre la <strong>+ C</strong> porque al derivar una constante, esta se vuelve cero. Al integrar, no sabemos qué número había ahí originalmente.</p>
+        <p>Donde el símbolo \( \int \) indica la instrucción de integrar, \( f(x) \) es la función que vamos a evaluar, \( dx \) nos indica sobre qué variable estamos trabajando (nuestra guía), y \( F(x) \) es la función original recuperada.</p>
       </div>
 
-      <h3>Ejemplos Resueltos</h3>
+      <h3>Las Dos Reglas de Oro (Linealidad)</h3>
+      <p>Antes de memorizar fórmulas, necesitas saber que la integral es muy amigable con las operaciones básicas. Tiene dos reglas fundamentales que te permiten desarmar problemas complejos en pedazos fáciles:</p>
+      <div class="note-box">
+        <p><strong>1. Separar las sumas y restas:</strong> Si tienes una suma larga de términos, puedes separarlos y darle una integral a cada uno.</p>
+        $$ \int [f(x) + g(x)] \, dx = \int f(x) \, dx + \int g(x) \, dx $$
+        <p><strong>2. Sacar las constantes:</strong> Los números que están multiplicando a tus variables no se integran, simplemente los sacas de la integral para que no estorben, y los multiplicas al final.</p>
+        $$ \int k \cdot f(x) \, dx = k \int f(x) \, dx $$
+      </div>
+
+      <h3>El Diccionario Básico de Integración</h3>
+      <p>Al igual que con las derivadas, no calculamos el límite desde cero cada vez. Usamos plantillas establecidas para las funciones más comunes:</p>
+
       <div class="example-box">
-        <div class="label">Ejemplo: Potencia básica</div>
-        <p>Para integrar \( x^n \), sumamos 1 al exponente y dividimos por ese mismo resultado:</p>
-        $$ \int x^2 \, dx = \frac{x^{2+1}}{2+1} + C = \frac{x^3}{3} + C $$
+        <div class="label">Reglas Clave</div>
+        <p><strong>1. Regla de la Constante:</strong> (Un número solo recupera su variable)</p>
+        $$ \int k \, dx = kx + C $$
+        <p><strong>2. Regla de la Potencia:</strong> (Le sumas 1 al exponente y divides entre ese nuevo número)</p>
+        $$ \int x^n \, dx = \frac{x^{n+1}}{n+1} + C \quad \text{(válido para cualquier número, excepto } n = -1 \text{)} $$
+        <p><strong>3. Regla del Inverso:</strong> (El caso especial cuando) $$n = -1 => 1/x$$</p>
+        $$ \int \frac{1}{x} \, dx = \ln|x| + C $$
+        <p><strong>4. Regla del Exponencial:</strong> (La función inmune a todo)</p>
+        $$ \int e^x \, dx = e^x + C $$
+        <p><strong>5. Trigonométricas Básicas:</strong></p>
+        $$ \int \cos(x) \, dx = \sin(x) + C $$
+        $$ \int \sin(x) \, dx = -\cos(x) + C $$
+      </div>
+
+      <h3>Ejemplos Resueltos Paso a Paso</h3>
+
+      <div class="example-box">
+        <div class="label">Ejemplo 1: Un polinomio simple usando Linealidad</div>
+        <p><strong>Problema:</strong> Resolver \( \int (3x^2 - 5x + 4) \, dx \)</p>
+        <p><strong>Paso 1:</strong> Separar la integral y sacar las constantes de cada término:</p>
+        $$ 3 \int x^2 \, dx - 5 \int x \, dx + \int 4 \, dx $$
+        <p><strong>Paso 2:</strong> Aplicar la regla de la potencia a las \( x \) y la regla de la constante al \( 4 \):</p>
+        $$ 3 \left( \frac{x^3}{3} \right) - 5 \left( \frac{x^2}{2} \right) + 4x + C $$
+        <p><strong>Paso 3:</strong> Simplificar las fracciones (el 3 multiplicando se cancela con el 3 dividiendo):</p>
+        $$ x^3 - \frac{5}{2}x^2 + 4x + C $$
+      </div>
+
+      <div class="example-box">
+        <div class="label">Ejemplo 2: Potencias fraccionarias (Raíces)</div>
+        <p><strong>Problema:</strong> Resolver \( \int \sqrt{x} \, dx \)</p>
+        <p><strong>Paso 1:</strong> Las raíces no tienen fórmula propia, así que reescribimos la raíz cuadrada como un exponente fraccionario para poder usar la Regla de la Potencia:</p>
+        $$ \int x^{1/2} \, dx $$
+        <p><strong>Paso 2:</strong> Sumar 1 al exponente (\( \frac{1}{2} + 1 = \frac{3}{2} \)) y dividir entre ese mismo valor:</p>
+        $$ \frac{x^{3/2}}{3/2} + C $$
+        <p><strong>Paso 3:</strong> Aplicar la regla de "la tortilla" (multiplicar por el recíproco) para arreglar la fracción doble:</p>
+        $$ \frac{2}{3} x^{3/2} + C = \frac{2}{3} \sqrt{x^3} + C $$
+      </div>
+
+      <div class="example-box">
+        <div class="label">Ejemplo 3: Mezcla de funciones VIP</div>
+        <p><strong>Problema:</strong> Resolver \( \int (4e^x + 2\sin(x) - \frac{3}{x}) \, dx \)</p>
+        <p><strong>Paso 1:</strong> Separamos y sacamos constantes rápidamente en nuestra mente. Nos queda:</p>
+        $$ 4 \int e^x \, dx + 2 \int \sin(x) \, dx - 3 \int \frac{1}{x} \, dx $$
+        <p><strong>Paso 2:</strong> Buscamos cada una en el diccionario y reemplazamos:</p>
+        $$ 4(e^x) + 2(-\cos(x)) - 3(\ln|x|) + C $$
+        <p><strong>Paso 3:</strong> Acomodamos los signos finales:</p>
+        $$ 4e^x - 2\cos(x) - 3\ln|x| + C $$
       </div>
 
       <h2 id="concepto">La Calculadora de Áreas</h2>
@@ -126,29 +194,72 @@
         <p>3. <strong>Suma de intervalos:</strong> Puedes dividir la integral en partes. \( \int_{a}^{c} = \int_{a}^{b} + \int_{b}^{c} \).</p>
       </div>
 
-      <h2 id="tecnicas">3. Técnicas de Integración</h2>
+      <h2 id="tecnicas">3. Técnicas de Integración (Los Trucos Avanzados)</h2>
       <p>
-        A veces las funciones son muy complejas para la tabla básica. Aquí usamos "trucos" para simplificarlas.
+        El "Diccionario Básico" está genial, pero ¿qué pasa cuando te topas con integrales donde las funciones se están multiplicando, dividiendo o están metidas unas dentro de otras? Para esos casos, el diccionario no sirve directamente. Necesitamos aplicar "técnicas" o trucos algebraicos para desarmar el problema hasta que se parezca a algo que sí esté en nuestra tabla básica.
       </p>
 
-      <h3>A. Sustitución U (Regla de la cadena al revés)</h3>
-      <p>Se usa cuando una parte de la integral es la derivada de otra parte.</p>
-      <div class="example-box">
-        <div class="label">Ejemplo de Sustitución</div>
-        <p>Resolver \( \int 2x e^{x^2} \, dx \):</p>
-        <ul>
-          <li>Elegimos \( u = x^2 \)</li>
-          <li>Su derivada es \( du = 2x \, dx \)</li>
-        </ul>
-        $$ \int e^u \, du = e^u + C = e^{x^2} + C $$
+      <h3 id="sustitucion">A. Integración por Sustitución (Cambio de Variable)</h3>
+      <p>
+        Esta técnica es esencialmente la <strong>Regla de la Cadena pero al revés</strong>. Se utiliza cuando notas que dentro de tu integral tienes una función "fea" o complicada, y justo al lado, multiplicando, está su derivada (o casi su derivada). El truco es esconder esa función fea detrás de una sola letra (usualmente la \( u \)).
+      </p>
+
+      <div class="note-box">
+        <strong>Los 4 pasos de la Sustitución:</strong>
+        <ol>
+          <li>Elige a tu víctima: Llama \( u \) a la parte más "escondida" o complicada de la función.</li>
+          <li>Deriva esa \( u \) para encontrar tu nuevo diferencial \( du \).</li>
+          <li>Reescribe toda tu integral usando solo \( u \) y \( du \). ¡El problema original debería desaparecer!</li>
+          <li>Resuelve la integral fácil y, al final, devuelve a la \( u \) su valor original en \( x \).</li>
+        </ol>
       </div>
 
-      <h3>B. Integración por Partes</h3>
-      <p>Se usa cuando tenemos un producto de dos funciones distintas (ej. una potencia por un logaritmo).</p>
       <div class="example-box">
-        <div class="label">La fórmula de "La Vaca"</div>
-        $$ \int u \, dv = uv - \int v \, du $$
-        <p><small>Truco mnemotécnico: "Un Día Vi Una Vaca Vestida De Uniforme"</small></p>
+        <div class="label">Ejemplo de Sustitución</div>
+        <p><strong>Problema:</strong> Resolver \( \int 2x e^{x^2} \, dx \)</p>
+        <p><strong>Paso 1 y 2 (Elige \( u \) y deriva):</strong> Vemos que el exponente \( x^2 \) es complicado. Si lo derivamos, nos da \( 2x \), ¡que está justo al lado! Así que elegimos:</p>
+        $$ u = x^2 $$
+        $$ du = 2x \, dx $$
+        <p><strong>Paso 3 (Sustituir):</strong> Cambiamos el problema al mundo de la \( u \). Todo el "\( 2x \, dx \)" se convierte simplemente en \( du \), y el "\( x^2 \)" se vuelve \( u \):</p>
+        $$ \int e^u \, du $$
+        <p><strong>Paso 4 (Resolver y regresar):</strong> Esa integral es la más fácil de la tabla. La resolvemos y devolvemos la \( x \):</p>
+        $$ = e^u + C = e^{x^2} + C $$
+      </div>
+
+      <h3 id="por-partes">B. Integración por Partes</h3>
+      <p>
+        Esta técnica salva vidas cuando tienes <strong>dos funciones de familias completamente distintas que se están multiplicando</strong> (por ejemplo, álgebra multiplicando a trigonometría: \( x \cdot \sin(x) \)). Es la versión inversa de la regla del producto de las derivadas.
+      </p>
+
+      <div class="example-box">
+        <div class="label">La Fórmula de "La Vaca"</div>
+        $$ \int u \, dv = u \cdot v - \int v \, du $$
+        <p>Para no olvidar esta fórmula jamás en un examen, los estudiantes usan este famoso truco mnemotécnico leyendo las iniciales de la ecuación:</p>
+        <p><em>"<strong>U</strong>n <strong>D</strong>ía <strong>V</strong>i = <strong>U</strong>na <strong>V</strong>aca - <strong>V</strong>estida <strong>D</strong>e <strong>U</strong>niforme"</em></p>
+      </div>
+
+      <div class="note-box">
+        💡 <strong>El truco ILATE (Para saber a quién elegir como "u")</strong><br>
+        En esta técnica tienes que elegir quién será \( u \) y quién será \( dv \). Para elegir a \( u \), usa la palabra <strong>ILATE</strong> y escoge la primera letra que aparezca en tu problema:
+        <ul>
+          <li><strong>I</strong>nversas trigonométricas (ej. \( \arcsin(x) \))</li>
+          <li><strong>L</strong>ogarítmicas (ej. \( \ln(x) \))</li>
+          <li><strong>A</strong>lgebraicas (ej. \( x, x^2, 3x \))</li>
+          <li><strong>T</strong>rigonométricas (ej. \( \sin(x), \cos(x) \))</li>
+          <li><strong>E</strong>xponenciales (ej. \( e^x \))</li>
+        </ul>
+      </div>
+
+      <div class="example-box">
+        <div class="label">Ejemplo por Partes</div>
+        <p><strong>Problema:</strong> Resolver \( \int x e^x \, dx \)</p>
+        <p><strong>Paso 1 (Elegir \( u \) y \( dv \) usando ILATE):</strong> Tenemos \( x \) (Algebraica) y \( e^x \) (Exponencial). La "A" va antes que la "E" en ILATE, así que \( u \) será la \( x \).</p>
+        $$ u = x \quad \Rightarrow \quad \text{derivamos:} \quad du = 1 \, dx $$
+        $$ dv = e^x \, dx \quad \Rightarrow \quad \text{integramos:} \quad v = e^x $$
+        <p><strong>Paso 2 (Aplicar la Vaca):</strong> Sustituimos nuestras cuatro piezas en la fórmula \( u \cdot v - \int v \, du \):</p>
+        $$ = (x)(e^x) - \int e^x \, dx $$
+        <p><strong>Paso 3 (Resolver la nueva integral):</strong> Ahora tenemos una integral mucho más sencilla al final. La resolvemos:</p>
+        $$ = x e^x - e^x + C $$
       </div>
 
       <div id="generador-container" data-tema="integrales"></div>
