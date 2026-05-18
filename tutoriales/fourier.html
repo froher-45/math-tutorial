@@ -3,12 +3,17 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Fourier — MathGen</title>
+  <title>Análisis de Fourier — MathGen</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Figtree:wght@300;400;500;600&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
   <link rel="stylesheet" href="../tutorial.css">
+  <style>
+    .toc-list { list-style: none; padding-left: 0; margin-top: 10px; }
+    .toc-list li { margin-bottom: 6px; }
+    .toc-list a { color: var(--accent2); text-decoration: none; font-size: 14px; transition: opacity 0.2s; }
+    .toc-list a:hover { opacity: 0.7; text-decoration: underline; }
+  </style>
 </head>
 <body>
 
@@ -22,131 +27,239 @@
     <aside id="menu-lateral" class="sidebar"></aside>
 
     <main class="content">
-      <h1>Series de Fourier</h1>
+      <h1>Análisis de Fourier</h1>
+      
+      <div class="note-box" style="margin-bottom: 2rem;">
+        <strong style="color: var(--accent); text-transform: uppercase; font-size: 11px; letter-spacing: 1px;">Contenido de esta lección</strong>
+        <ul class="toc-list">
+          <li><a href="#concepto">1. El Concepto (El Ecualizador Matemático)</a></li>
+          <li><a href="#series">2. Series de Fourier y Coeficientes</a></li>
+          <li><a href="#simetria">3. Atajos de Simetría (Pares e Impares)</a></li>
+          <li><a href="#onda-cuadrada">4. Construyendo la Onda Cuadrada</a></li>
+          <li><a href="#parseval">5. Identidad de Parseval</a></li>
+          <li><a href="#transformada">6. Transformada de Fourier</a></li>
+          <li><a href="#convolucion">7.Teorema de Convolución</a></li>
+        </ul>
+      </div>
+
       <p>
-        Una <strong>serie de Fourier</strong> descompone una función periódica en una suma
-        infinita de senos y cosenos. Es una herramienta esencial para analizar señales,
-        resolver ecuaciones diferenciales con condiciones periódicas y procesar imágenes.
+        Imagina que te dan un vaso con un licuado mixto y te piden que averigües exactamente cuántos gramos de fresa, plátano y manzana tiene. Una vez mezclado, parece imposible separarlo, ¿verdad? En matemáticas, el <strong>Análisis de Fourier</strong> es la receta que toma una señal compleja, la pasa por un filtro, y te devuelve los ingredientes exactos (frecuencias puras) que la componen.
       </p>
+      
+      
+      <div class="divider"></div>
 
-      <h2>Fórmulas de los coeficientes</h2>
-      <p>Para una función <em>f(x)</em> periódica en [−π, π]:</p>
-
-      <div class="example-box">
-        <div class="label">Coeficientes de Fourier</div>
-        <pre>a₀ = (1/π) ∫₋π^π f(x) dx
-
-aₙ = (1/π) ∫₋π^π f(x)·cos(nx) dx
-
-bₙ = (1/π) ∫₋π^π f(x)·sen(nx) dx
-
-Serie completa:
-f(x) = a₀/2 + Σₙ₌₁^∞ [ aₙ·cos(nx) + bₙ·sen(nx) ]</pre>
-      </div>
-
-      <h2>Simetría: funciones pares e impares</h2>
-
-      <div class="example-box">
-        <div class="label">Regla de simetría</div>
-        <pre>Función par  f(−x) = f(x)   →  solo coeficientes aₙ  (todos bₙ = 0)
-Función impar f(−x) = −f(x)  →  solo coeficientes bₙ  (todos aₙ = 0)
-
-Esto reduce a la mitad el trabajo de cálculo.</pre>
-      </div>
-
-      <div class="example-box">
-        <div class="label">Ejemplo — f(x) = x en [−π, π]</div>
-        <pre>f(x) = x  es impar  →  a₀ = 0, aₙ = 0 para todo n
-
-bₙ = (2/π) ∫₀^π x·sen(nx) dx
-
-    Integrando por partes:
-    bₙ = 2·(−1)^(n+1) / n
-
-Serie:  f(x) = 2[ sen(x) − sen(2x)/2 + sen(3x)/3 − sen(4x)/4 + … ]</pre>
-      </div>
-
-      <h2>Onda cuadrada</h2>
-
-      <div class="example-box">
-        <div class="label">Ejemplo — Onda cuadrada</div>
-        <pre>f(x) = +1  si  0 &lt; x &lt; π
-f(x) = −1  si −π &lt; x &lt; 0
-
-f(x) es impar  →  solo bₙ
-
-bₙ = (2/π)·[1 − cos(nπ)] / n
-   = 4/(nπ)  si n impar;   0  si n par
-
-Serie:  f(x) = (4/π)[sen(x) + sen(3x)/3 + sen(5x)/5 + …]</pre>
-      </div>
-
-      <h2>Identidad de Parseval</h2>
-
-      <div class="example-box">
-        <div class="label">Parseval y aplicación</div>
-        <pre>(1/π)∫₋π^π |f(x)|² dx  =  a₀²/2 + Σₙ₌₁^∞ (aₙ² + bₙ²)
-
-Aplicando con f(x) = x  →  bₙ = 2(−1)^(n+1)/n  →  bₙ² = 4/n²
-
-Lado izquierdo:  (1/π)·∫₋π^π x² dx  =  2π²/3
-
-Entonces:  2π²/3 = 4·Σ 1/n²   →   Σ 1/n² = π²/6  (Euler)</pre>
-      </div>
-
-      <hr style="border-color:var(--border); margin: 2.5rem 0;">
-
-      <h1>Transformada de Fourier</h1>
+      <h2 id="concepto">1. El Concepto (El Ecualizador Matemático)</h2>
       <p>
-        La <strong>Transformada de Fourier</strong> extiende las series de Fourier a funciones
-        no periódicas, convirtiendo una señal del dominio del tiempo al dominio de la frecuencia.
+        Para entender a Fourier, piensa en un acorde de guitarra. Cuando tocas tres cuerdas al mismo tiempo, tu oído escucha un solo sonido complejo. Sin embargo, ese sonido está compuesto por tres notas distintas vibrando juntas. El análisis de Fourier nos permite cambiar nuestra perspectiva entre dos mundos:
+      </p>
+      <ul>
+        <li><strong>El Dominio del Tiempo \( (t) \):</strong> Cómo se ve la señal cambiando a medida que avanza el reloj (la onda compleja).</li>
+        <li><strong>El Dominio de la Frecuencia \( (\omega) \):</strong> Un gráfico que nos dice exactamente qué "notas" están presentes y con qué volumen (amplitud).</li>
+      </ul>
+
+      <h2 id="series">2. Series de Fourier y Coeficientes</h2>
+      <p>
+        El descubrimiento principal fue que <strong>cualquier función periódica</strong> (que se repite infinitamente) se puede construir sumando únicamente ondas de seno y coseno.
       </p>
 
       <div class="example-box">
-        <div class="label">Definición</div>
-        <pre>Directa:  F(ω) = ∫₋∞^∞ f(t)·e^(−jωt) dt
-
-Inversa:  f(t) = (1/2π) ∫₋∞^∞ F(ω)·e^(jωt) dω</pre>
+        <div class="label">La Serie General</div>
+        <p>Para una función \( f(x) \) periódica en un intervalo \( [-\pi, \pi] \):</p>
+        $$f(x) = \frac{a_0}{2} + \sum_{n=1}^{\infty} \left[ a_n \cos(nx) + b_n \sin(nx) \right]$$
       </div>
 
-      <h2>Propiedades clave</h2>
+      <p>Para encontrar el "volumen" de cada nota, calculamos sus <strong>coeficientes</strong> usando estas integrales:</p>
 
       <div class="example-box">
-        <div class="label">Propiedades</div>
-        <pre>Linealidad:              F{af + bg} = a·F(ω) + b·G(ω)
+        <div class="label">Cálculo de Coeficientes</div>
+        $$a_0 = \frac{1}{\pi} \int_{-\pi}^{\pi} f(x) \, dx \quad \text{(Nivel Promedio / DC)}$$
+        $$a_n = \frac{1}{\pi} \int_{-\pi}^{\pi} f(x) \cos(nx) \, dx \quad \text{(Amplitud de los cosenos)}$$
+        $$b_n = \frac{1}{\pi} \int_{-\pi}^{\pi} f(x) \sin(nx) \, dx \quad \text{(Amplitud de los senos)}$$
+      </div>
 
-Desplazamiento temporal: F{f(t − t₀)} = e^(−jωt₀)·F(ω)
+      <h2 id="simetria">3. Atajos de Simetría (Pares e Impares)</h2>
+      <p>Calcular tres integrales es agotador. Por suerte, si observas la gráfica de tu función, puedes ahorrarte la mitad del trabajo usando simetría.</p>
 
-Derivada en tiempo:      F{f'(t)} = jω·F(ω)
+      <div class="note-box">
+        <p><strong>Funciones Pares:</strong> Reflejadas perfectamente como un espejo en el eje Y (ej. \( \cos(x) \) o \( x^2 \)).</p>
+        <p><em>Truco:</em> \( f(-x) = f(x) \). Como los cosenos son pares, la serie <strong>solo tendrá coeficientes \( a_n \)</strong>. Todos los \( b_n \) valdrán \( 0 \) automáticamente.</p>
+        <br>
+        <p><strong>Funciones Impares:</strong> Reflejadas en diagonal respecto al origen (ej. \( \sin(x) \) o \( x \)).</p>
+        <p><em>Truco:</em> \( f(-x) = -f(x) \). Como los senos son impares, la serie <strong>solo tendrá coeficientes \( b_n \)</strong>. El \( a_0 \) y los \( a_n \) valdrán \( 0 \) automáticamente.</p>
+      </div>
 
-Convolución:             F{f * g} = F(ω)·G(ω)</pre>
+      <h2 id="onda-cuadrada">4. Construyendo la Onda Cuadrada</h2>
+      <p>Vamos a construir una señal digital (Onda Cuadrada) alternando entre 1 y -1. Esto demostrará cómo sumar curvas suaves crea esquinas perfectas.</p>
+
+      <div class="example-box">
+        <div class="label">Paso 1: Definir la función</div>
+        $$f(x) = \begin{cases} -1 & \text{si } -\pi < x < 0 \\ 1 & \text{si } 0 < x < \pi \end{cases}$$
+        <p>Al graficar esto, notamos que es una <strong>función impar</strong>. ¡Atajo desbloqueado! Sabemos inmediatamente que \( a_0 = 0 \) y \( a_n = 0 \). Solo necesitamos calcular \( b_n \).</p>
       </div>
 
       <div class="example-box">
-        <div class="label">Par transformado fundamental</div>
-        <pre>f(t) = e^(−a|t|),   a > 0
-
-Separamos en dos integrales:
-  ∫₋∞^0 e^(at)·e^(−jωt) dt  +  ∫₀^∞ e^(−at)·e^(−jωt) dt
-= 1/(a − jω)  +  1/(a + jω)
-= 2a / (a² + ω²)
-
-→  F(ω) = 2a / (a² + ω²)</pre>
+        <div class="label">Paso 2: Calcular el coeficiente \( b_n \)</div>
+        <p>Usamos la fórmula de \( b_n \), pero como es impar, podemos integrar solo la mitad derecha (de 0 a \(\pi\)) y multiplicar por 2:</p>
+        $$b_n = \frac{2}{\pi} \int_{0}^{\pi} (1) \sin(nx) \, dx$$
+        <p>Integramos el seno:</p>
+        $$b_n = \frac{2}{\pi} \left[ -\frac{\cos(nx)}{n} \right]_{0}^{\pi} = \frac{-2}{n\pi} \left[ \cos(n\pi) - \cos(0) \right]$$
+        <p>Sabemos que \( \cos(0) = 1 \). Además, \( \cos(n\pi) \) alterna entre \( -1 \) (si n es impar) y \( 1 \) (si n es par).</p>
+        $$b_n = \frac{2}{n\pi} [1 - \cos(n\pi)]$$
+        <p><strong>La magia sucede aquí:</strong> Si \( n \) es par, el corchete da \( 1 - 1 = 0 \). ¡Los armónicos pares no existen en la onda cuadrada! Si \( n \) es impar, el corchete da \( 1 - (-1) = 2 \).</p>
+        $$b_n = \frac{4}{n\pi} \quad \text{(solo para } n \text{ impar: 1, 3, 5...)}$$
       </div>
 
-      <!-- ══ GENERADOR ══ -->
+      <div class="example-box">
+        <div class="label">Paso 3: Armar la Serie Final</div>
+        <p>Sustituimos nuestros \( b_n \) encontrados (1, 3, 5...) en la sumatoria general:</p>
+        $$f(x) = \frac{4}{\pi} \sin(x) + \frac{4}{3\pi} \sin(3x) + \frac{4}{5\pi} \sin(5x) + ...$$
+        <p>Factorizando el \( 4/\pi \):</p>
+        $$f(x) = \frac{4}{\pi} \left[ \sin(x) + \frac{\sin(3x)}{3} + \frac{\sin(5x)}{5} + ... \right]$$
+      </div>
+      
+      
+      <h2 id="parseval">5. Identidad de Parseval (La Energía de la Señal)</h2>
+      <p>El Teorema de Parseval nos dice que la energía total de una señal en el dominio del tiempo es exactamente igual a la suma de las energías de cada uno de sus armónicos en el dominio de la frecuencia.</p>
+
+      <div class="example-box">
+        <div class="label">Identidad de Parseval</div>
+        $$\frac{1}{\pi} \int_{-\pi}^{\pi} |f(x)|^2 \, dx = \frac{a_0^2}{2} + \sum_{n=1}^{\infty} (a_n^2 + b_n^2)$$
+        <p>Es una herramienta increíblemente poderosa en telecomunicaciones para saber cuánta energía se está transmitiendo en ciertas bandas de frecuencia.</p>
+      </div>
+
+      <div class="divider"></div>
+
+      <h2 id="transformada">6. La Transformada de Fourier (Para Eventos Únicos)</h2>
+      <p>
+        Ya vimos que las Series de Fourier son geniales para analizar cosas que se repiten en ciclos. Pero, ¿qué pasa con los sonidos de la vida real? Un aplauso, el estallido de un cohete o un disparo de un videojuego ocurren <strong>una sola vez y se van para siempre</strong>. No tienen un "periodo" que se repita.
+      </p>
+      <p>
+        Aquí es donde ocurre la verdadera magia. La <strong>Transformada de Fourier</strong> toma una señal que cambia con el tiempo y, mediante un "hack" matemático (estirar el periodo hasta el infinito), la convierte en un mapa de frecuencias. Pasamos de ver "cuándo pasa algo" a ver "a qué velocidad vibra algo".
+      </p>
+
+      
+
+      <h3>¿Para qué se usa en la vida real?</h3>
+      <p>Si eres estudiante de tecnología o ingeniería, la Transformada de Fourier está detrás de casi todo lo que usas a diario:</p>
+      
+      <div class="note-box">
+        <ul>
+          <li><strong>Compresión de Audio (MP3 / Spotify):</strong> El oído humano no escucha frecuencias extremadamente altas. La Transformada analiza una canción, detecta qué frecuencias son imperceptibles para nosotros, las borra, y transforma un archivo pesado en un MP3 superligero sin que notes la diferencia.</li>
+          <li><strong>Telecomunicaciones (Wi-Fi, Bluetooth, 4G/5G):</strong> El aire está inundado de ondas de radio. La Transformada de Fourier permite que tu teléfono sintonice exactamente la frecuencia de tu Wi-Fi y descarte todas las demás señales de tus vecinos que están viajando por el mismo espacio.</li>
+          <li><strong>Procesamiento de Imágenes (Filtros y JPEG):</strong> Una imagen digital se puede ver como una onda. Las frecuencias altas representan los bordes y el ruido. Al aplicar la Transformada, podemos "apagar" las frecuencias altas para suavizar una imagen o eliminar el ruido de una fotografía borrosa.</li>
+        </ul>
+      </div>
+
+      <h3>Entendiendo la Fórmula sin pánico</h3>
+      <p>Esta es la ecuación matemática de la Transformada Directa. Vamos a desarmarla como si fuera una máquina:</p>
+
+      <div class="example-box">
+        <div class="label">La Fórmula Oficial</div>
+        $$ F(\omega) = \int_{-\infty}^{\infty} f(t) e^{-j\omega t} \, dt $$
+      </div>
+
+      <p>No te asustes por los símbolos, esto es lo que hace cada pieza:</p>
+      <ul>
+        <li>\( f(t) \): Es tu señal original en el <strong>Dominio del Tiempo</strong> (por ejemplo, la grabación de un aplauso).</li>
+        <li>\( \int_{-\infty}^{\infty} ... dt \): La integral desde el inicio de los tiempos hasta el fin del universo significa que vamos a procesar la señal <strong>completa</strong>, de principio a fin.</li>
+        <li>\( e^{-j\omega t} \): Este es el "radar" o sintonizador. La letra \( \omega \) (omega) es la frecuencia que queremos buscar. La letra \( j \) representa el mundo imaginario (los giros). Esta pieza hace que la señal gire; si la señal tiene la frecuencia \( \omega \), se produce una resonancia.</li>
+        <li>\( F(\omega) \): Es el resultado en el <strong>Dominio de la Frecuencia</strong>. Es la respuesta del radar que te dice: "Sí, en el aplauso encontramos la frecuencia \( \omega \) con tanta intensidad".</li>
+      </ul>
+<br>
+      <h3 id="convolucion">El "Código de Trampa": El Teorema de Convolución</h3>
+      <p>
+        De todas las propiedades que acabamos de ver, la <strong>Convolución</strong> es, sin duda, la herramienta más poderosa para crear software o circuitos. Representada por el asterisco \( f * g \), la convolución es la operación matemática que describe qué le pasa a una señal \( f(t) \) cuando la haces pasar por un sistema o filtro \( g(t) \) (por ejemplo, ponerle un efecto de eco a una pista de audio, o aplicar un filtro de desenfoque a una imagen).
+      </p>
+      <p>
+        El problema es que resolver una convolución en el dominio del tiempo implica calcular una integral doble espantosa y larguísima. Sin embargo, Fourier nos dio un "atajo" increíble:
+      </p>
+
+      <div class="example-box">
+        <div class="label">Teorema de Convolución</div>
+        $$ \mathcal{F}\{f(t) * g(t)\} = F(\omega) \cdot G(\omega) $$
+        <br>
+        <p><strong>¿Qué significa esto en la vida real?</strong></p>
+        <p>Significa que <strong>filtrar una señal en el tiempo es exactamente igual a multiplicar sus frecuencias</strong>.</p>
+        <p>Por eso, cuando tu computadora o tu teléfono aplican un filtro a una foto de Instagram o a un audio, no calculan la integral en el tiempo. Primero transforman todo con Fourier, luego hacen una simple multiplicación (que a un procesador le toma milisegundos) y finalmente aplican la transformada inversa. ¡Es un ahorro de procesamiento masivo!</p>
+      </div>
+
+      <h3>Ejemplo Práctico: El Pulso Rectangular (Un interruptor encendiéndose)</h3>
+      <p>El ejemplo más claro para entender esto visualmente es un pulso rectangular: un interruptor de luz que está apagado (0), se enciende al máximo (1) durante un breve instante de tiempo (desde \( -T \) hasta \( T \)), y se vuelve a apagar para siempre.</p>
+
+      <div class="example-box">
+        <div class="label">Paso 1: Plantear la integral</div>
+        <p>Nuestra función vale \( 1 \) solo entre \( -T \) y \( T \). Fuera de ahí vale \( 0 \). Por lo tanto, los límites infinitos de la integral se reducen solo al espacio donde la función existe:</p>
+        $$ F(\omega) = \int_{-T}^{T} (1) e^{-j\omega t} \, dt $$
+      </div>
+
+      <div class="example-box">
+        <div class="label">Paso 2: Resolver la integral exponencial</div>
+        <p>Integrar una exponencial es muy sencillo, solo bajamos su constante dividiendo (con respecto a \( t \)):</p>
+        $$ F(\omega) = \left[ \frac{e^{-j\omega t}}{-j\omega} \right]_{-T}^{T} $$
+        <p>Evaluamos el límite superior menos el inferior:</p>
+        $$ F(\omega) = \frac{e^{-j\omega T}}{-j\omega} - \frac{e^{-j\omega (-T)}}{-j\omega} $$
+        <p>Acomodando los signos y los denominadores nos queda:</p>
+        $$ F(\omega) = \frac{e^{j\omega T} - e^{-j\omega T}}{j\omega} $$
+      </div>
+
+      <div class="example-box">
+        <div class="label">Paso 3: El truco final (La función Sinc)</div>
+        <p>Existe una famosa identidad matemática (la fórmula de Euler) que nos dice que restar esas dos exponenciales complejas equivale a un Seno multiplicando por 2:</p>
+        $$ e^{j\omega T} - e^{-j\omega T} = 2j \sin(\omega T) $$
+        <p>Sustituimos esto en nuestra fracción:</p>
+        $$ F(\omega) = \frac{2j \sin(\omega T)}{j\omega} $$
+        <p>Cancelamos la \( j \) de arriba con la de abajo:</p>
+        $$ F(\omega) = \frac{2 \sin(\omega T)}{\omega} $$
+        <p><strong>Resultado Conceptual:</strong> A esta forma \( \frac{\sin(x)}{x} \) se le conoce en ingeniería como la función <strong>Sinc</strong>. Descubrimos algo asombroso: para crear una señal con esquinas perfectamente rectas y cuadradas en el tiempo (como un pulso digital), en el mundo de las frecuencias necesitas una onda que se va atenuando lentamente como el oleaje del agua.</p>
+      </div>
+       <h3>Ejemplo Práctico 2: La señal que se desvanece (Exponencial con valor absoluto)</h3>
+      <div class="example-box">
+        <div class="label"></div>
+        <p>Encontrar la Transformada de Fourier de la función \( f(t) = e^{-a|t|} \) (asumiendo que \( a > 0 \)).</p>
+        
+        <p><strong>Paso 1: Entender el valor absoluto.</strong><br>
+        El valor absoluto \( |t| \) significa que la función se comporta diferente antes y después del cero. Tenemos que partir nuestra integral infinita en dos pedazos:</p>
+        <ul>
+          <li><strong>Para el tiempo negativo (\( t < 0 \)):</strong> El valor absoluto le cambia el signo a la \( t \), así que usamos \( e^{at} \).</li>
+          <li><strong>Para el tiempo positivo (\( t \ge 0 \)):</strong> El valor absoluto deja la \( t \) igual, así que usamos \( e^{-at} \).</li>
+        </ul>
+        
+        <p><strong>Paso 2: Partir la integral oficial en dos.</strong></p>
+        $$ F(\omega) = \int_{-\infty}^{0} e^{at} e^{-j\omega t} \, dt + \int_{0}^{\infty} e^{-at} e^{-j\omega t} \, dt $$
+        
+        <p><strong>Paso 3: Agrupar los exponentes.</strong><br>
+        Por leyes de los exponentes (cuando las bases se multiplican, los exponentes se suman), factorizamos la \( t \) en cada integral:</p>
+        $$ F(\omega) = \int_{-\infty}^{0} e^{(a - j\omega)t} \, dt + \int_{0}^{\infty} e^{-(a + j\omega)t} \, dt $$
+        
+        <p><strong>Paso 4: Resolver las integrales.</strong><br>
+        Integramos bajando las constantes que acompañan a la \( t \):</p>
+        $$ F(\omega) = \left[ \frac{e^{(a - j\omega)t}}{a - j\omega} \right]_{-\infty}^{0} + \left[ \frac{e^{-(a + j\omega)t}}{-(a + j\omega)} \right]_{0}^{\infty} $$
+        
+        <p><strong>Paso 5: Evaluar los límites (El infinito).</strong><br>
+        Recordemos que \( e^{-\infty} = 0 \) y que \( e^0 = 1 \). Al evaluar los límites superior menos inferior en ambos corchetes, los infinitos se vuelven cero y nos queda:</p>
+        $$ F(\omega) = \left( \frac{1}{a - j\omega} - 0 \right) + \left( 0 - \frac{1}{-(a + j\omega)} \right) $$
+        <p>Los signos menos de la segunda fracción se cancelan y se vuelve positiva:</p>
+        $$ F(\omega) = \frac{1}{a - j\omega} + \frac{1}{a + j\omega} $$
+        
+        <p><strong>Paso 6: Suma de fracciones algebraicas (Resultado final).</strong><br>
+        Para sumar estas dos fracciones, usamos el truco de la "carita feliz" (multiplicar cruzado y multiplicar los denominadores). El denominador es una diferencia de cuadrados: \( (a - j\omega)(a + j\omega) = a^2 - (j\omega)^2 \). Como en números imaginarios \( j^2 = -1 \), el denominador se vuelve \( a^2 + \omega^2 \):</p>
+        $$ F(\omega) = \frac{(a + j\omega) + (a - j\omega)}{a^2 + \omega^2} $$
+        <p>Las \( j\omega \) de arriba se cancelan entre sí, quedando solo \( a + a = 2a \):</p>
+        $$ F(\omega) = \frac{2a}{a^2 + \omega^2} $$
+      </div>
+
       <div id="generador-container" data-tema="fourier_series"></div>
 
-      <!-- ══ QUIZ ══ -->
       <div class="gen-box">
         <h2>Quiz — Pon a prueba lo que aprendiste</h2>
-        <p>Responde 3 preguntas para verificar tu comprensión del tema.</p>
+        <p>Demuestra tu dominio sobre las series, la simetría y las transformadas.</p>
         <div id="quiz" data-topic="fourier"></div>
       </div>
 
-      <!-- ══ NAVEGACIÓN ══ -->
       <div class="nav-btns">
-        <a href="laplace.html" class="btn">❮ Anterior: Transformada de Laplace</a>
+        <a href="edo.html" class="btn outline">❮ Anterior: Ecuaciones Diferenciales</a>
+        <a href="laplace.html" class="btn">Siguiente: Transformada de Laplace ❯</a>
       </div>
     </main>
 
@@ -157,8 +270,9 @@ Separamos en dos integrales:
   <script src="../quiz.js"></script>
   <script src="../app.js"></script>
   <script>
-    loadComponents("fourier");
-    initQuiz("fourier");
+    if(typeof loadComponents === "function") loadComponents("fourier");
+    if(typeof initQuiz === "function") initQuiz("fourier");
   </script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </body>
 </html>
