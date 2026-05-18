@@ -8,7 +8,15 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Figtree:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../tutorial.css">
+  <style>
+    /* Estilos para el índice de contenido */
+    .toc-list { list-style: none; padding-left: 0; margin-top: 10px; }
+    .toc-list li { margin-bottom: 6px; }
+    .toc-list a { color: var(--accent2); text-decoration: none; font-size: 14px; transition: opacity 0.2s; }
+    .toc-list a:hover { opacity: 0.7; text-decoration: underline; }
+  </style>
 </head>
+<body>
 
   <div class="bg-grid"></div>
   <div class="bg-glow"></div>
@@ -21,153 +29,159 @@
 
     <main class="content">
       <h1>Exponenciales</h1>
+      
+      <div class="note-box" style="margin-bottom: 2rem;">
+        <strong style="color: var(--accent); text-transform: uppercase; font-size: 11px; letter-spacing: 1px;">Contenido de esta lección</strong>
+        <ul class="toc-list">
+          <li><a href="#forma-general">1. Forma General y el número e</a></li>
+          <li><a href="#crecimiento">2. Crecimiento y Decaimiento</a></li>
+          <li><a href="#propiedades">3. Propiedades y Cálculo</a></li>
+          <li><a href="#aplicaciones">4. Aplicaciones Reales</a></li>
+          <li><a href="#laplace">5. Base para la Transformada de Laplace</a></li>
+          <li><a href="#ejemplo">6. Ejemplo Resuelto Paso a Paso</a></li>
+        </ul>
+      </div>
+
       <p>
         Una <strong>función exponencial</strong> tiene la variable en el <em>exponente</em>.
         Modela procesos donde la tasa de cambio es proporcional al valor actual:
         crecimiento poblacional, decaimiento radiactivo, interés compuesto y más.
       </p>
 
-      <h2>Forma general</h2>
+      <div class="divider"></div>
+      <h2 id="forma-general">1. Forma general y el número e</h2>
 
       <div class="example-box">
-        <div class="label">Definición</div>
-        <pre>f(x) = a · bˣ
-
-Donde:
-  a → valor inicial (cuando x = 0)
-  b → base  (b > 0, b ≠ 1)
-  x → el exponente (variable independiente)</pre>
+        <div class="label">Definición Estándar</div>
+        $$ f(x) = a \cdot b^x $$
+        <ul>
+          <li><strong>\( a \):</strong> Valor inicial (cuando \( x = 0 \)).</li>
+          <li><strong>\( b \):</strong> Base (\( b > 0 \) y \( b \neq 1 \)).</li>
+          <li><strong>\( x \):</strong> El exponente (variable independiente).</li>
+        </ul>
       </div>
 
-      <p>La forma más usada en ciencias e ingeniería usa el número <em>e</em>:</p>
+      <p>La forma más usada en ciencias e ingeniería utiliza el número de Euler (\( e \)) como base:</p>
 
       <div class="example-box">
-        <div class="label">Forma con e</div>
-        <pre>f(x) = A · e^(kx)
-
-Donde:
-  e ≈ 2.71828…  (número de Euler, base natural)
-  k             → tasa de crecimiento o decaimiento
-  A             → valor inicial (condición inicial)
-
-Propiedad especial: es la única función tal que f'(x) = f(x)</pre>
+        <div class="label">Forma Natural (con e)</div>
+        $$ f(x) = A \cdot e^{kx} $$
+        <ul>
+          <li><strong>\( e \):</strong> Base natural (\( \approx 2.71828\dots \)).</li>
+          <li><strong>\( k \):</strong> Tasa de crecimiento (si es positivo) o decaimiento (si es negativo).</li>
+          <li><strong>\( A \):</strong> Valor inicial (condición en \( t=0 \)).</li>
+        </ul>
+        <p><em>Propiedad especial:</em> La función \( e^x \) es la única en todo el cálculo cuya derivada es exactamente ella misma: \( f'(x) = f(x) \).</p>
       </div>
 
-      <h2>Crecimiento y decaimiento</h2>
+      <div class="divider"></div>
+      <h2 id="crecimiento">2. Crecimiento y decaimiento</h2>
 
       <div class="example-box">
-        <div class="label">Crecimiento (k &gt; 0)</div>
-        <pre>N(t) = N₀ · e^(kt)     con k > 0
-
-La función crece sin límite conforme t → +∞.
-
-Ejemplo: bacteria con k = 0.5 y N₀ = 200 en t = 4:
-  N(4) = 200 · e^(0.5·4) = 200 · e² ≈ 1,478 unidades</pre>
+        <div class="label">Crecimiento (\( k > 0 \))</div>
+        $$ N(t) = N_0 \cdot e^{kt} $$
+        <p>La función crece sin límite conforme \( t \to +\infty \).</p>
+        <p><strong>Ejemplo:</strong> Población de bacterias con \( k = 0.5 \) y \( N_0 = 200 \) en \( t = 4 \):</p>
+        $$ N(4) = 200 \cdot e^{0.5 \cdot 4} = 200 \cdot e^2 \approx 1478 \text{ unidades} $$
       </div>
 
       <div class="example-box">
-        <div class="label">Decaimiento (k &lt; 0)</div>
-        <pre>N(t) = N₀ · e^(−kt)    con k > 0
-
-La función decrece hacia cero conforme t → +∞.
-
-Vida media → tiempo para que la cantidad caiga al 50%:
-  t½ = ln(2) / k ≈ 0.693 / k
-
-Ejemplo: k = 0.2  →  t½ = 0.693 / 0.2 ≈ 3.47 unidades de tiempo</pre>
+        <div class="label">Decaimiento (\( k < 0 \))</div>
+        $$ N(t) = N_0 \cdot e^{-kt} \quad \text{(asumiendo } k > 0 \text{ en la fórmula)}$$
+        <p>La función decrece hacia cero conforme \( t \to +\infty \).</p>
+        <p><strong>Vida media (\( t_{1/2} \)):</strong> Es el tiempo necesario para que la cantidad caiga exactamente al 50%.</p>
+        $$ t_{1/2} = \frac{\ln(2)}{k} \approx \frac{0.693}{k} $$
+        <p><strong>Ejemplo:</strong> Si \( k = 0.2 \), la vida media es:</p>
+        $$ t_{1/2} = \frac{0.693}{0.2} \approx 3.47 \text{ unidades de tiempo} $$
       </div>
 
-      <h2>Propiedades de e^(ax)</h2>
+      <div class="divider"></div>
+      <h2 id="propiedades">3. Propiedades de \( e^{ax} \)</h2>
 
       <div class="example-box">
-        <div class="label">Cálculo</div>
-        <pre>Derivada:   d/dx (e^(ax)) = a · e^(ax)
-Integral:   ∫ e^(ax) dx  = (1/a) · e^(ax) + C
-
-Propiedades algebraicas:
-  e^(a+b) = eᵃ · eᵇ
-  e^(a−b) = eᵃ / eᵇ
-  (eᵃ)ᵇ  = e^(ab)
-  e⁰ = 1  |  e¹ = e</pre>
+        <div class="label">Cálculo Diferencial e Integral</div>
+        <p><strong>Derivada (Regla de la Cadena):</strong></p>
+        $$ \frac{d}{dx} \left( e^{ax} \right) = a \cdot e^{ax} $$
+        <p><strong>Integral:</strong></p>
+        $$ \int e^{ax} \, dx = \frac{1}{a} e^{ax} + C $$
+        <p><strong>Propiedades Algebraicas:</strong></p>
+        $$ e^{a+b} = e^a \cdot e^b $$
+        $$ e^{a-b} = \frac{e^a}{e^b} $$
+        $$ (e^a)^b = e^{ab} $$
+        $$ e^0 = 1 \quad | \quad e^1 = e $$
       </div>
 
       <div class="example-box">
         <div class="label">Comportamiento en los límites</div>
-        <pre>lim  eˣ = +∞      (crece sin límite)
-x→+∞
-
-lim  eˣ = 0       (asíntota horizontal en y = 0)
-x→−∞
-
-eˣ domina a xⁿ para todo n finito
-(la exponencial supera a cualquier polinomio)</pre>
+        <p>Crece sin límite hacia la derecha:</p>
+        $$ \lim_{x \to +\infty} e^x = +\infty $$
+        <p>Tiene una asíntota horizontal en \( y = 0 \) hacia la izquierda:</p>
+        $$ \lim_{x \to -\infty} e^x = 0 $$
+        <p><em>Nota clave:</em> La función exponencial \( e^x \) domina (crece más rápido) que cualquier polinomio \( x^n \) conforme \( x \) tiende al infinito.</p>
       </div>
 
-      <h2>Aplicaciones reales</h2>
+      <div class="divider"></div>
+      <h2 id="aplicaciones">4. Aplicaciones reales</h2>
 
       <div class="example-box">
-        <div class="label">Ejemplos</div>
-        <pre>Decaimiento radiactivo:      N(t) = N₀ · e^(−λt)
-  Carbono-14: t½ ≈ 5,730 años (datación arqueológica)
-
-Crecimiento poblacional:     P(t) = P₀ · e^(rt)
-  r = 0.02 (2% anual): 1 M → 1.22 M en 10 años
-
-Interés compuesto continuo:  A(t) = P · e^(rt)
-  $1,000 al 5% por 10 años → $1,000 · e^0.5 ≈ $1,648.7
-
-Descarga de capacitor:       V(t) = V₀ · e^(−t/RC)
-  En t = RC el voltaje es el 36.8% del inicial (= 1/e)
-
-Enfriamiento de Newton:      T(t) = T_amb + (T₀ − T_amb) · e^(−kt)
-  Un café a 90 °C en ambiente de 20 °C sigue esta ley.</pre>
+        <div class="label">Ejemplos en Ingeniería y Ciencias</div>
+        <ul>
+          <li><strong>Decaimiento radiactivo:</strong> \( N(t) = N_0 \cdot e^{-\lambda t} \) <br> <em>Ej: Carbono-14 con \( t_{1/2} \approx 5730 \) años (datación arqueológica).</em></li>
+         
+          <br> <li><strong>Crecimiento poblacional:</strong> \( P(t) = P_0 \cdot e^{rt} \) <br> <em>Ej: Con \( r = 0.02 \) (2% anual), 1 Millón pasa a 1.22 Millones en 10 años.</em></li>
+           <br><li><strong>Interés compuesto continuo:</strong> \( A(t) = P \cdot e^{rt} \) <br> <em>Ej: $1,000 al 5% por 10 años \( \rightarrow \$1,000 \cdot e^{0.5} \approx \$1,648.7 \).</em></li>
+           <br><li><strong>Descarga de un capacitor:</strong> \( V(t) = V_0 \cdot e^{-t/RC} \) <br> <em>Ej: En \( t = RC \) (constante de tiempo), el voltaje cae al 36.8% del inicial (\( 1/e \)).</em></li>
+          < <br>li><strong>Enfriamiento de Newton:</strong> \( T(t) = T_{\text{amb}} + (T_0 - T_{\text{amb}}) \cdot e^{-kt} \) <br> <em>Ej: Modela cómo un café a 90 °C se enfría en un ambiente de 20 °C.</em></li>
+        </ul>
       </div>
 
-      <h2>Base para la Transformada de Laplace</h2>
+      <div class="divider"></div>
+      <h2 id="laplace">5. Base para la Transformada de Laplace</h2>
       <p>
-        La Transformada de Laplace usa una exponencial como núcleo para convertir
-        funciones del dominio del tiempo en funciones algebraicas más simples.
+        La Transformada de Laplace utiliza una función exponencial de decaimiento complejo (\( e^{-st} \)) como núcleo o "filtro" para convertir ecuaciones diferenciales muy complejas del dominio del tiempo en simples ecuaciones algebraicas en el dominio de las frecuencias (\( s \)).
       </p>
 
-      <h2>Ejemplo paso a paso</h2>
-      <p>Calcula la vida media de una sustancia con k = 0.3:</p>
+      <div class="divider"></div>
+      <h2 id="ejemplo">6. Ejemplo paso a paso</h2>
+      <p>Calcula la vida media de una sustancia química si sabemos que su constante de decaimiento es \( k = 0.3 \):</p>
 
       <div class="example-box">
         <div class="label">Paso a paso</div>
-        <pre>N(t) = N₀ · e^(−0.3t)
-
-Paso 1: Plantear la condición de vida media
-N(t½) = N₀ / 2
-
-Paso 2: Sustituir
-N₀ / 2 = N₀ · e^(−0.3 · t½)
-
-Paso 3: Cancelar N₀ y tomar logaritmo
-1/2 = e^(−0.3 · t½)
-ln(1/2) = −0.3 · t½
-
-Paso 4: Despejar t½
-−ln(2) = −0.3 · t½
-t½ = ln(2) / 0.3 = 0.693 / 0.3 ≈ 2.31 unidades de tiempo</pre>
+        <p><strong>Función de decaimiento:</strong></p>
+        $$ N(t) = N_0 \cdot e^{-0.3t} $$
+        
+        <p><strong>Paso 1:</strong> Plantear la condición de vida media (la cantidad debe ser la mitad de la original).</p>
+        $$ N(t_{1/2}) = \frac{N_0}{2} $$
+        
+        <p><strong>Paso 2:</strong> Sustituir esta condición en la ecuación.</p>
+        $$ \frac{N_0}{2} = N_0 \cdot e^{-0.3 \cdot t_{1/2}} $$
+        
+        <p><strong>Paso 3:</strong> Cancelar \( N_0 \) de ambos lados y aplicar logaritmo natural (\( \ln \)) para bajar el exponente.</p>
+        $$ \frac{1}{2} = e^{-0.3 \cdot t_{1/2}} $$
+        $$ \ln\left(\frac{1}{2}\right) = -0.3 \cdot t_{1/2} $$
+        
+        <p><strong>Paso 4:</strong> Usar la propiedad \( \ln(1/2) = -\ln(2) \) y despejar \( t_{1/2} \).</p>
+        $$ -\ln(2) = -0.3 \cdot t_{1/2} $$
+        $$ t_{1/2} = \frac{\ln(2)}{0.3} \approx \frac{0.693}{0.3} $$
+        
+        <p><strong>Resultado Final:</strong></p>
+        $$ t_{1/2} \approx 2.31 \text{ unidades de tiempo} $$
       </div>
 
       <div class="note-box">
-        💡 <strong>Nota:</strong> Si k &gt; 0 el exponente es positivo → <strong>crecimiento</strong>.
-        Si k &lt; 0 (o se escribe −k con k &gt; 0) → <strong>decaimiento</strong>.
-        La constante <em>e</em> es especial porque su derivada es ella misma.
+        💡 <strong>Nota:</strong> Si \( k > 0 \) y el exponente no tiene signo menos \( \rightarrow \) <strong>crecimiento</strong>.
+        Si el exponente tiene signo menos \( -k \) \( \rightarrow \) <strong>decaimiento</strong>.
+        La constante \( e \) es vital en matemáticas superiores precisamente porque es inmune a la derivación básica.
       </div>
 
-     <!-- ══ GENERADOR ══ -->
-      <div id="generador-container" data-tema="exponenciales"></div>
+     <div id="generador-container" data-tema="exponenciales"></div>
 
-        <!-- ══ QUIZ ══ -->
-      <div class="gen-box">
+        <div class="gen-box">
         <h2>Quiz — Pon a prueba lo que aprendiste</h2>
         <p>Responde 5 preguntas para verificar tu comprensión del tema.</p>
-        <div id="quiz" data-topic="ecuaciones"></div>
+        <div id="quiz" data-topic="exponenciales"></div>
       </div>
 
-      <!-- ══ NAVEGACIÓN ══ -->
       <div class="nav-btns">
         <a href="funciones.html" class="btn outline">❮ Anterior: Funciones</a>
         <a href="limites.html" class="btn">Siguiente: Límites ❯</a>
@@ -178,10 +192,11 @@ t½ = ln(2) / 0.3 = 0.693 / 0.3 ≈ 2.31 unidades de tiempo</pre>
   <script src="../components.js"></script>
   <script src="../ejercicios.js"></script>
   <script src="../quiz.js"></script>
-  <script src="../app.js"></script>  <!-- ← este faltaba -->
+  <script src="../app.js"></script>
   <script>
-    loadComponents("exponenciales");
-    initQuiz("exponenciales");
+    if(typeof loadComponents === "function") loadComponents("exponenciales");
+    if(typeof initQuiz === "function") initQuiz("exponenciales");
   </script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </body>
 </html>

@@ -7,7 +7,15 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Figtree:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
   <link rel="stylesheet" href="../tutorial.css">
+  <style>
+    /* Estilos para el índice de contenido */
+    .toc-list { list-style: none; padding-left: 0; margin-top: 10px; }
+    .toc-list li { margin-bottom: 6px; }
+    .toc-list a { color: var(--accent2); text-decoration: none; font-size: 14px; transition: opacity 0.2s; }
+    .toc-list a:hover { opacity: 0.7; text-decoration: underline; }
+  </style>
 </head>
 <body>
 
@@ -22,274 +30,224 @@
 
     <main class="content">
       <h1>Ecuaciones</h1>
+      
+      <div class="note-box" style="margin-bottom: 2rem;">
+        <strong style="color: var(--accent); text-transform: uppercase; font-size: 11px; letter-spacing: 1px;">Contenido de esta lección</strong>
+        <ul class="toc-list">
+          <li><a href="#conceptos">1. Conceptos Básicos</a></li>
+          <li><a href="#lineales">2. Ecuaciones Lineales (Primer Grado)</a></li>
+          <li><a href="#cuadraticas">3. Ecuaciones Cuadráticas (Segundo Grado)</a></li>
+          <li><a href="#sistemas">4. Sistemas de Ecuaciones</a></li>
+          <li><a href="#fracciones">5. Ecuaciones con Fracciones</a></li>
+          <li><a href="#errores">6. Errores Comunes</a></li>
+        </ul>
+      </div>
+
       <p>
-        Una <strong>ecuación</strong> es una igualdad matemática que contiene una o más
-        incógnitas. Resolver una ecuación significa encontrar el valor (o valores) de la
-        incógnita que hacen verdadera la igualdad.
+        Una <strong>ecuación</strong> es una igualdad matemática que contiene una o más incógnitas. Resolver una ecuación significa encontrar el valor (o valores) de la incógnita que hacen verdadera la igualdad.
       </p>
 
-      <!-- ══ CONCEPTOS BÁSICOS ══ -->
-      <h2>Conceptos Básicos</h2>
+      <h2 id="conceptos">1. Conceptos Básicos</h2>
       <p>
-        Toda ecuación tiene dos partes separadas por el signo <em>=</em>.
-        El objetivo es despejar la incógnita aplicando operaciones inversas en ambos lados.
+        Toda ecuación tiene dos partes separadas por el signo \( = \). El objetivo es despejar la incógnita aplicando operaciones inversas en ambos lados.
       </p>
 
       <div class="example-box">
         <div class="label">Anatomía de una ecuación</div>
-        <pre>        2x + 5 = 13
-        ──┬──   ──┬──
-    lado izquierdo  lado derecho
-
-Incógnita: x
-Solución: el valor de x que hace la igualdad verdadera.</pre>
+        <p>Identificamos las partes principales:</p>
+        $$ \underbrace{2x + 5}_{\text{Lado izquierdo}} = \underbrace{13}_{\text{Lado derecho}} $$
+        <ul>
+          <li><strong>Incógnita:</strong> \( x \)</li>
+          <li><strong>Solución:</strong> el valor de \( x \) que hace la igualdad verdadera.</li>
+        </ul>
       </div>
 
       <div class="note-box">
-        💡 <strong>Principio de igualdad:</strong> Lo que se hace a un lado de la ecuación
-        debe hacerse también al otro lado para mantener la igualdad.
+        💡 <strong>Principio de igualdad:</strong> Lo que se hace a un lado de la ecuación debe hacerse también al otro lado para mantener el equilibrio.
       </div>
 
-      <!-- ══ ECUACIONES LINEALES ══ -->
-      <hr class="section-hr">
-      <h2>Ecuaciones Lineales (Primer Grado)</h2>
+      <div class="divider"></div>
+      <h2 id="lineales">2. Ecuaciones Lineales (Primer Grado)</h2>
       <p>
-        Son ecuaciones donde la incógnita aparece con exponente 1. Su forma general es
-        <em>ax + b = c</em>.
+        Son ecuaciones donde la incógnita aparece con exponente 1. Su forma general es \( ax + b = c \).
       </p>
 
       <div class="example-box">
         <div class="label">Paso a paso — Ecuación simple</div>
-        <pre>Resolver: 2x + 5 = 13
-
-Paso 1: Restar 5 en ambos lados
-  2x + 5 − 5 = 13 − 5
-  2x = 8
-
-Paso 2: Dividir entre 2
-  x = 8 / 2
-  x = 4
-
-Verificación: 2(4) + 5 = 8 + 5 = 13 ✓</pre>
+        <p><strong>Resolver:</strong> \( 2x + 5 = 13 \)</p>
+        <p><strong>Paso 1:</strong> Restar 5 en ambos lados.</p>
+        $$ 2x + 5 - 5 = 13 - 5 $$
+        $$ 2x = 8 $$
+        <p><strong>Paso 2:</strong> Dividir entre 2.</p>
+        $$ x = \frac{8}{2} $$
+        $$ x = 4 $$
+        <p><strong>Verificación:</strong> \( 2(4) + 5 = 8 + 5 = 13 \) ✓</p>
       </div>
 
       <div class="example-box">
         <div class="label">Paso a paso — Con incógnita en ambos lados</div>
-        <pre>Resolver: 5x − 3 = 2x + 9
-
-Paso 1: Pasar los términos con x al lado izquierdo
-  5x − 2x − 3 = 9
-  3x − 3 = 9
-
-Paso 2: Sumar 3 en ambos lados
-  3x = 12
-
-Paso 3: Dividir entre 3
-  x = 4
-
-Verificación: 5(4) − 3 = 17   y   2(4) + 9 = 17 ✓</pre>
+        <p><strong>Resolver:</strong> \( 5x - 3 = 2x + 9 \)</p>
+        <p><strong>Paso 1:</strong> Pasar los términos con \( x \) al lado izquierdo (restando \( 2x \)).</p>
+        $$ 5x - 2x - 3 = 9 $$
+        $$ 3x - 3 = 9 $$
+        <p><strong>Paso 2:</strong> Sumar 3 en ambos lados.</p>
+        $$ 3x = 12 $$
+        <p><strong>Paso 3:</strong> Dividir entre 3.</p>
+        $$ x = 4 $$
+        <p><strong>Verificación:</strong> \( 5(4) - 3 = 17 \) y \( 2(4) + 9 = 17 \) ✓</p>
       </div>
 
       <div class="example-box">
         <div class="label">Paso a paso — Con paréntesis</div>
-        <pre>Resolver: 3(x − 2) = 2(x + 4)
-
-Paso 1: Distribuir en ambos lados
-  3x − 6 = 2x + 8
-
-Paso 2: Pasar términos con x a la izquierda
-  3x − 2x = 8 + 6
-  x = 14
-
-Verificación: 3(14 − 2) = 3(12) = 36   y   2(14 + 4) = 2(18) = 36 ✓</pre>
+        <p><strong>Resolver:</strong> \( 3(x - 2) = 2(x + 4) \)</p>
+        <p><strong>Paso 1:</strong> Distribuir en ambos lados.</p>
+        $$ 3x - 6 = 2x + 8 $$
+        <p><strong>Paso 2:</strong> Agrupar términos con \( x \) a la izquierda y números a la derecha.</p>
+        $$ 3x - 2x = 8 + 6 $$
+        $$ x = 14 $$
+        <p><strong>Verificación:</strong> \( 3(14 - 2) = 3(12) = 36 \) y \( 2(14 + 4) = 2(18) = 36 \) ✓</p>
       </div>
 
-      <!-- ══ ECUACIONES CUADRÁTICAS ══ -->
-      <hr class="section-hr">
-      <h2>Ecuaciones Cuadráticas (Segundo Grado)</h2>
+      <div class="divider"></div>
+      <h2 id="cuadraticas">3. Ecuaciones Cuadráticas (Segundo Grado)</h2>
       <p>
-        Son ecuaciones donde la incógnita aparece con exponente 2. Su forma general es
-        <em>ax² + bx + c = 0</em>. Pueden tener dos, una o ninguna solución real.
+        Son ecuaciones donde la incógnita aparece con exponente 2. Su forma general es \( ax^2 + bx + c = 0 \). Pueden tener dos, una o ninguna solución real.
       </p>
 
       <div class="example-box">
         <div class="label">Método 1 — Factorización</div>
-        <pre>Resolver: x² − 5x + 6 = 0
-
-Paso 1: Buscar dos números que multipliquen 6 y sumen −5
-  → −2 y −3  (−2 · −3 = 6  y  −2 + (−3) = −5)
-
-Paso 2: Factorizar
-  (x − 2)(x − 3) = 0
-
-Paso 3: Igualar cada factor a cero
-  x − 2 = 0  →  x = 2
-  x − 3 = 0  →  x = 3
-
-Soluciones: x = 2  y  x = 3</pre>
+        <p><strong>Resolver:</strong> \( x^2 - 5x + 6 = 0 \)</p>
+        <p><strong>Paso 1:</strong> Buscar dos números que multiplicados den 6 y sumados den -5 (Esos son -2 y -3).</p>
+        <p><strong>Paso 2:</strong> Factorizar.</p>
+        $$ (x - 2)(x - 3) = 0 $$
+        <p><strong>Paso 3:</strong> Igualar cada factor a cero.</p>
+        $$ x - 2 = 0 \quad \rightarrow \quad x = 2 $$
+        $$ x - 3 = 0 \quad \rightarrow \quad x = 3 $$
+        <p><strong>Soluciones:</strong> \( x = 2 \) y \( x = 3 \)</p>
       </div>
 
       <div class="example-box">
         <div class="label">Método 2 — Fórmula General (Chicharronera)</div>
-        <pre>         −b ± √(b² − 4ac)
-x =     ─────────────────────
-                2a
-
-Resolver: 2x² + 3x − 2 = 0
-  a = 2,  b = 3,  c = −2
-
-Paso 1: Calcular el discriminante
-  b² − 4ac = 9 − 4(2)(−2) = 9 + 16 = 25
-
-Paso 2: Aplicar la fórmula
-  x = (−3 ± √25) / 4
-  x = (−3 ± 5) / 4
-
-Paso 3: Las dos soluciones
-  x₁ = (−3 + 5) / 4 = 2/4 = 1/2
-  x₂ = (−3 − 5) / 4 = −8/4 = −2
-
-Soluciones: x = 1/2  y  x = −2</pre>
+        <p>La fórmula general es:</p>
+        $$ x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a} $$
+        <p><strong>Resolver:</strong> \( 2x^2 + 3x - 2 = 0 \) (Donde \( a=2 \), \( b=3 \), \( c=-2 \)).</p>
+        <p><strong>Paso 1:</strong> Calcular el discriminante (\( \Delta \)).</p>
+        $$ \Delta = b^2 - 4ac = (3)^2 - 4(2)(-2) = 9 + 16 = 25 $$
+        <p><strong>Paso 2:</strong> Aplicar la fórmula.</p>
+        $$ x = \frac{-3 \pm \sqrt{25}}{4} = \frac{-3 \pm 5}{4} $$
+        <p><strong>Paso 3:</strong> Extraer las dos soluciones.</p>
+        $$ x_1 = \frac{-3 + 5}{4} = \frac{2}{4} = \frac{1}{2} $$
+        $$ x_2 = \frac{-3 - 5}{4} = \frac{-8}{4} = -2 $$
+        <p><strong>Soluciones:</strong> \( x = 1/2 \) y \( x = -2 \)</p>
       </div>
 
       <div class="note-box">
-        📊 <strong>El discriminante (Δ = b² − 4ac) indica el número de soluciones:</strong><br>
-        • Δ &gt; 0 → dos soluciones reales distintas<br>
-        • Δ = 0 → una solución real (raíz doble)<br>
-        • Δ &lt; 0 → no hay soluciones reales (soluciones complejas)
+       <strong>El discriminante (\( \Delta = b^2 - 4ac \)) indica el número de soluciones:</strong><br>
+        • \( \Delta > 0 \) → Dos soluciones reales distintas.<br>
+        • \( \Delta = 0 \) → Una solución real (raíz doble).<br>
+        • \( \Delta < 0 \) → No hay soluciones reales (soluciones complejas).
       </div>
 
       <div class="example-box">
         <div class="label">Método 3 — Completar el cuadrado</div>
-        <pre>Resolver: x² + 6x + 5 = 0
-
-Paso 1: Pasar la constante al otro lado
-  x² + 6x = −5
-
-Paso 2: Sumar (b/2)² = (6/2)² = 9 en ambos lados
-  x² + 6x + 9 = −5 + 9
-  (x + 3)² = 4
-
-Paso 3: Sacar raíz cuadrada
-  x + 3 = ± 2
-
-Paso 4: Despejar x
-  x = −3 + 2 = −1
-  x = −3 − 2 = −5
-
-Soluciones: x = −1  y  x = −5</pre>
+        <p><strong>Resolver:</strong> \( x^2 + 6x + 5 = 0 \)</p>
+        <p><strong>Paso 1:</strong> Pasar la constante al otro lado.</p>
+        $$ x^2 + 6x = -5 $$
+        <p><strong>Paso 2:</strong> Sumar \( (b/2)^2 = (6/2)^2 = 9 \) en ambos lados para formar un trinomio cuadrado perfecto.</p>
+        $$ x^2 + 6x + 9 = -5 + 9 $$
+        $$ (x + 3)^2 = 4 $$
+        <p><strong>Paso 3:</strong> Sacar raíz cuadrada en ambos lados.</p>
+        $$ x + 3 = \pm 2 $$
+        <p><strong>Paso 4:</strong> Despejar \( x \).</p>
+        $$ x_1 = -3 + 2 = -1 $$
+        $$ x_2 = -3 - 2 = -5 $$
+        <p><strong>Soluciones:</strong> \( x = -1 \) y \( x = -5 \)</p>
       </div>
 
-      <!-- ══ SISTEMAS DE ECUACIONES ══ -->
-      <hr class="section-hr">
-      <h2>Sistemas de Ecuaciones</h2>
+      <div class="divider"></div>
+      <h2 id="sistemas">4. Sistemas de Ecuaciones</h2>
       <p>
-        Un <strong>sistema de ecuaciones</strong> es un conjunto de dos o más ecuaciones con
-        las mismas incógnitas. La solución es el valor de cada variable que satisface
-        todas las ecuaciones simultáneamente.
+        Un <strong>sistema de ecuaciones</strong> es un conjunto de dos o más ecuaciones con las mismas incógnitas. La solución es el valor de cada variable que satisface todas las ecuaciones simultáneamente.
       </p>
 
       <div class="example-box">
         <div class="label">Método de Sustitución</div>
-        <pre>Sistema:
-  x + y = 10   ...(1)
-  2x − y = 5   ...(2)
-
-Paso 1: Despejar x de la ecuación (1)
-  x = 10 − y
-
-Paso 2: Sustituir en la ecuación (2)
-  2(10 − y) − y = 5
-  20 − 2y − y = 5
-  20 − 3y = 5
-  −3y = −15
-  y = 5
-
-Paso 3: Sustituir y en la ecuación despejada
-  x = 10 − 5 = 5
-
-Solución: x = 5,  y = 5
-
-Verificación:
-  5 + 5 = 10 ✓
-  2(5) − 5 = 5 ✓</pre>
+        <p><strong>Sistema:</strong></p>
+        $$ (1) \quad x + y = 10 $$
+        $$ (2) \quad 2x - y = 5 $$
+        <p><strong>Paso 1:</strong> Despejar \( x \) de la ecuación (1).</p>
+        $$ x = 10 - y $$
+        <p><strong>Paso 2:</strong> Sustituir esta expresión en la ecuación (2).</p>
+        $$ 2(10 - y) - y = 5 $$
+        $$ 20 - 2y - y = 5 $$
+        $$ 20 - 3y = 5 $$
+        $$ -3y = -15 \quad \rightarrow \quad y = 5 $$
+        <p><strong>Paso 3:</strong> Sustituir \( y \) en la ecuación despejada.</p>
+        $$ x = 10 - 5 = 5 $$
+        <p><strong>Solución:</strong> \( x = 5 \), \( y = 5 \) ✓</p>
       </div>
 
       <div class="example-box">
         <div class="label">Método de Eliminación (Suma y Resta)</div>
-        <pre>Sistema:
-  3x + 2y = 12   ...(1)
-  3x − y  = 6    ...(2)
-
-Paso 1: Restar (2) de (1) para eliminar x
-  (3x + 2y) − (3x − y) = 12 − 6
-  3y = 6
-  y = 2
-
-Paso 2: Sustituir y en la ecuación (2)
-  3x − 2 = 6
-  3x = 8
-  x = 8/3
-
-Solución: x = 8/3,  y = 2</pre>
+        <p><strong>Sistema:</strong></p>
+        $$ (1) \quad 3x + 2y = 12 $$
+        $$ (2) \quad 3x - y  = 6 $$
+        <p><strong>Paso 1:</strong> Restar (2) de (1) para eliminar \( x \).</p>
+        $$ (3x + 2y) - (3x - y) = 12 - 6 $$
+        $$ 3y = 6 \quad \rightarrow \quad y = 2 $$
+        <p><strong>Paso 2:</strong> Sustituir \( y \) en la ecuación (2).</p>
+        $$ 3x - 2 = 6 $$
+        $$ 3x = 8 \quad \rightarrow \quad x = \frac{8}{3} $$
+        <p><strong>Solución:</strong> \( x = 8/3 \), \( y = 2 \) ✓</p>
       </div>
 
-      <!-- ══ ECUACIONES CON FRACCIONES ══ -->
-      <hr class="section-hr">
-      <h2>Ecuaciones con Fracciones</h2>
+      <div class="divider"></div>
+      <h2 id="fracciones">5. Ecuaciones con Fracciones</h2>
       <p>
-        Para resolver ecuaciones con fracciones, el truco es multiplicar todos los
-        términos por el <strong>mínimo común múltiplo (MCM)</strong> de los denominadores.
+        Para resolver ecuaciones con fracciones, el truco es multiplicar todos los términos por el <strong>mínimo común múltiplo (MCM)</strong> de los denominadores para desaparecerlos.
       </p>
 
       <div class="example-box">
         <div class="label">Paso a paso — Ecuación con fracciones</div>
-        <pre>Resolver: x/2 + x/3 = 5
-
-Paso 1: MCM de 2 y 3 es 6. Multiplicar todo por 6:
-  6·(x/2) + 6·(x/3) = 6·5
-  3x + 2x = 30
-
-Paso 2: Simplificar y resolver
-  5x = 30
-  x = 6
-
-Verificación: 6/2 + 6/3 = 3 + 2 = 5 ✓</pre>
+        <p><strong>Resolver:</strong></p>
+        $$ \frac{x}{2} + \frac{x}{3} = 5 $$
+        <p><strong>Paso 1:</strong> El MCM de 2 y 3 es 6. Multiplicamos todo por 6:</p>
+        $$ 6\left(\frac{x}{2}\right) + 6\left(\frac{x}{3}\right) = 6(5) $$
+        $$ 3x + 2x = 30 $$
+        <p><strong>Paso 2:</strong> Simplificar y resolver.</p>
+        $$ 5x = 30 \quad \rightarrow \quad x = 6 $$
+        <p><strong>Verificación:</strong> \( \frac{6}{2} + \frac{6}{3} = 3 + 2 = 5 \) ✓</p>
       </div>
 
-      <!-- ══ ERRORES COMUNES ══ -->
-      <hr class="section-hr">
-      <h2>Errores Comunes</h2>
+      <div class="divider"></div>
+      <h2 id="errores">6. Errores Comunes</h2>
 
       <div class="note-box">
         ❌ <strong>Error 1 — No aplicar la operación en ambos lados:</strong><br>
-        Incorrecto: 2x + 4 = 10  →  2x = 10  (se olvidó restar 4 al lado derecho)<br>
-        Correcto:   2x + 4 = 10  →  2x = 6  →  x = 3
+        <p><strong>Incorrecto:</strong> \( 2x + 4 = 10 \quad \rightarrow \quad 2x = 10 \) (se olvidó restar 4 al lado derecho)</p>
+        <p><strong>Correcto:</strong> \( 2x + 4 = 10 \quad \rightarrow \quad 2x = 6 \quad \rightarrow \quad x = 3 \)</p>
       </div>
 
       <div class="note-box">
-        ❌ <strong>Error 2 — No distribuir correctamente:</strong><br>
-        Incorrecto: 2(x + 3) = 2x + 3<br>
-        Correcto:   2(x + 3) = 2x + 6
+        ❌ <strong>Error 2 — No distribuir correctamente el paréntesis:</strong><br>
+        <p><strong>Incorrecto:</strong> \( 2(x + 3) = 2x + 3 \)</p>
+        <p><strong>Correcto:</strong> \( 2(x + 3) = 2x + 6 \)</p>
       </div>
 
       <div class="note-box">
-        ❌ <strong>Error 3 — Cambiar el signo al pasar al otro lado:</strong><br>
-        Incorrecto: x − 5 = 3  →  x = 3 − 5 = −2<br>
-        Correcto:   x − 5 = 3  →  x = 3 + 5 = 8
+        ❌ <strong>Error 3 — Equivocarse de signo al despejar:</strong><br>
+        <p><strong>Incorrecto:</strong> \( x - 5 = 3 \quad \rightarrow \quad x = 3 - 5 = -2 \)</p>
+        <p><strong>Correcto:</strong> \( x - 5 = 3 \quad \rightarrow \quad x = 3 + 5 = 8 \)</p>
       </div>
 
-      <!-- ══ GENERADOR ══ -->
       <div id="generador-container" data-tema="ecuaciones"></div>
 
-      <!-- ══ QUIZ ══ -->
       <div class="gen-box">
         <h2>Quiz — Pon a prueba lo que aprendiste</h2>
         <p>Responde 5 preguntas para verificar tu comprensión del tema.</p>
         <div id="quiz" data-topic="ecuaciones"></div>
       </div>
 
-      <!-- ══ NAVEGACIÓN ══ -->
       <div class="nav-btns">
         <span></span>
         <a href="funciones.html" class="btn">Siguiente: Funciones ❯</a>
@@ -303,8 +261,9 @@ Verificación: 6/2 + 6/3 = 3 + 2 = 5 ✓</pre>
   <script src="../quiz.js"></script>
   <script src="../app.js"></script>
   <script>
-    loadComponents("ecuaciones");
-    initQuiz("ecuaciones");
+    if(typeof loadComponents === "function") loadComponents("ecuaciones");
+    if(typeof initQuiz === "function") initQuiz("ecuaciones");
   </script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </body>
 </html>
