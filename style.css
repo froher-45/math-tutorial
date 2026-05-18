@@ -268,9 +268,32 @@ body.light-mode header {
 body.light-mode .bg-glow { opacity: 0.4; }
 
 #theme-btn {
-  background: transparent; border: 1px solid var(--border);
-  border-radius: var(--radius-sm); padding: 5px 10px;
-  font-size: 16px; cursor: pointer; transition: background 0.18s;
-  margin-left: auto;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 8px;
+  padding: 3px 5px;
+  cursor: pointer;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  transition: background 0.2s, border-color 0.2s;
 }
-#theme-btn:hover { background: var(--bg3); }
+
+#theme-btn .material-symbols-rounded {
+  font-size: 18px;
+}
+
+#theme-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.6);
+}
+
+body.light-mode #theme-btn {
+  color: #111111;
+  border-color: rgba(0, 0, 0, 0.3);
+}
+
+body.light-mode #theme-btn:hover {
+  background: rgba(0, 0, 0, 0.08);
+  border-color: rgba(0, 0, 0, 0.6);
+}

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Funciones — MathGen</title>
+  <title>Exponenciales — MathGen</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Figtree:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -157,28 +157,28 @@ t½ = ln(2) / 0.3 = 0.693 / 0.3 ≈ 2.31 unidades de tiempo</pre>
         La constante <em>e</em> es especial porque su derivada es ella misma.
       </div>
 
-      <!-- ══ GENERADOR ══ -->
+     <!-- ══ GENERADOR ══ -->
       <div id="generador-container" data-tema="exponenciales"></div>
 
-      <!-- ══ QUIZ ══ -->
+        <!-- ══ QUIZ ══ -->
       <div class="gen-box">
         <h2>Quiz — Pon a prueba lo que aprendiste</h2>
-        <p>Responde 3 preguntas para verificar tu comprensión del tema.</p>
-        <div id="quiz" data-topic="exponenciales"></div>
+        <p>Responde 5 preguntas para verificar tu comprensión del tema.</p>
+        <div id="quiz" data-topic="ecuaciones"></div>
       </div>
 
       <!-- ══ NAVEGACIÓN ══ -->
       <div class="nav-btns">
-        <a href="funciones.html" class="btn">❮ Anterior: Funciones</a>
-        <a href="limites.html" class="btn">Siguiente: Limites ❯</a>
+        <a href="funciones.html" class="btn outline">❮ Anterior: Funciones</a>
+        <a href="limites.html" class="btn">Siguiente: Límites ❯</a>
       </div>
     </main>
-
   </div>
 
   <script src="../components.js"></script>
   <script src="../ejercicios.js"></script>
   <script src="../quiz.js"></script>
+  <script src="../app.js"></script>  <!-- ← este faltaba -->
   <script>
     loadComponents("exponenciales");
     initQuiz("exponenciales");

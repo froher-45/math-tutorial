@@ -13,11 +13,10 @@ const TOPICS = [
   { id: "limites",       label: "Límites",                 icon: "lim" },
   { id: "derivadas",     label: "Derivadas",               icon: "d/dx" },
   { id: "integrales",    label: "Integrales",              icon: "∫" },
-  { id: "series",            label: "Series y Sucesiones",     icon: "Σ" },
-  { id: "edo",               label: "Ec. Diferenciales",       icon: "y'" },
-  { id: "laplace",           label: "Transformada de Laplace", icon: "ℒ" },
-  { id: "fourier_series",    label: "Series de Fourier",       icon: "∑cos" },
-  { id: "fourier_transform", label: "Transformada de Fourier", icon: "F(ω)" },
+  { id: "series",        label: "Series y Sucesiones",     icon: "Σ" },
+  { id: "edo",           label: "Ec. Diferenciales",       icon: "y'" },
+  { id: "laplace",       label: "Transformada de Laplace", icon: "ℒ" },
+  { id: "fourier_series", label: "Transformada de Fourier", icon: "F(ω)" }, 
 ];
 
 let selectedTopic = null;
@@ -32,6 +31,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 function buildTopicGrid() {
   const grid = document.getElementById("topicsGrid");
+  if (!grid) return;  // ← agrega solo esta línea
   TOPICS.forEach(t => {
     const btn = document.createElement("button");
     btn.className = "topic-btn";
@@ -138,32 +138,24 @@ function escHtml(str) {
     .replace(/>/g,"&gt;").replace(/"/g,"&quot;")
     .replace(/\n/g,"<br>");
 }
-//detector de la side bar
+// detector de la side bar
 document.addEventListener("DOMContentLoaded", () => {
-  // 1. Buscamos el archivo sidebar.html
+
   fetch('../utilidades/sidebar.html')
     .then(response => {
       if (!response.ok) throw new Error("No se pudo cargar el menú");
       return response.text();
     })
     .then(html => {
-      // 2. Insertamos el HTML dentro del aside
       document.getElementById('menu-lateral').innerHTML = html;
 
-      // 3. Lógica para pintar de morado el tema actual
-      // Obtenemos el nombre del archivo actual (ej. 'laplace.html')
-      let paginaActual = window.location.pathname.split('/').pop();
-      
-      // Si entra a la raíz sin nombre de archivo, asumimos index.html
-      if (paginaActual === '') paginaActual = 'index.html'; 
+      // ✅ Extraer solo el nombre del archivo actual
+      const paginaActual = window.location.pathname.split('/').pop() || 'index.html';
 
-      // Buscamos todos los enlaces inyectados
-      const enlaces = document.querySelectorAll('#menu-lateral a');
-
-      enlaces.forEach(enlace => {
-        const href = enlace.getAttribute('href');
-        // Si el enlace coincide con la página en la que estamos, le damos la clase 'active'
-        if (href === paginaActual) {
+      document.querySelectorAll('#menu-lateral a').forEach(enlace => {
+        const href = enlace.getAttribute('href') || '';
+        const nombreEnlace = href.split('/').pop(); // ← extrae solo "funciones.html"
+        if (nombreEnlace === paginaActual) {
           enlace.classList.add('active');
         } else {
           enlace.classList.remove('active');
@@ -171,9 +163,9 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     })
     .catch(error => console.error('Error cargando el menú lateral:', error));
-// --- 2. CÓDIGO DEL GENERADOR DE EJERCICIOS ---
+
+  // generador de ejercicios
   const genContainer = document.getElementById('generador-container');
-  
   if (genContainer) {
     fetch('../utilidades/generador.html')
       .then(response => {
@@ -181,14 +173,9 @@ document.addEventListener("DOMContentLoaded", () => {
         return response.text();
       })
       .then(html => {
-        // Inyectamos el HTML del generador
         genContainer.innerHTML = html;
-
-        // Leemos qué tema necesita esta página específica
         const temaAsignado = genContainer.getAttribute('data-tema');
         const topicSelect = document.getElementById('topicSelect');
-
-        // Si existe el select y tenemos un tema asignado, lo forzamos
         if (topicSelect && temaAsignado) {
           topicSelect.value = temaAsignado;
         }
@@ -196,8 +183,7 @@ document.addEventListener("DOMContentLoaded", () => {
       .catch(error => console.error('Error cargando el generador:', error));
   }
 
-  });
-
+});
 const TOPIC_ALIAS = {
   series_y_sucesiones: "series",
 };

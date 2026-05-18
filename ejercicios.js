@@ -408,6 +408,56 @@ const GENERATORS = {
   },
 
   // ══════════════════════════════════════════════════
+  //  EXPONENCIALES
+  // ══════════════════════════════════════════════════
+  exponenciales: {
+    basico() {
+      const A = rnd(1, 10), k = rndNZ(1, 4), t = rnd(1, 5);
+      const res = round2(A * Math.exp(k * t));
+      return {
+        enunciado: `Dada N(t) = ${A}·e^(${k}t), calcula N(${t})`,
+        pasos: [
+          { titulo: "Sustituir el valor de t", explicacion: `Reemplazamos t = ${t} en la función.`, formula: `N(${t}) = ${A}·e^(${k}·${t})` },
+          { titulo: "Calcular el exponente", explicacion: `${k} × ${t} = ${k * t}`, formula: `N(${t}) = ${A}·e^(${k * t})` },
+          { titulo: "Evaluar e^(${k * t})", explicacion: `e^(${k * t}) ≈ ${round2(Math.exp(k * t))}`, formula: `N(${t}) = ${A} × ${round2(Math.exp(k * t))}` },
+          { titulo: "Resultado final", explicacion: "Multiplicamos.", formula: `N(${t}) ≈ ${res}` },
+        ],
+        respuesta: `N(${t}) ≈ ${res}`
+      };
+    },
+    intermedio() {
+      const N0 = rnd(100, 500), k = round2(rnd(1, 5) * 0.1);
+      const thalf = round2(Math.log(2) / k);
+      return {
+        enunciado: `Una sustancia tiene N₀ = ${N0} y tasa de decaimiento k = ${k}. Halla la vida media t½.`,
+        pasos: [
+          { titulo: "Modelo de decaimiento", explicacion: "La función de decaimiento es N(t) = N₀·e^(−kt).", formula: `N(t) = ${N0}·e^(−${k}t)` },
+          { titulo: "Condición de vida media", explicacion: "En t = t½, la cantidad es la mitad del valor inicial.", formula: `N(t½) = ${N0}/2 = ${N0 / 2}` },
+          { titulo: "Plantear la ecuación", explicacion: "Sustituimos la condición.", formula: `${N0}/2 = ${N0}·e^(−${k}·t½)` },
+          { titulo: "Cancelar N₀ y aplicar logaritmo", explicacion: "Dividimos entre N₀ y aplicamos ln.", formula: `1/2 = e^(−${k}·t½)  →  ln(1/2) = −${k}·t½` },
+          { titulo: "Despejar t½", explicacion: "Usamos ln(1/2) = −ln(2) ≈ −0.693.", formula: `t½ = ln(2) / ${k} = 0.693 / ${k} ≈ ${thalf}` },
+        ],
+        respuesta: `t½ ≈ ${thalf} unidades de tiempo`
+      };
+    },
+    avanzado() {
+      const P = rnd(500, 2000), r = round2(rnd(1, 8) * 0.01), t = rnd(5, 20);
+      const A = round2(P * Math.exp(r * t));
+      return {
+        enunciado: `Se invierte $${P} a una tasa continua del ${round2(r * 100)}% anual. ¿Cuánto habrá en ${t} años?`,
+        pasos: [
+          { titulo: "Modelo de interés compuesto continuo", explicacion: "A(t) = P·e^(rt), donde P es el capital inicial y r la tasa.", formula: `A(t) = ${P}·e^(${r}·t)` },
+          { titulo: "Sustituir t = ${t}", explicacion: `Evaluamos en t = ${t} años.`, formula: `A(${t}) = ${P}·e^(${r}·${t})` },
+          { titulo: "Calcular el exponente", explicacion: `${r} × ${t} = ${round2(r * t)}`, formula: `A(${t}) = ${P}·e^(${round2(r * t)})` },
+          { titulo: "Evaluar la exponencial", explicacion: `e^(${round2(r * t)}) ≈ ${round2(Math.exp(r * t))}`, formula: `A(${t}) = ${P} × ${round2(Math.exp(r * t))}` },
+          { titulo: "Resultado", explicacion: "Multiplicamos para obtener el monto final.", formula: `A(${t}) ≈ $${A}` },
+        ],
+        respuesta: `A(${t}) ≈ $${A}`
+      };
+    }
+  },
+
+  // ══════════════════════════════════════════════════
   //  LÍMITES
   // ══════════════════════════════════════════════════
   limites: {
@@ -694,5 +744,52 @@ const GENERATORS = {
         respuesta: `F(s) = ${b}/((s−${a})² + ${b*b})`
       };
     }
+  },
+  // ══════════════════════════════════════════════════
+  //  TRANSFORMADA DE FOURIER
+  // ══════════════════════════════════════════════════
+  fourier_series: {
+    basico() {
+      const a = rnd(1, 6);
+      return {
+        enunciado: `Calcula la Transformada de Fourier de f(t) = e^(−${a}|t|)`,
+        pasos: [
+          { titulo: "Separar la integral en dos partes", explicacion: "Por definición F(ω) = ∫₋∞^∞ f(t)·e^(−jωt) dt. Como |t| cambia de signo, separamos.", formula: `F(ω) = ∫₋∞^0 e^(${a}t)·e^(−jωt) dt  +  ∫₀^∞ e^(−${a}t)·e^(−jωt) dt` },
+          { titulo: "Resolver cada integral", explicacion: `La primera converge si ${a} > Re(jω), la segunda si ${a} > 0.`, formula: `I₁ = 1/(${a} − jω)     I₂ = 1/(${a} + jω)` },
+          { titulo: "Sumar los resultados", explicacion: "Sumamos las dos fracciones con denominadores conjugados.", formula: `F(ω) = 1/(${a}−jω) + 1/(${a}+jω) = 2${a}/(${a}² + ω²)` },
+          { titulo: "Resultado final", explicacion: `La transformada es una función real y par.`, formula: `F(ω) = ${2*a} / (${a*a} + ω²)` },
+        ],
+        respuesta: `F(ω) = ${2*a} / (${a*a} + ω²)`
+      };
+    },
+    intermedio() {
+      const a = rnd(1, 5), t0 = rnd(1, 4);
+      return {
+        enunciado: `Usa la propiedad de desplazamiento temporal: si F{f(t)} = F(ω), ¿cuánto vale F{f(t − ${t0})}?`,
+        pasos: [
+          { titulo: "Propiedad de desplazamiento temporal", explicacion: "Un retardo en el tiempo equivale a multiplicar en frecuencia por un exponencial complejo.", formula: `F{f(t − t₀)} = e^(−jωt₀) · F(ω)` },
+          { titulo: "Sustituir t₀ = ${t0}", explicacion: `Reemplazamos el valor del retardo.`, formula: `F{f(t − ${t0})} = e^(−jω·${t0}) · F(ω)` },
+          { titulo: "Interpretar el resultado", explicacion: "El módulo |F(ω)| no cambia; solo se modifica la fase en −${t0}ω radianes.", formula: `|F{f(t−${t0})}| = |F(ω)|   (misma amplitud)\n∠ = ∠F(ω) − ${t0}ω   (fase desplazada)` },
+          { titulo: "Conclusión", explicacion: "El desplazamiento temporal no afecta el espectro de amplitud.", formula: `F{f(t − ${t0})} = e^(−j${t0}ω) · F(ω)` },
+        ],
+        respuesta: `F{f(t − ${t0})} = e^(−j${t0}ω) · F(ω)`
+      };
+    },
+    avanzado() {
+      const a = rnd(1, 5), b = rnd(1, 5);
+      return {
+        enunciado: `Aplica el teorema de convolución: calcula F{f(t) * g(t)} si F(ω) = 1/(${a}+jω) y G(ω) = 1/(${b}+jω)`,
+        pasos: [
+          { titulo: "Teorema de convolución", explicacion: "La Transformada de Fourier de una convolución es el producto de las transformadas individuales.", formula: `F{f(t) * g(t)} = F(ω) · G(ω)` },
+          { titulo: "Sustituir las transformadas", explicacion: "Multiplicamos F(ω) por G(ω).", formula: `F(ω)·G(ω) = 1/(${a}+jω) · 1/(${b}+jω)` },
+          { titulo: "Escribir el producto", explicacion: "El resultado es una fracción de segundo orden.", formula: `H(ω) = 1 / [(${a}+jω)(${b}+jω)]` },
+          { titulo: "Expandir el denominador", explicacion: `(${a}+jω)(${b}+jω) = ${a*b} + (${a+b})jω + (jω)² = ${a*b} + (${a+b})jω − ω²`, formula: `H(ω) = 1 / (${a*b} + ${a+b}·jω − ω²)` },
+          { titulo: "Interpretación", explicacion: "Corresponde a un sistema de segundo orden con dos polos en s = −${a} y s = −${b}.", formula: `Polos: jω = −${a}  y  jω = −${b}` },
+        ],
+        respuesta: `H(ω) = 1 / [(${a}+jω)(${b}+jω)]`
+      };
+    }
   }
 };
+
+

@@ -40,45 +40,229 @@ Ejemplo: f(x) = 2x + 3</pre>
 
       <p>Donde <em>x</em> es la variable independiente y <em>f(x)</em> es el valor que produce la función.</p>
 
-      <h2>Ejemplo paso a paso</h2>
-      <p>Evalúa f(x) = 3x² − 2x + 1 en x = 4:</p>
+      <!-- ══ DOMINIO Y RANGO ══ -->
+      <hr class="section-hr">
+      <h2>Dominio y Rango</h2>
+      <p>
+        El <strong>dominio</strong> es el conjunto de todos los valores que puede tomar <em>x</em>.
+        El <strong>rango</strong> (o imagen) es el conjunto de todos los valores posibles de <em>f(x)</em>.
+      </p>
 
       <div class="example-box">
-        <div class="label">Paso a paso</div>
-        <pre>f(x) = 3x² − 2x + 1
+        <div class="label">Ejemplo — Dominio y Rango</div>
+        <pre>f(x) = √(x − 3)
 
-Paso 1: Sustituir x = 4
-f(4) = 3(4)² − 2(4) + 1
+Dominio: x − 3 ≥ 0  →  x ≥ 3  →  D = [3, +∞)
+Rango:   √(x − 3) ≥ 0          →  R = [0, +∞)
 
-Paso 2: Resolver la potencia
-= 3(16) − 2(4) + 1
-
-Paso 3: Multiplicar
-= 48 − 8 + 1
-
-Paso 4: Sumar y restar
-= 41</pre>
+Explicación: no podemos sacar raíz de un número negativo,
+por eso x debe ser mayor o igual a 3.</pre>
       </div>
 
       <div class="note-box">
-        💡 <strong>Nota:</strong> El <strong>dominio</strong> es el conjunto de todos los valores
-        posibles de x. El <strong>rango</strong> es el conjunto de todos los valores posibles de f(x).
+        ⚠️ <strong>Restricciones comunes de dominio:</strong><br>
+        • Denominadores: el denominador no puede ser 0.<br>
+        • Raíces pares: el radicando debe ser ≥ 0.<br>
+        • Logaritmos: el argumento debe ser &gt; 0.
+      </div>
+
+      <!-- ══ TIPOS DE FUNCIONES ══ -->
+      <hr class="section-hr">
+      <h2>Tipos de Funciones</h2>
+      <p>Las funciones se clasifican según su expresión algebraica y comportamiento gráfico.</p>
+
+      <div class="example-box">
+        <div class="label">Función Lineal</div>
+        <pre>f(x) = mx + b
+
+Donde m es la pendiente y b es la ordenada al origen.
+
+Ejemplo: f(x) = 2x + 1
+  → Pendiente: 2  (sube 2 unidades por cada 1 en x)
+  → Intercepto: 1 (cruza el eje y en y = 1)
+  → Gráfica: línea recta</pre>
+      </div>
+
+      <div class="example-box">
+        <div class="label">Función Cuadrática</div>
+        <pre>f(x) = ax² + bx + c   (a ≠ 0)
+
+Ejemplo: f(x) = x² − 4x + 3
+  → Gráfica: parábola
+  → Vértice en x = −b/(2a) = 4/2 = 2
+  → f(2) = 4 − 8 + 3 = −1  →  vértice: (2, −1)
+  → Raíces: x = 1  y  x = 3</pre>
+      </div>
+
+      <div class="example-box">
+        <div class="label">Función Racional</div>
+        <pre>f(x) = p(x) / q(x)   donde q(x) ≠ 0
+
+Ejemplo: f(x) = (x + 2) / (x − 1)
+  → Dominio: x ≠ 1  (el denominador no puede ser 0)
+  → Asíntota vertical: x = 1
+  → Asíntota horizontal: y = 1 (mismo grado en num. y den.)</pre>
+      </div>
+
+      <div class="example-box">
+        <div class="label">Función Valor Absoluto</div>
+        <pre>f(x) = |x|
+
+Definición por partes:
+  f(x) =  x   si x ≥ 0
+  f(x) = −x   si x &lt; 0
+
+Ejemplo: f(x) = |x − 2|
+  → Vértice en x = 2, f(2) = 0
+  → Dominio: todos los reales  →  D = (−∞, +∞)
+  → Rango: R = [0, +∞)</pre>
+      </div>
+
+      <!-- ══ EVALUACIÓN ══ -->
+      <hr class="section-hr">
+      <h2>Evaluación de Funciones</h2>
+      <p>Evaluar una función significa sustituir <em>x</em> por un valor específico y calcular el resultado.</p>
+
+      <div class="example-box">
+        <div class="label">Paso a paso — Evaluación</div>
+        <pre>f(x) = 3x² − 2x + 1
+
+Evaluar en x = 4:
+
+Paso 1: Sustituir x = 4
+  f(4) = 3(4)² − 2(4) + 1
+
+Paso 2: Resolver la potencia
+  = 3(16) − 2(4) + 1
+
+Paso 3: Multiplicar
+  = 48 − 8 + 1
+
+Paso 4: Sumar y restar
+  = 41</pre>
+      </div>
+
+      <div class="example-box">
+        <div class="label">Evaluación con expresión algebraica</div>
+        <pre>g(x) = x² + 3x
+
+Evaluar g(x + 1):
+
+Paso 1: Sustituir x por (x + 1)
+  g(x + 1) = (x + 1)² + 3(x + 1)
+
+Paso 2: Expandir
+  = x² + 2x + 1 + 3x + 3
+
+Paso 3: Simplificar
+  = x² + 5x + 4</pre>
+      </div>
+
+      <!-- ══ OPERACIONES ══ -->
+      <hr class="section-hr">
+      <h2>Operaciones entre Funciones</h2>
+      <p>Dadas dos funciones <em>f</em> y <em>g</em>, podemos combinarlas de distintas formas:</p>
+
+      <div class="example-box">
+        <div class="label">Suma, Resta, Producto y Cociente</div>
+        <pre>f(x) = x + 2      g(x) = x − 1
+
+(f + g)(x) = (x + 2) + (x − 1) = 2x + 1
+(f − g)(x) = (x + 2) − (x − 1) = 3
+(f · g)(x) = (x + 2)(x − 1)   = x² + x − 2
+(f / g)(x) = (x + 2) / (x − 1)   con x ≠ 1</pre>
+      </div>
+
+      <!-- ══ COMPOSICIÓN ══ -->
+      <hr class="section-hr">
+      <h2>Composición de Funciones</h2>
+      <p>
+        La <strong>composición</strong> consiste en aplicar una función al resultado de otra.
+        Se denota <em>(f ∘ g)(x) = f(g(x))</em>.
+      </p>
+
+      <div class="example-box">
+        <div class="label">Paso a paso — Composición</div>
+        <pre>f(x) = 2x + 1      g(x) = x²
+
+Calcular (f ∘ g)(x) = f(g(x)):
+
+Paso 1: Aplicar g(x) primero
+  g(x) = x²
+
+Paso 2: Sustituir en f
+  f(g(x)) = f(x²) = 2(x²) + 1 = 2x² + 1
+
+Resultado: (f ∘ g)(x) = 2x² + 1
+
+Calcular (g ∘ f)(x) = g(f(x)):
+  g(f(x)) = g(2x + 1) = (2x + 1)² = 4x² + 4x + 1
+
+⚠️ Nota: f ∘ g ≠ g ∘ f  (la composición NO es conmutativa)</pre>
+      </div>
+
+      <!-- ══ FUNCIÓN INVERSA ══ -->
+      <hr class="section-hr">
+      <h2>Función Inversa</h2>
+      <p>
+        La <strong>función inversa</strong> <em>f⁻¹(x)</em> "deshace" lo que hace <em>f(x)</em>.
+        Solo existe si la función es <strong>biyectiva</strong> (uno a uno).
+      </p>
+
+      <div class="example-box">
+        <div class="label">Paso a paso — Función Inversa</div>
+        <pre>Hallar la inversa de f(x) = 3x − 6
+
+Paso 1: Escribir y = f(x)
+  y = 3x − 6
+
+Paso 2: Despejar x en términos de y
+  y + 6 = 3x
+  x = (y + 6) / 3
+
+Paso 3: Intercambiar x e y
+  y = (x + 6) / 3
+
+Resultado: f⁻¹(x) = (x + 6) / 3
+
+Verificación: f(f⁻¹(x)) = 3·((x+6)/3) − 6 = x + 6 − 6 = x ✓</pre>
+      </div>
+
+      <div class="note-box">
+        💡 <strong>Propiedad:</strong> Si <em>f(a) = b</em>, entonces <em>f⁻¹(b) = a</em>.
+        La gráfica de <em>f⁻¹</em> es el reflejo de la gráfica de <em>f</em> respecto a la recta <em>y = x</em>.
+      </div>
+
+      <!-- ══ FUNCIONES PAR E IMPAR ══ -->
+      <hr class="section-hr">
+      <h2>Funciones Par e Impar</h2>
+      <p>Esta clasificación describe la simetría de una función.</p>
+
+      <div class="example-box">
+        <div class="label">Par vs Impar</div>
+        <pre>Función PAR:   f(−x) = f(x)    → simétrica respecto al eje y
+Función IMPAR: f(−x) = −f(x)   → simétrica respecto al origen
+
+Ejemplos:
+  f(x) = x²    →  f(−x) = (−x)² = x²   = f(x)    → PAR
+  f(x) = x³    →  f(−x) = (−x)³ = −x³  = −f(x)   → IMPAR
+  f(x) = x + 1 →  f(−x) = −x + 1  (ni par ni impar)</pre>
       </div>
 
       <!-- ══ GENERADOR ══ -->
       <div id="generador-container" data-tema="funciones"></div>
 
-      <!-- ══ QUIZ ══ -->
+        <!-- ══ QUIZ ══ -->
       <div class="gen-box">
         <h2>Quiz — Pon a prueba lo que aprendiste</h2>
-        <p>Responde 3 preguntas para verificar tu comprensión del tema.</p>
+        <p>Responde 5 preguntas para verificar tu comprensión del tema.</p>
         <div id="quiz" data-topic="funciones"></div>
       </div>
 
       <!-- ══ NAVEGACIÓN ══ -->
       <div class="nav-btns">
         <a href="ecuaciones.html" class="btn outline">❮ Anterior: Ecuaciones</a>
-        <a href="limites.html" class="btn">Siguiente: Límites ❯</a>
+        <a href="exponenciales.html" class="btn">Siguiente: Exponenciales ❯</a>
       </div>
     </main>
 

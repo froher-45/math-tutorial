@@ -1,10 +1,62 @@
 
-//  quiz.js — Quiz de 3 preguntas al final del tutorial
-
+//  quiz.js — Quiz de 5 preguntas al final del tutorial
 
 // ── Banco de preguntas por tema ────────────────────
 
 const QUIZ_BANK = {
+
+  ecuaciones: [
+    {
+      pregunta: "Resuelve: 2x + 4 = 10",
+      opciones: ["x = 2", "x = 3", "x = 4", "x = 7"],
+      correcta: 1
+    },
+    {
+      pregunta: "¿Cuál es la fórmula general para resolver ax² + bx + c = 0?",
+      opciones: [
+        "x = (−b ± √(b²−4ac)) / 2a",
+        "x = (b ± √(b²+4ac)) / 2a",
+        "x = −b / 2a",
+        "x = (−b ± √(b²−4ac)) / a"
+      ],
+      correcta: 0
+    },
+    {
+      pregunta: "Resuelve: 3x − 6 = 0",
+      opciones: ["x = −2", "x = 6", "x = 2", "x = 3"],
+      correcta: 2
+    },
+    {
+      pregunta: "¿Cuántas soluciones reales tiene una ecuación cuadrática con discriminante Δ = 0?",
+      opciones: ["Ninguna", "Una (raíz doble)", "Dos", "Infinitas"],
+      correcta: 1
+    },
+    {
+      pregunta: "Resuelve el sistema: x + y = 5 y x − y = 1",
+      opciones: ["x = 2, y = 3", "x = 3, y = 2", "x = 4, y = 1", "x = 1, y = 4"],
+      correcta: 1
+    },
+    {
+      pregunta: "¿Qué significa 'resolver una ecuación'?",
+      opciones: [
+        "Simplificar la expresión algebraica",
+        "Encontrar el valor de la incógnita que hace verdadera la igualdad",
+        "Factorizar el polinomio",
+        "Graficar la función"
+      ],
+      correcta: 1
+    },
+    {
+      pregunta: "Resuelve: x/2 = 6",
+      opciones: ["x = 3", "x = 8", "x = 12", "x = 4"],
+      correcta: 2
+    },
+    {
+      pregunta: "¿Cuál es el resultado de resolver x² = 9?",
+      opciones: ["x = 3", "x = −3", "x = 3 y x = −3", "x = 81"],
+      correcta: 2
+    }
+  ],
 
   funciones: [
     {
@@ -46,6 +98,64 @@ const QUIZ_BANK = {
         "El dominio"
       ],
       correcta: 2
+    },
+    {
+      pregunta: "¿Cuál es el dominio de f(x) = √(x − 2)?",
+      opciones: ["x > 2", "x ≥ 2", "x < 2", "Todos los reales"],
+      correcta: 1
+    },
+    {
+      pregunta: "Dada f(x) = x² y g(x) = x + 1, ¿cuánto vale (f ∘ g)(2)?",
+      opciones: ["5", "9", "6", "4"],
+      correcta: 1
+    },
+    {
+      pregunta: "Una función f(x) es par si:",
+      opciones: ["f(x) = −f(x)", "f(−x) = f(x)", "f(−x) = −f(x)", "f(0) = 0"],
+      correcta: 1
+    }
+  ],
+
+  exponenciales: [
+    {
+      pregunta: "¿Cuál es la forma general de una función exponencial?",
+      opciones: ["f(x) = x^a", "f(x) = a · bˣ", "f(x) = a + bx", "f(x) = log(x)"],
+      correcta: 1
+    },
+    {
+      pregunta: "¿Cuánto vale e⁰?",
+      opciones: ["0", "e", "1", "Indefinido"],
+      correcta: 2
+    },
+    {
+      pregunta: "En N(t) = N₀·e^(kt), si k > 0 la función representa:",
+      opciones: ["Decaimiento", "Crecimiento", "Una constante", "Una oscilación"],
+      correcta: 1
+    },
+    {
+      pregunta: "¿Cuál es la fórmula de la vida media t½?",
+      opciones: ["t½ = k / ln(2)", "t½ = ln(2) / k", "t½ = e / k", "t½ = k · ln(2)"],
+      correcta: 1
+    },
+    {
+      pregunta: "¿Cuál es la derivada de f(x) = e^(3x)?",
+      opciones: ["e^(3x)", "3·e^(3x)", "e^(3x)/3", "3x·e^(3x−1)"],
+      correcta: 1
+    },
+    {
+      pregunta: "¿Cuál es la integral de e^(2x)?",
+      opciones: ["2e^(2x) + C", "e^(2x) + C", "(1/2)e^(2x) + C", "e^(x²) + C"],
+      correcta: 2
+    },
+    {
+      pregunta: "lím(x→−∞) de eˣ es igual a:",
+      opciones: ["∞", "1", "−∞", "0"],
+      correcta: 3
+    },
+    {
+      pregunta: "En el interés compuesto continuo A = P·e^(rt), ¿qué representa r?",
+      opciones: ["El capital inicial", "El tiempo", "La tasa de interés", "El monto final"],
+      correcta: 2
     }
   ],
 
@@ -84,6 +194,21 @@ const QUIZ_BANK = {
       pregunta: "¿Cuánto vale lím(x→∞) de 1/x?",
       opciones: ["1", "∞", "0", "−1"],
       correcta: 2
+    },
+    {
+      pregunta: "¿Cuánto vale lím(x→0) de sen(x)/x?",
+      opciones: ["0", "∞", "1", "Indefinido"],
+      correcta: 2
+    },
+    {
+      pregunta: "Si lím(x→a⁻) f(x) = 3 y lím(x→a⁺) f(x) = 5, entonces el límite en a:",
+      opciones: ["Es 4", "Es 3", "Es 5", "No existe"],
+      correcta: 3
+    },
+    {
+      pregunta: "¿Cuánto vale lím(x→2) de (x² − 4)/(x − 2)?",
+      opciones: ["0", "2", "4", "Indefinido"],
+      correcta: 2
     }
   ],
 
@@ -116,6 +241,21 @@ const QUIZ_BANK = {
     {
       pregunta: "¿Cuál es la derivada de f(x) = sen(x)?",
       opciones: ["−sen(x)", "cos(x)", "−cos(x)", "tan(x)"],
+      correcta: 1
+    },
+    {
+      pregunta: "¿Cuál es la derivada de f(x) = eˣ?",
+      opciones: ["xeˣ⁻¹", "eˣ + 1", "eˣ", "1/eˣ"],
+      correcta: 2
+    },
+    {
+      pregunta: "¿Cuál es la derivada de f(x) = ln(x)?",
+      opciones: ["ln(x)/x", "1/x", "x·ln(x)", "eˣ"],
+      correcta: 1
+    },
+    {
+      pregunta: "Dada f(x) = 4x³ − 2x, ¿cuánto vale f'(1)?",
+      opciones: ["2", "10", "12", "6"],
       correcta: 1
     }
   ],
@@ -155,6 +295,21 @@ const QUIZ_BANK = {
       pregunta: "¿Cuál es la integral de xⁿ (n ≠ −1)?",
       opciones: ["nxⁿ⁻¹", "xⁿ⁺¹ + C", "xⁿ⁺¹/(n+1) + C", "xⁿ/n + C"],
       correcta: 2
+    },
+    {
+      pregunta: "¿Cuál es la integral de cos(x)?",
+      opciones: ["−sen(x) + C", "sen(x) + C", "tan(x) + C", "−cos(x) + C"],
+      correcta: 1
+    },
+    {
+      pregunta: "¿Cuál es la integral de eˣ?",
+      opciones: ["eˣ/x + C", "xeˣ + C", "eˣ + C", "eˣ⁻¹ + C"],
+      correcta: 2
+    },
+    {
+      pregunta: "Calcula ∫₀² 2x dx",
+      opciones: ["2", "4", "6", "8"],
+      correcta: 1
     }
   ],
 
@@ -188,6 +343,26 @@ const QUIZ_BANK = {
       pregunta: "El primer teorema de traslación establece que L{eᵃᵗf(t)} =",
       opciones: ["F(s+a)", "F(s−a)", "eᵃˢF(s)", "F(s)/a"],
       correcta: 1
+    },
+    {
+      pregunta: "¿Cuál es la Transformada de Laplace de f(t) = t?",
+      opciones: ["1/s", "1/s²", "2/s²", "s"],
+      correcta: 1
+    },
+    {
+      pregunta: "¿Cuál es la Transformada de Laplace de sen(ωt)?",
+      opciones: ["ω/(s²+ω²)", "s/(s²+ω²)", "ω²/(s²+ω²)", "1/(s+ω)"],
+      correcta: 0
+    },
+    {
+      pregunta: "La Transformada de Laplace convierte una ecuación diferencial en:",
+      opciones: [
+        "Otra ecuación diferencial más simple",
+        "Una ecuación algebraica en s",
+        "Una serie de Fourier",
+        "Una integral doble"
+      ],
+      correcta: 1
     }
   ],
 
@@ -216,6 +391,21 @@ const QUIZ_BANK = {
       pregunta: "La serie armónica Σ 1/n:",
       opciones: ["Converge a π", "Converge a 1", "Diverge", "Converge a ln(2)"],
       correcta: 2
+    },
+    {
+      pregunta: "¿Cuál es el término general de la sucesión 2, 4, 6, 8, ...?",
+      opciones: ["aₙ = n", "aₙ = 2n", "aₙ = 2ⁿ", "aₙ = n + 2"],
+      correcta: 1
+    },
+    {
+      pregunta: "La razón de la serie geométrica 3, 6, 12, 24, ... es:",
+      opciones: ["3", "1/2", "6", "2"],
+      correcta: 3
+    },
+    {
+      pregunta: "La suma de una serie geométrica infinita convergente es:",
+      opciones: ["a₁ · r", "a₁ / (1 − r)", "a₁ · (1 − r)", "a₁ / r"],
+      correcta: 1
     }
   ],
 
@@ -254,60 +444,96 @@ const QUIZ_BANK = {
       pregunta: "El teorema de convolución de Fourier establece que F{f*g} =",
       opciones: ["F(ω) + G(ω)", "F(ω) − G(ω)", "F(ω)·G(ω)", "F(ω)/G(ω)"],
       correcta: 2
+    },
+    {
+      pregunta: "¿Cuántos coeficientes tiene una serie de Fourier?",
+      opciones: ["Solo uno (a₀)", "Finitos", "Infinitos", "Depende del período"],
+      correcta: 2
+    },
+    {
+      pregunta: "Para una función par, la serie de Fourier solo contiene:",
+      opciones: ["Términos seno", "Términos coseno", "Términos tangente", "Todos por igual"],
+      correcta: 1
+    },
+    {
+      pregunta: "El período de f(x) = sen(2x) es:",
+      opciones: ["π/2", "π", "2π", "4π"],
+      correcta: 1
     }
   ],
+
   ecuacionesDiferenciales: [
-  {
-    pregunta: "¿Qué caracteriza a una ecuación diferencial ordinaria (EDO)?",
-    opciones: [
-      "Contiene derivadas parciales",
-      "Tiene más de una variable independiente",
-      "Contiene derivadas respecto a una sola variable independiente",
-      "No contiene derivadas"
-    ],
-    correcta: 2
-  },
-  {
-    pregunta: "La ecuación dy/dx = ky representa un modelo de:",
-    opciones: [
-      "Movimiento armónico",
-      "Crecimiento o decaimiento exponencial",
-      "Ecuación de onda",
-      "Serie de Fourier"
-    ],
-    correcta: 1
-  },
-  {
-    pregunta: "¿Cuál es el orden de la ecuación d²y/dx² + 3dy/dx + y = 0?",
-    opciones: [
-      "Primer orden",
-      "Segundo orden",
-      "Tercer orden",
-      "Orden indefinido"
-    ],
-    correcta: 1
-  },
-  {
-    pregunta: "Una ecuación diferencial lineal cumple que:",
-    opciones: [
-      "La variable dependiente aparece elevada a potencias mayores que 1",
-      "Las derivadas se multiplican entre sí",
-      "La variable dependiente y sus derivadas aparecen de forma lineal",
-      "Siempre tiene solución exponencial"
-    ],
-    correcta: 2
-  },
-  {
-    pregunta: "El método de separación de variables se utiliza cuando:",
-    opciones: [
-      "La ecuación puede escribirse como f(y)dy = g(x)dx",
-      "La ecuación tiene derivadas parciales",
-      "La ecuación es de segundo orden",
-      "No existen condiciones iniciales"
-    ],
-    correcta: 0
-  }
-]
+    {
+      pregunta: "¿Qué caracteriza a una ecuación diferencial ordinaria (EDO)?",
+      opciones: [
+        "Contiene derivadas parciales",
+        "Tiene más de una variable independiente",
+        "Contiene derivadas respecto a una sola variable independiente",
+        "No contiene derivadas"
+      ],
+      correcta: 2
+    },
+    {
+      pregunta: "La ecuación dy/dx = ky representa un modelo de:",
+      opciones: [
+        "Movimiento armónico",
+        "Crecimiento o decaimiento exponencial",
+        "Ecuación de onda",
+        "Serie de Fourier"
+      ],
+      correcta: 1
+    },
+    {
+      pregunta: "¿Cuál es el orden de la ecuación d²y/dx² + 3dy/dx + y = 0?",
+      opciones: [
+        "Primer orden",
+        "Segundo orden",
+        "Tercer orden",
+        "Orden indefinido"
+      ],
+      correcta: 1
+    },
+    {
+      pregunta: "Una ecuación diferencial lineal cumple que:",
+      opciones: [
+        "La variable dependiente aparece elevada a potencias mayores que 1",
+        "Las derivadas se multiplican entre sí",
+        "La variable dependiente y sus derivadas aparecen de forma lineal",
+        "Siempre tiene solución exponencial"
+      ],
+      correcta: 2
+    },
+    {
+      pregunta: "El método de separación de variables se utiliza cuando:",
+      opciones: [
+        "La ecuación puede escribirse como f(y)dy = g(x)dx",
+        "La ecuación tiene derivadas parciales",
+        "La ecuación es de segundo orden",
+        "No existen condiciones iniciales"
+      ],
+      correcta: 0
+    },
+    {
+      pregunta: "¿Qué es una condición inicial en una EDO?",
+      opciones: [
+        "El orden de la ecuación",
+        "El valor de la solución (o sus derivadas) en un punto específico",
+        "El coeficiente del término de mayor orden",
+        "La variable independiente"
+      ],
+      correcta: 1
+    },
+    {
+      pregunta: "La solución general de dy/dx = 2x es:",
+      opciones: ["y = 2", "y = x² + C", "y = 2x + C", "y = x + C"],
+      correcta: 1
+    },
+    {
+      pregunta: "¿Cuántas condiciones iniciales se necesitan para una EDO de segundo orden?",
+      opciones: ["Ninguna", "Una", "Dos", "Tres"],
+      correcta: 2
+    }
+  ]
 };
 
 // ── Inicializar quiz ───────────────────────────────
@@ -317,10 +543,16 @@ function initQuiz(topicId) {
   if (!container) return;
 
   const bank = QUIZ_BANK[topicId];
-  if (!bank) { container.innerHTML = `<p style="color:#f87171">Quiz no disponible para este tema.</p>`; return; }
+  if (!bank) {
+    container.innerHTML = `<p style="color:#f87171">Quiz no disponible para este tema.</p>`;
+    return;
+  }
 
-  // Seleccionar 3 preguntas al azar
-  const shuffled = [...bank].sort(() => Math.random() - 0.5).slice(0, 3);
+  // Guardar el topicId para el botón de reintentar
+  container.dataset.topic = topicId;
+
+  // Seleccionar 5 preguntas al azar
+  const shuffled = [...bank].sort(() => Math.random() - 0.5).slice(0, 5);
   container.dataset.questions = JSON.stringify(shuffled);
   container.dataset.current   = 0;
   container.dataset.score     = 0;
@@ -342,7 +574,7 @@ function renderQuestion(container, questions, idx) {
       <div style="display:flex; gap:6px">
         ${Array.from({length: total}, (_, i) => `
           <div style="width:8px; height:8px; border-radius:50%;
-            background:${i === idx ? 'var(--accent)' : 'var(--bg3)'}; 
+            background:${i === idx ? 'var(--accent)' : 'var(--bg3)'};
             border:1px solid ${i < idx ? 'var(--accent)' : 'var(--border)'}">
           </div>`).join("")}
       </div>
@@ -391,26 +623,26 @@ function selectAnswer(selected) {
   // Colorear correcta e incorrecta
   buttons.forEach((b, i) => {
     if (i === correct) {
-      b.style.background    = "rgba(52,211,153,0.12)";
-      b.style.borderColor   = "#34d399";
-      b.style.color         = "#34d399";
-      b.querySelector("span").style.background   = "rgba(52,211,153,0.2)";
-      b.querySelector("span").style.borderColor  = "#34d399";
-      b.querySelector("span").style.color        = "#34d399";
+      b.style.background  = "rgba(52,211,153,0.12)";
+      b.style.borderColor = "#34d399";
+      b.style.color       = "#34d399";
+      b.querySelector("span").style.background  = "rgba(52,211,153,0.2)";
+      b.querySelector("span").style.borderColor = "#34d399";
+      b.querySelector("span").style.color       = "#34d399";
     }
     if (i === selected && selected !== correct) {
-      b.style.background    = "rgba(248,113,113,0.1)";
-      b.style.borderColor   = "#f87171";
-      b.style.color         = "#f87171";
+      b.style.background  = "rgba(248,113,113,0.1)";
+      b.style.borderColor = "#f87171";
+      b.style.color       = "#f87171";
       b.querySelector("span").style.background  = "rgba(248,113,113,0.15)";
       b.querySelector("span").style.borderColor = "#f87171";
       b.querySelector("span").style.color       = "#f87171";
     }
   });
 
-  const isCorrect  = selected === correct;
-  const newScore   = isCorrect ? score + 1 : score;
-  const isLast     = idx === questions.length - 1;
+  const isCorrect = selected === correct;
+  const newScore  = isCorrect ? score + 1 : score;
+  const isLast    = idx === questions.length - 1;
 
   container.dataset.score   = newScore;
   container.dataset.current = idx + 1;
@@ -420,7 +652,9 @@ function selectAnswer(selected) {
       <span style="font-size:13px; color:${isCorrect ? '#34d399' : '#f87171'}">
         ${isCorrect ? "✓ ¡Correcto!" : `✗ La respuesta correcta era: ${q.opciones[correct]}`}
       </span>
-      <button onclick="${isLast ? `showResult(${newScore}, ${questions.length})` : `renderQuestion(document.getElementById('quiz'), JSON.parse(document.getElementById('quiz').dataset.questions), ${idx + 1})`}"
+      <button onclick="${isLast
+        ? `showResult(${newScore}, ${questions.length})`
+        : `renderQuestion(document.getElementById('quiz'), JSON.parse(document.getElementById('quiz').dataset.questions), ${idx + 1})`}"
         style="background:var(--accent); border:none; border-radius:var(--radius-sm);
         padding:8px 18px; font-family:var(--sans); font-size:13px;
         font-weight:600; color:white; cursor:pointer; transition:opacity 0.18s">
@@ -434,17 +668,20 @@ function selectAnswer(selected) {
 function showResult(score, total) {
   const container = document.getElementById("quiz");
   const pct       = Math.round((score / total) * 100);
-  const msg       = score === total ? "¡Perfecto! Dominaste el tema 🎉"
-                  : score >= 2     ? "¡Bien! Estás en buen camino 👍"
-                  : "Sigue repasando, tú puedes 💪";
-  const color     = score === total ? "#34d399" : score >= 2 ? "#fbbf24" : "#f87171";
+  const msg       = score === total  ? "¡Perfecto! Dominaste el tema 🎉"
+                  : score >= 4       ? "¡Muy bien! Casi lo tienes 👍"
+                  : score >= 3       ? "¡Bien! Sigue practicando 💪"
+                  : "Sigue repasando, tú puedes 📚";
+  const color     = score === total  ? "#34d399"
+                  : score >= 3       ? "#fbbf24"
+                  : "#f87171";
 
   container.innerHTML = `
     <div style="text-align:center; padding:16px 0">
       <div style="font-size:48px; margin-bottom:12px">
-        ${score === total ? "🏆" : score >= 2 ? "⭐" : "📚"}
+        ${score === total ? "🏆" : score >= 3 ? "⭐" : "📚"}
       </div>
-      <div style="font-family:var(--serif); font-size:28px; font-style:italic;
+      <div style="font-family:var(--serif); font-size:32px; font-style:italic;
         color:${color}; margin-bottom:8px">
         ${score} / ${total}
       </div>

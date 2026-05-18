@@ -16,6 +16,9 @@ function toggleTheme() {
 function applyTheme() {
   if (localStorage.getItem("theme") === "light") {
     document.body.classList.add("light-mode");
+
+    const icon = document.querySelector("#theme-btn .material-symbols-rounded");
+    if (icon) icon.textContent = "dark_mode";
   }
 }
 

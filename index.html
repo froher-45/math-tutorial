@@ -14,16 +14,21 @@
   <div class="bg-grid"></div>
   <div class="bg-glow"></div>
 
-  <header class="header">
-    <a class="logo" href="index.html">
-      <span class="logo-symbol">∑</span>
-      <span class="logo-text">MathGen</span>
-    </a>
-    <nav>
-      <a href="#temas">Temas</a>
-      <a href="acerca.html">Acerca de</a>
-    </nav>
-  </header>
+ <header class="header">
+  <a class="logo" href="index.html">
+    <span class="logo-symbol">∑</span>
+    <span class="logo-text">MathGen</span>
+  </a>
+  <nav>
+    <a href="#temas">Temas</a>
+    <a href="acerca.html">Acerca de</a>
+
+    <button id="theme-btn" onclick="toggleTheme()" title="Cambiar tema">
+      <span class="material-symbols-rounded">light_mode</span>
+    </button>
+
+  </nav>
+</header>
 
   <div class="hero">
     <div class="hero-tag">Tutoriales · Ejercicios · Paso a paso</div>
@@ -120,6 +125,10 @@
   </main>
 
   <footer class="footer">MathGen · Proyecto académico · Hecho con HTML, CSS y GitHub Pages</footer>
+
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded" rel="stylesheet">
+
+  <script src="components.js"></script>
 
 </body>
 </html>
