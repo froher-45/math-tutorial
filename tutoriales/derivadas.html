@@ -8,32 +8,49 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Figtree:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../tutorial.css">
+  <style>
+    /* Estilos para el índice de contenido */
+    .toc-list { list-style: none; padding-left: 0; margin-top: 10px; }
+    .toc-list li { margin-bottom: 6px; }
+    .toc-list a { color: var(--accent2); text-decoration: none; font-size: 14px; transition: opacity 0.2s; }
+    .toc-list a:hover { opacity: 0.7; text-decoration: underline; }
+  </style>
 </head>
 <body>
 
   <div class="bg-grid"></div>
   <div class="bg-glow"></div>
 
-  <!-- ══ HEADER ══ -->
   <header></header>
 
   <div class="layout">
 
-    <!-- ══ SIDEBAR ══ -->
     <aside id="menu-lateral" class="sidebar"></aside>
 
-    <!-- ══ CONTENIDO ══ -->
     <main class="content">
 
-      <!-- HERO -->
       <h1>Derivadas</h1>
+      
+      <div class="note-box" style="margin-bottom: 2rem;">
+        <strong style="color: var(--accent); text-transform: uppercase; font-size: 11px; letter-spacing: 1px;">Contenido de esta lección</strong>
+        <ul class="toc-list">
+          <li><a href="#concepto">1. ¿Qué es una Derivada?</a></li>
+          <li><a href="#notacion">2. Notación y Definición Formal</a></li>
+          <li><a href="#reglas">3. Reglas Básicas de Derivación</a></li>
+          <li><a href="#exponenciales">4. Derivadas de Funciones Exponenciales</a></li>
+          <li><a href="#trigonometricas">5. Derivadas de Funciones Trigonométricas</a></li>
+          <li><a href="#resumen">6. Tabla Resumen</a></li>
+          <li><a href="#interactivo">7. Herramientas Interactivas</a></li>
+        </ul>
+      </div>
+
       <p style="font-size:15px;color:var(--text2);line-height:1.8;margin-bottom:32px;max-width:620px;">
         La <strong>derivada</strong> mide cómo cambia una función en cada instante.
         Es la herramienta central del cálculo diferencial y la base del análisis matemático moderno.
       </p>
 
-      <!-- ══ SECCIÓN 1 — DERIVADAS ══ -->
-      <h2 id="derivadas">¿Qué es una Derivada?</h2>
+      <div class="divider"></div>
+      <h2 id="concepto">1. ¿Qué es una Derivada?</h2>
       <p>
         La <strong>derivada</strong> de una función mide la <em>tasa de cambio instantánea</em> de esa función
         en un punto dado. Geométricamente, representa la <strong>pendiente de la recta tangente</strong>
@@ -44,7 +61,7 @@
         <div class="info-card">
           <div class="info-card-icon">📈</div>
           <h3>Tasa de cambio</h3>
-          <p>¿Qué tan rápido cambia <em>f(x)</em> cuando <em>x</em> aumenta un poquito?</p>
+          <p>¿Qué tan rápido cambia $f(x)$ cuando $x$ aumenta un poquito?</p>
         </div>
         <div class="info-card">
           <div class="info-card-icon">📐</div>
@@ -54,31 +71,34 @@
         <div class="info-card">
           <div class="info-card-icon">⚡</div>
           <h3>Cambio instantáneo</h3>
-          <p>No el promedio entre dos puntos, sino el valor exacto en un instante.</p>
+          <p>No el promedio entre dos puntos, sino el valor exacto en un instante preciso.</p>
         </div>
       </div>
 
-      <!-- ══ SECCIÓN 2 — NOTACIÓN ══ -->
-      <h2 id="notacion">Notación</h2>
-      <p>Existen varias formas equivalentes de escribir la derivada:</p>
+      <div class="divider"></div>
+      <h2 id="notacion">2. Notación y Definición Formal</h2>
+      <p>Existen varias formas equivalentes de escribir la derivada en los libros de texto:</p>
 
       <div class="example-box">
         <div class="label">Notaciones equivalentes</div>
-        <pre>f'(x)          ← Notación de Lagrange (prima)
-dy/dx          ← Notación de Leibniz
-d/dx [f(x)]    ← Operador diferencial
-Ḟ(x)           ← Notación de Newton (punto)</pre>
+        <ul>
+          <li><strong>Notación de Lagrange (prima):</strong> \( f'(x) \) o \( y' \)</li>
+          <li><strong>Notación de Leibniz:</strong> \( \frac{dy}{dx} \)</li>
+          <li><strong>Operador diferencial:</strong> \( \frac{d}{dx} [f(x)] \)</li>
+          <li><strong>Notación de Newton:</strong> \( \dot{y} \) (usada principalmente en física para el tiempo)</li>
+
+        </ul>
       </div>
 
       <div class="example-box">
-        <div class="label">Definición formal (límite)</div>
-        <pre>f'(x) = lím  f(x + h) − f(x)
-        h→0  ─────────────────
-                    h</pre>
+        <div class="label">Definición formal (Por Límite)</div>
+        <p>Matemáticamente, la derivada nace de evaluar el límite cuando la distancia entre dos puntos se vuelve casi cero:</p>
+        $$ f'(x) = \lim_{h \to 0} \frac{f(x + h) - f(x)}{h} $$
       </div>
 
-      <!-- ══ SECCIÓN 3 — REGLAS ══ -->
-      <h2 id="reglas">Reglas Básicas de Derivación</h2>
+      <div class="divider"></div>
+      <h2 id="reglas">3. Reglas Básicas de Derivación</h2>
+      <p>No usamos el límite para cada problema. Utilizamos estas reglas directas:</p>
 
       <div class="accordion">
 
@@ -90,12 +110,10 @@ d/dx [f(x)]    ← Operador diferencial
           <div class="accordion-body">
             <div class="example-box">
               <div class="label">Fórmula</div>
-              <pre>Si f(x) = c  →  f'(x) = 0
-
-Ejemplo:
-f(x) = 7  →  f'(x) = 0</pre>
+              $$ \frac{d}{dx} [c] = 0 $$
+              <p><strong>Ejemplo:</strong> Si \( f(x) = 7 \), entonces \( f'(x) = 0 \)</p>
             </div>
-            <p>Una constante no cambia, así que su tasa de cambio es cero.</p>
+            <p>Una constante no cambia (es una línea plana), así que su tasa de cambio siempre es cero.</p>
           </div>
         </div>
 
@@ -107,14 +125,16 @@ f(x) = 7  →  f'(x) = 0</pre>
           <div class="accordion-body">
             <div class="example-box">
               <div class="label">Fórmula</div>
-              <pre>d/dx [xⁿ] = n · xⁿ⁻¹
+              $$ \frac{d}{dx} [x^n] = n \cdot x^{n-1} $$
+              <p><strong>Ejemplos:</strong></p>
+              <ul>
+                <li>\( f(x) = x^4 \quad \rightarrow \quad f'(x) = 4x^3 \)</li>
+<li>\( f(x) = x \quad \rightarrow \quad f'(x) = 1 \)</li>
+<li>\( f(x) = x^{-2} \quad \rightarrow \quad f'(x) = -2x^{-3} \)</li>
 
-Ejemplos:
-f(x) = x⁴  →  f'(x) = 4x³
-f(x) = x   →  f'(x) = 1
-f(x) = x⁻² →  f'(x) = −2x⁻³</pre>
+              </ul>
             </div>
-            <p>Baja el exponente y resta 1. La regla más usada en cálculo.</p>
+            <p>El truco es simple: baja el exponente multiplicando al frente y réstale 1. Es la regla más usada en cálculo.</p>
           </div>
         </div>
 
@@ -126,11 +146,10 @@ f(x) = x⁻² →  f'(x) = −2x⁻³</pre>
           <div class="accordion-body">
             <div class="example-box">
               <div class="label">Fórmula</div>
-              <pre>d/dx [f(x) ± g(x)] = f'(x) ± g'(x)
-
-Ejemplo:
-f(x) = x³ + 5x² − 2x + 1
-f'(x) = 3x² + 10x − 2</pre>
+              $$ \frac{d}{dx} [f(x) \pm g(x)] = f'(x) \pm g'(x) $$
+              <p><strong>Ejemplo:</strong></p>
+              $$ f(x) = x^3 + 5x^2 - 2x + 1 $$
+              $$ f'(x) = 3x^2 + 10x - 2 $$
             </div>
           </div>
         </div>
@@ -143,11 +162,9 @@ f'(x) = 3x² + 10x − 2</pre>
           <div class="accordion-body">
             <div class="example-box">
               <div class="label">Fórmula</div>
-              <pre>d/dx [f·g] = f'·g + f·g'
-
-Ejemplo:
-h(x) = x² · sin(x)
-h'(x) = 2x·sin(x) + x²·cos(x)</pre>
+              $$ \frac{d}{dx} [f(x) \cdot g(x)] = f'(x)g(x) + f(x)g'(x) $$
+              <p><strong>Ejemplo:</strong> \( h(x) = x^2 \cdot \sin(x) \)</p>
+              $$ h'(x) = 2x \sin(x) + x^2 \cos(x) $$
             </div>
           </div>
         </div>
@@ -160,12 +177,9 @@ h'(x) = 2x·sin(x) + x²·cos(x)</pre>
           <div class="accordion-body">
             <div class="example-box">
               <div class="label">Fórmula</div>
-              <pre>d/dx [f/g] = (f'·g − f·g') / g²
-
-Ejemplo:
-h(x) = sin(x) / x
-h'(x) = (cos(x)·x − sin(x)·1) / x²
-       = (x·cos(x) − sin(x)) / x²</pre>
+              $$ \frac{d}{dx} \left[ \frac{f(x)}{g(x)} \right] = \frac{f'(x)g(x) - f(x)g'(x)}{[g(x)]^2} $$
+              <p><strong>Ejemplo:</strong> \( h(x) = \frac{\sin(x)}{x} \)</p>
+              $$ h'(x) = \frac{\cos(x) \cdot x - \sin(x) \cdot 1}{x^2} = \frac{x \cos(x) - \sin(x)}{x^2} $$
             </div>
           </div>
         </div>
@@ -178,11 +192,9 @@ h'(x) = (cos(x)·x − sin(x)·1) / x²
           <div class="accordion-body">
             <div class="example-box">
               <div class="label">Fórmula</div>
-              <pre>d/dx [f(g(x))] = f'(g(x)) · g'(x)
-
-Ejemplo:
-h(x) = (3x + 1)⁵
-h'(x) = 5(3x + 1)⁴ · 3 = 15(3x + 1)⁴</pre>
+              $$ \frac{d}{dx} [f(g(x))] = f'(g(x)) \cdot g'(x) $$
+              <p><strong>Ejemplo:</strong> \( h(x) = (3x + 1)^5 \)</p>
+              $$ h'(x) = 5(3x + 1)^4 \cdot 3 = 15(3x + 1)^4 $$
             </div>
             <p>Deriva la función exterior manteniendo la interior intacta, luego multiplica por la derivada de la interior.</p>
           </div>
@@ -190,82 +202,120 @@ h'(x) = 5(3x + 1)⁴ · 3 = 15(3x + 1)⁴</pre>
 
       </div>
 
-      <!-- ══ SECCIÓN 4 — EXPONENCIALES ══ -->
-      <h2 id="exponenciales">Derivadas de Funciones Exponenciales</h2>
+      <div class="divider"></div>
+      <h2 id="exponenciales">4. Derivadas de Funciones Exponenciales</h2>
 
       <div class="example-box">
-        <div class="label">Paso a paso — e^(2x)</div>
-        <pre>f(x) = e^(2x)
+        <div class="label">Paso a paso — La Regla de la Cadena en Exponenciales</div>
+        <p><strong>Problema:</strong> Derivar \( f(x) = e^{2x} \)</p>
+<ul>
+  <li><strong>Paso 1:</strong> Identificar la función exterior: \( e^u \)</li>
+  <li><strong>Paso 2:</strong> Identificar la función interior: \( u = 2x \) (Su derivada es \( u' = 2 \))</li>
+  <li><strong>Paso 3:</strong> Aplicar regla de la cadena: La derivada de \( e^u \) es \( e^u \cdot u' \).</li>
+</ul>
 
-Paso 1: Identificar la función exterior: eˣ
-Paso 2: Identificar la función interior: g(x) = 2x
-Paso 3: Aplicar regla de la cadena
-f'(x) = e^(2x) · 2 = 2e^(2x)</pre>
+        $$ f'(x) = e^{2x} \cdot 2 = 2e^{2x} $$
       </div>
 
       <table class="math-table">
         <thead><tr><th>Función</th><th>Derivada</th></tr></thead>
         <tbody>
-          <tr><td>eˣ</td><td>eˣ</td></tr>
-          <tr><td>e^(kx)</td><td>k · e^(kx)</td></tr>
-          <tr><td>aˣ</td><td>aˣ · ln(a)</td></tr>
-          <tr><td>ln(x)</td><td>1/x</td></tr>
-          <tr><td>log_a(x)</td><td>1 / (x · ln a)</td></tr>
+<tr><td>\( e^x \)</td><td>\( e^x \)</td></tr>
+<tr><td>\( e^{kx} \)</td><td>\( k \cdot e^{kx} \)</td></tr>
+<tr><td>\( a^x \)</td><td>\( a^x \cdot \ln(a) \)</td></tr>
+<tr><td>\( \ln(x) \)</td><td>\( \frac{1}{x} \)</td></tr>
+<tr><td>\( \log_a(x) \)</td><td>\( \frac{1}{x \cdot \ln(a)} \)</td></tr>
         </tbody>
       </table>
 
       <div class="note-box">
-        💡 <strong>Nota:</strong> La función <em>eˣ</em> es la única función que es su propia derivada.
-        Es por eso que <em>e</em> es tan especial en matemáticas.
+        💡 <strong>Nota:</strong> La función $e^x$ es la única función que es su propia derivada.
+        Es por eso que el número de Euler ($e$) es tan especial en matemáticas.
       </div>
 
-      <!-- ══ SECCIÓN 5 — TRIGONOMÉTRICAS ══ -->
-      <h2 id="trigonometricas">Derivadas de Funciones Trigonométricas</h2>
+      <div class="divider"></div>
+      <h2 id="trigonometricas">5. Derivadas de Funciones Trigonométricas</h2>
 
       <table class="math-table">
         <thead><tr><th>Función</th><th>Derivada</th><th>Regla clave</th></tr></thead>
         <tbody>
-          <tr><td>sin(x)</td><td>cos(x)</td><td>Gira +90°</td></tr>
-          <tr><td>cos(x)</td><td>−sin(x)</td><td>Gira +90° con signo −</td></tr>
-          <tr><td>tan(x)</td><td>sec²(x)</td><td>= 1/cos²(x)</td></tr>
-          <tr><td>sec(x)</td><td>sec(x)·tan(x)</td><td></td></tr>
-          <tr><td>csc(x)</td><td>−csc(x)·cot(x)</td><td></td></tr>
-          <tr><td>cot(x)</td><td>−csc²(x)</td><td></td></tr>
+          <tr><td>\( \sin(x) \)</td><td>\( \cos(x) \)</td><td>Gira +90°</td></tr>
+<tr><td>\( \cos(x) \)</td><td>\( -\sin(x) \)</td><td>Gira +90° con signo negativo</td></tr>
+<tr><td>\( \tan(x) \)</td><td>\( \sec^2(x) \)</td><td>Equivale a \( \frac{1}{\cos^2(x)} \)</td></tr>
+<tr><td>\( \sec(x) \)</td><td>\( \sec(x)\tan(x) \)</td><td></td></tr>
+<tr><td>\( \csc(x) \)</td><td>\( -\csc(x)\cot(x) \)</td><td></td></tr>
+<tr><td>\( \cot(x) \)</td><td>\( -\csc^2(x) \)</td><td></td></tr>
         </tbody>
       </table>
 
       <div class="example-box">
-        <div class="label">Paso a paso — sin(3x²)</div>
-        <pre>f(x) = sin(3x²)
-
-Paso 1: Función exterior: sin(u) → derivada: cos(u)
-Paso 2: Función interior: u = 3x² → u' = 6x
-Paso 3: Regla de la cadena:
-f'(x) = cos(3x²) · 6x = 6x·cos(3x²)</pre>
+       <div class="label">Paso a paso — \( \sin(3x^2) \)</div>
+<p><strong>Problema:</strong> Derivar \( f(x) = \sin(3x^2) \)</p>
+<ul>
+  <li><strong>Paso 1:</strong> Función exterior: \( \sin(u) \rightarrow \) derivada: \( \cos(u) \)</li>
+  <li><strong>Paso 2:</strong> Función interior: \( u = 3x^2 \rightarrow \) derivada: \( u' = 6x \)</li>
+          <li><strong>Paso 3:</strong> Regla de la cadena:</li>
+        </ul>
+        $$ f'(x) = \cos(3x^2) \cdot 6x = 6x \cos(3x^2) $$
       </div>
 
-      <!-- ══ TABLA RESUMEN ══ -->
+      <div class="divider"></div>
+      <h2 id="resumen">6. Tabla Resumen</h2>
       <table class="math-table" id="tabla">
-        <caption>Tabla Resumen — Función y su Derivada</caption>
-        <thead><tr><th>Función f(x)</th><th>Derivada f'(x)</th></tr></thead>
-        <tbody>
-          <tr><td>c (constante)</td><td>0</td></tr>
-          <tr><td>xⁿ</td><td>n·xⁿ⁻¹</td></tr>
-          <tr><td>eˣ</td><td>eˣ</td></tr>
-          <tr><td>e^(kx)</td><td>k·e^(kx)</td></tr>
-          <tr><td>ln(x)</td><td>1/x</td></tr>
-          <tr><td>sin(x)</td><td>cos(x)</td></tr>
-          <tr><td>cos(x)</td><td>−sin(x)</td></tr>
-          <tr><td>tan(x)</td><td>sec²(x)</td></tr>
-          <tr><td>aˣ</td><td>aˣ·ln(a)</td></tr>
-          <tr><td>1/x</td><td>−1/x²</td></tr>
-        </tbody>
-      </table>
+  <caption>Función Original vs Su Derivada</caption>
+  <thead>
+    <tr>
+      <th>Función \( f(x) \)</th>
+      <th>Derivada \( f'(x) \)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>\( c \quad (\text{constante}) \)</td>
+      <td>\( 0 \)</td>
+    </tr>
+    <tr>
+      <td>\( x^n \)</td>
+      <td>\( n \cdot x^{n-1} \)</td>
+    </tr>
+    <tr>
+      <td>\( e^x \)</td>
+      <td>\( e^x \)</td>
+    </tr>
+    <tr>
+      <td>\( e^{kx} \)</td>
+      <td>\( k \cdot e^{kx} \)</td>
+    </tr>
+    <tr>
+      <td>\( \ln(x) \)</td>
+      <td>\( \frac{1}{x} \)</td>
+    </tr>
+    <tr>
+      <td>\( \sin(x) \)</td>
+      <td>\( \cos(x) \)</td>
+    </tr>
+    <tr>
+      <td>\( \cos(x) \)</td>
+      <td>\( -\sin(x) \)</td>
+    </tr>
+    <tr>
+      <td>\( \tan(x) \)</td>
+      <td>\( \sec^2(x) \)</td>
+    </tr>
+    <tr>
+      <td>\( a^x \)</td>
+      <td>\( a^x \cdot \ln(a) \)</td>
+    </tr>
+    <tr>
+      <td>\( \frac{1}{x} \)</td>
+      <td>\( -\frac{1}{x^2} \)</td>
+    </tr>
+  </tbody>
+</table>
 
-      <!-- ══ HERRAMIENTAS ══ -->
-      <h2 id="interactivo" style="font-size:18px;margin-top:48px;">Herramientas Interactivas</h2>
+      <div class="divider"></div>
+      <h2 id="interactivo" style="font-size:18px;margin-top:20px;">7. Herramientas Interactivas</h2>
 
-      <!-- GRAFICADOR -->
       <div class="gen-box" id="graficador">
         <h2>📊 Graficador — Función y su Derivada</h2>
         <p>Ingresa una función para ver su gráfica y la de su derivada simultáneamente.</p>
@@ -284,7 +334,6 @@ f'(x) = cos(3x²) · 6x = 6x·cos(3x²)</pre>
         <p id="graficaError" class="error-msg"></p>
       </div>
 
-      <!-- RECTA TANGENTE -->
       <div class="gen-box" id="tangente">
         <h2>📐 Recta Tangente Dinámica</h2>
         <p>Mueve el slider para ver la recta tangente moverse en tiempo real sobre la función.</p>
@@ -306,10 +355,8 @@ f'(x) = cos(3x²) · 6x = 6x·cos(3x²)</pre>
         <canvas id="tanCanvas" style="height:280px;"></canvas>
       </div>
 
-      <!-- ══ GENERADOR ══ -->
       <div id="generador-container" data-tema="derivadas"></div>
 
-      <!-- CALCULADORA -->
       <div class="gen-box" id="calculadora">
         <h2>🧮 Calculadora de Derivadas</h2>
         <p>Ingresa una función básica y obtén su derivada simbólica.</p>
@@ -331,14 +378,12 @@ f'(x) = cos(3x²) · 6x = 6x·cos(3x²)</pre>
         </div>
       </div>
 
-          <!-- ══ QUIZ ══ -->
       <div class="gen-box">
         <h2>Quiz — Pon a prueba lo que aprendiste</h2>
         <p>Responde 5 preguntas para verificar tu comprensión del tema.</p>
         <div id="quiz" data-topic="derivadas"></div>
       </div>
 
-      <!-- ══ NAVEGACIÓN ══ -->
       <div class="nav-btns">
         <a href="limites.html" class="btn outline">❮ Anterior: Límites</a>
         <a href="integral.html" class="btn">Siguiente: Integrales ❯</a>
@@ -482,14 +527,14 @@ f'(x) = cos(3x²) · 6x = 6x·cos(3x²)</pre>
     });
 
   </script>
-<script src="../components.js"></script>
+  <script src="../components.js"></script>
   <script src="../ejercicios.js"></script>
   <script src="../quiz.js"></script>
   <script src="../app.js"></script>
   <script>
-    loadComponents("derivadas");
-    initQuiz("derivadas");
+    if(typeof loadComponents === "function") loadComponents("derivadas");
+    if(typeof initQuiz === "function") initQuiz("derivadas");
   </script>
-
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </body>
 </html>

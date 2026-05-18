@@ -8,6 +8,13 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Figtree:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../tutorial.css">
+  <style>
+    /* Estilos para el índice de contenido */
+    .toc-list { list-style: none; padding-left: 0; margin-top: 10px; }
+    .toc-list li { margin-bottom: 6px; }
+    .toc-list a { color: var(--accent2); text-decoration: none; font-size: 14px; transition: opacity 0.2s; }
+    .toc-list a:hover { opacity: 0.7; text-decoration: underline; }
+  </style>
 </head>
 <body>
 
@@ -22,181 +29,188 @@
 
     <main class="content">
       <h1>Series y Sucesiones</h1>
+      
+      <div class="note-box" style="margin-bottom: 2rem;">
+        <strong style="color: var(--accent); text-transform: uppercase; font-size: 11px; letter-spacing: 1px;">Contenido de esta lección</strong>
+        <ul class="toc-list">
+          <li><a href="#sucesiones">1. Sucesiones</a></li>
+          <li><a href="#series">2. Series Infinitas</a></li>
+          <li><a href="#criterios">3. Criterios de Convergencia</a></li>
+          <li><a href="#geometrica">4. Serie Geométrica (Detalle)</a></li>
+          <li><a href="#taylor">5. Series de Taylor y Exponenciales</a></li>
+          <li><a href="#ejemplo">6. Ejemplo Paso a Paso</a></li>
+        </ul>
+      </div>
+
       <p>
         Una <strong>sucesión</strong> es una lista ordenada de números generados por una regla.
         Una <strong>serie</strong> es la suma de todos los términos de una sucesión.
-        La pregunta clave: ¿esa suma tiene un valor finito?
+        La pregunta clave en el cálculo avanzado es: ¿esa suma infinita tiene un valor finito?
       </p>
 
-      <h2>Sucesiones</h2>
+      <div class="divider"></div>
+      <h2 id="sucesiones">1. Sucesiones</h2>
 
       <div class="example-box">
-        <div class="label">Definición</div>
-        <pre>Una sucesión es una función  a : ℕ → ℝ
-
-Se escribe:  a₁, a₂, a₃, …, aₙ, …
-Se denota como {aₙ} o simplemente aₙ.
-
-Converge a L si:   lim  aₙ = L   (los términos se acercan a L)
-                  n→∞
-Si no converge a ningún valor → diverge.</pre>
+        <div class="label">Definición Formal</div>
+        <p>Una sucesión es una función que asigna un número real a cada número natural: \( a : \mathbb{N} \to \mathbb{R} \)</p>
+        <p>Se escribe como una lista:</p>
+        $$ a_1, a_2, a_3, \dots, a_n, \dots $$
+        <p>Y se denota comúnmente como \( \{a_n\} \) o simplemente \( a_n \).</p>
+        <p><strong>Convergencia:</strong> Una sucesión converge a un límite \( L \) si los términos se acercan a \( L \) conforme \( n \) crece:</p>
+        $$ \lim_{n \to \infty} a_n = L $$
+        <p>Si el límite no existe o es infinito, la sucesión <strong>diverge</strong>.</p>
       </div>
 
       <div class="example-box">
         <div class="label">Ejemplos de sucesiones</div>
-        <pre>aₙ = n         →  1, 2, 3, 4, …           Diverge → ∞
-aₙ = 1/n       →  1, 1/2, 1/3, 1/4, …    Converge → 0
-aₙ = (0.5)ⁿ    →  0.5, 0.25, 0.125, …   Converge → 0
-aₙ = (−1)ⁿ     →  −1, 1, −1, 1, …        Diverge (oscila)</pre>
+        <ul>
+          <li>\( a_n = n \quad \rightarrow \quad 1, 2, 3, 4, \dots \quad \) <strong>(Diverge a \( \infty \))</strong></li>
+          <li>\( a_n = \frac{1}{n} \quad \rightarrow \quad 1, \frac{1}{2}, \frac{1}{3}, \frac{1}{4}, \dots \quad \) <strong>(Converge a \( 0 \))</strong></li>
+          <li>\( a_n = (0.5)^n \quad \rightarrow \quad 0.5, 0.25, 0.125, \dots \quad \) <strong>(Converge a \( 0 \))</strong></li>
+          <li>\( a_n = (-1)^n \quad \rightarrow \quad -1, 1, -1, 1, \dots \quad \) <strong>(Diverge, oscila)</strong></li>
+        </ul>
       </div>
 
-      <h2>Series infinitas</h2>
+      <div class="divider"></div>
+      <h2 id="series">2. Series Infinitas</h2>
 
       <div class="example-box">
         <div class="label">Definición</div>
-        <pre>Dada una sucesión {aₙ}, su serie es:
-
-  Σ aₙ = a₁ + a₂ + a₃ + …   (suma desde n=1 hasta ∞)
-
-La n-ésima suma parcial agrupa los primeros n términos:
-  Sₙ = a₁ + a₂ + … + aₙ
-
-Si  lim  Sₙ = S  (finito) → la serie converge a S.
-   n→∞
-
-Ejemplos:
-  Σ 1/n²  → converge a π²/6  ✓
-  Σ 1/n   → diverge (serie armónica)  ✗</pre>
+        <p>Dada una sucesión \( \{a_n\} \), su serie es la suma desde \( n=1 \) hasta el infinito:</p>
+        $$ \sum_{n=1}^{\infty} a_n = a_1 + a_2 + a_3 + \dots $$
+        <p>La <strong>n-ésima suma parcial</strong> agrupa los primeros \( n \) términos:</p>
+        $$ S_n = a_1 + a_2 + \dots + a_n $$
+        <p>Si el límite de las sumas parciales \( \lim_{n \to \infty} S_n = S \) es un número finito, decimos que la serie <strong>converge a \( S \)</strong>.</p>
+        <br>
+        <p><strong>Ejemplos clásicos:</strong></p>
+        <ul>
+          <li>\( \sum \frac{1}{n^2} \quad \rightarrow \quad \) Converge a \( \frac{\pi^2}{6} \) ✓</li>
+          <li>\( \sum \frac{1}{n} \quad \rightarrow \quad \) Diverge (Serie Armónica) ✗</li>
+        </ul>
       </div>
 
-      <h2>Criterios de convergencia</h2>
-      <p>Herramientas para decidir si una serie converge <em>sin calcular la suma exacta</em>.</p>
+      <div class="divider"></div>
+      <h2 id="criterios">3. Criterios de Convergencia</h2>
+      <p>Son herramientas matemáticas para decidir si una serie converge <em>sin necesidad de calcular su suma exacta</em>.</p>
 
       <div class="example-box">
-        <div class="label">1 — Prueba del término general</div>
-        <pre>Si  lim  aₙ ≠ 0  →  la serie diverge.
-   n→∞
-
-⚠️  Si lim aₙ = 0, la prueba no concluye nada.
-    (Ej: la serie armónica Σ 1/n diverge aunque lim 1/n = 0)
-
-Ejemplo: Σ n/(n+1) diverge porque lim n/(n+1) = 1 ≠ 0</pre>
+        <div class="label">1 — Prueba del término general (Divergencia)</div>
+        <p>Si el límite del término general no es cero, es imposible que la suma finita exista:</p>
+        $$ \text{Si } \lim_{n \to \infty} a_n \neq 0 \implies \text{La serie diverge.} $$
+        <p>⚠️ <em>Cuidado:</em> Si el límite es \( 0 \), la prueba no concluye nada (Ej: la serie armónica \( \sum 1/n \) diverge aunque su límite es 0).</p>
+        <p><strong>Ejemplo:</strong> \( \sum \frac{n}{n+1} \) diverge porque \( \lim_{n \to \infty} \frac{n}{n+1} = 1 \neq 0 \).</p>
       </div>
 
       <div class="example-box">
         <div class="label">2 — Serie geométrica</div>
-        <pre>Σ a · rⁿ  converge si |r| < 1   →   S = a / (1 − r)
-         diverge  si |r| ≥ 1
-
-Ejemplo: Σ (0.5)ⁿ  →  S = 1 / (1 − 0.5) = 2</pre>
+        <p>Tiene la forma \( \sum a \cdot r^n \).</p>
+        <ul>
+          <li>Converge si el valor absoluto de la razón \( |r| < 1 \). La suma es \( S = \frac{a}{1 - r} \).</li>
+          <li>Diverge si \( |r| \ge 1 \).</li>
+        </ul>
+        <p><strong>Ejemplo:</strong> \( \sum (0.5)^n \rightarrow S = \frac{1}{1 - 0.5} = 2 \)</p>
       </div>
 
       <div class="example-box">
-        <div class="label">3 — Prueba del cociente (Ratio)</div>
-        <pre>L = lim |a_(n+1) / aₙ|
-   n→∞
-
-  L < 1  →  converge absolutamente
-  L > 1  →  diverge
-  L = 1  →  prueba inconclusa
-
-Útil cuando hay factoriales o exponentes con n.
-Ejemplo: Σ n!/nⁿ</pre>
+        <div class="label">3 — Prueba del cociente (Criterio de D'Alembert)</div>
+        <p>Calculamos el límite de la división entre el término siguiente y el actual:</p>
+        $$ L = \lim_{n \to \infty} \left| \frac{a_{n+1}}{a_n} \right| $$
+        <ul>
+          <li>\( L < 1 \rightarrow \) Converge absolutamente.</li>
+          <li>\( L > 1 \rightarrow \) Diverge.</li>
+          <li>\( L = 1 \rightarrow \) Prueba inconclusa.</li>
+        </ul>
+        <p><em>Súper útil cuando hay factoriales ( \( n! \) ) o exponentes constantes a la \( n \).</em></p>
       </div>
 
       <div class="example-box">
-        <div class="label">4 — Prueba de la raíz</div>
-        <pre>L = lim  ⁿ√|aₙ|
-   n→∞
-
-  L < 1  →  converge
-  L > 1  →  diverge
-  L = 1  →  inconclusa
-
-Útil cuando el término completo está elevado a la n.
-Ejemplo: Σ (2n/(n+1))ⁿ</pre>
+        <div class="label">4 — Prueba de la raíz (Criterio de Cauchy)</div>
+        <p>Calculamos el límite de la raíz n-ésima del término:</p>
+        $$ L = \lim_{n \to \infty} \sqrt[n]{|a_n|} $$
+        <ul>
+          <li>\( L < 1 \rightarrow \) Converge.</li>
+          <li>\( L > 1 \rightarrow \) Diverge.</li>
+          <li>\( L = 1 \rightarrow \) Prueba inconclusa.</li>
+        </ul>
+        <p><em>Útil cuando todo el término está elevado a la \( n \). Ej: \( \sum \left(\frac{2n}{n+1}\right)^n \)</em></p>
       </div>
 
-      <h2>Serie geométrica — detalle</h2>
+      <div class="divider"></div>
+      <h2 id="geometrica">4. Serie geométrica — Detalle</h2>
 
       <div class="example-box">
         <div class="label">Forma y fórmula</div>
-        <pre>Σ a · rⁿ = a + ar + ar² + ar³ + …
-
-  a → primer término (o coeficiente)
-  r → razón común (ratio)
-
-Suma cuando |r| < 1:   S = a / (1 − r)</pre>
+        $$ \sum_{n=0}^{\infty} a \cdot r^n = a + ar + ar^2 + ar^3 + \dots $$
+        <ul>
+          <li><strong>\( a \):</strong> Primer término (o coeficiente).</li>
+          <li><strong>\( r \):</strong> Razón común (ratio).</li>
+        </ul>
+        <p>Si \( |r| < 1 \), la suma exacta es: \( S = \frac{a}{1 - r} \)</p>
       </div>
 
       <div class="example-box">
-        <div class="label">Demostración (por qué S = a/(1−r))</div>
-        <pre>Paso 1: Sea  S = a + ar + ar² + ar³ + …
-
-Paso 2: Multiplica por r:  rS = ar + ar² + ar³ + …
-
-Paso 3: Resta:  S − rS = a   (todo lo demás se cancela)
-
-Paso 4: Despeja:  S(1 − r) = a   →   S = a / (1 − r)  ✓</pre>
+        <div class="label">Demostración (Por qué \( S = \frac{a}{1-r} \))</div>
+        <p><strong>Paso 1:</strong> Escribimos la suma infinita \( S \).</p>
+        $$ S = a + ar + ar^2 + ar^3 + \dots $$
+        <p><strong>Paso 2:</strong> Multiplicamos todo por \( r \).</p>
+        $$ rS = ar + ar^2 + ar^3 + \dots $$
+        <p><strong>Paso 3:</strong> Restamos la segunda ecuación a la primera (\( S - rS \)). ¡Todos los términos del medio se cancelan!</p>
+        $$ S - rS = a $$
+        <p><strong>Paso 4:</strong> Factorizamos \( S \) y despejamos.</p>
+        $$ S(1 - r) = a \quad \implies \quad S = \frac{a}{1 - r} \quad \text{✓} $$
       </div>
 
-      <h2>Series de Taylor y conexión con exponenciales</h2>
+      <div class="divider"></div>
+      <h2 id="taylor">5. Series de Taylor y conexión con exponenciales</h2>
 
       <div class="example-box">
-        <div class="label">Series de potencias importantes</div>
-        <pre>eˣ   = Σ xⁿ/n!        = 1 + x + x²/2! + x³/3! + …
-       Converge para todo x ∈ ℝ.
-
-sin x = Σ (−1)ⁿ x^(2n+1)/(2n+1)!
-       = x − x³/6 + x⁵/120 − …
-       Solo términos impares.
-
-cos x = Σ (−1)ⁿ x^(2n)/(2n)!
-       = 1 − x²/2 + x⁴/24 − …
-       Solo términos pares.</pre>
+        <div class="label">Series de Maclaurin (Taylor en 0) importantes</div>
+        <p><strong>Función Exponencial (\( e^x \)):</strong> Converge para todo \( x \in \mathbb{R} \).</p>
+        $$ e^x = \sum_{n=0}^{\infty} \frac{x^n}{n!} = 1 + x + \frac{x^2}{2!} + \frac{x^3}{3!} + \dots $$
+        
+        <p><strong>Seno (\( \sin x \)):</strong> Compuesta solo por términos impares.</p>
+        $$ \sin x = \sum_{n=0}^{\infty} \frac{(-1)^n x^{2n+1}}{(2n+1)!} = x - \frac{x^3}{3!} + \frac{x^5}{5!} - \dots $$
+        
+        <p><strong>Coseno (\( \cos x \)):</strong> Compuesta solo por términos pares.</p>
+        $$ \cos x = \sum_{n=0}^{\infty} \frac{(-1)^n x^{2n}}{(2n)!} = 1 - \frac{x^2}{2!} + \frac{x^4}{4!} - \dots $$
       </div>
 
       <div class="note-box">
-        💡 <strong>Conexión:</strong> La serie geométrica Σ rⁿ = 1/(1−r) es un caso especial.
-        La función eˣ generaliza esto para cualquier x — los factoriales controlan el crecimiento
-        para que la serie siempre converja. Estas series son la base del Análisis de Fourier y la
-        Transformada de Laplace.
+        💡 <strong>Conexión:</strong> La serie geométrica \( \sum r^n = \frac{1}{1-r} \) es un caso especial y limitado. La función \( e^x \) generaliza esto para cualquier \( x \); los factoriales en el denominador crecen tan rápido que controlan el valor de la fracción para que la serie siempre converja. ¡Estas series (junto a la fórmula de Euler) son el ADN puro del Análisis de Fourier y la Transformada de Laplace!
       </div>
 
-      <h2>Ejemplo paso a paso</h2>
-      <p>Determina si la serie Σ 3·(0.5)ⁿ converge y calcula su suma:</p>
+      <div class="divider"></div>
+      <h2 id="ejemplo">6. Ejemplo paso a paso</h2>
+      <p>Determina si la serie \( \sum_{n=0}^{\infty} 3(0.5)^n \) converge y calcula su suma exacta:</p>
 
       <div class="example-box">
-        <div class="label">Paso a paso</div>
-        <pre>Σ 3·(0.5)ⁿ   →   a = 3,  r = 0.5
-
-Paso 1: Verificar si |r| < 1
-  |0.5| = 0.5 < 1  ✓  →  la serie converge
-
-Paso 2: Aplicar la fórmula de serie geométrica
-  S = a / (1 − r)
-
-Paso 3: Sustituir
-  S = 3 / (1 − 0.5)
-    = 3 / 0.5
-    = 6
-
-La serie converge a S = 6.</pre>
+        <div class="label">Resolución</div>
+        <p>Al observar la forma \( a \cdot r^n \), identificamos que es una serie geométrica con \( a = 3 \) y \( r = 0.5 \).</p>
+        
+        <p><strong>Paso 1:</strong> Verificar el criterio de convergencia (\( |r| < 1 \)).</p>
+        $$ |0.5| = 0.5 < 1 \quad \text{(¡Cumple! La serie converge)} $$
+        
+        <p><strong>Paso 2:</strong> Aplicar la fórmula de la suma de la serie geométrica.</p>
+        $$ S = \frac{a}{1 - r} $$
+        
+        <p><strong>Paso 3:</strong> Sustituir los valores y resolver.</p>
+        $$ S = \frac{3}{1 - 0.5} $$
+        $$ S = \frac{3}{0.5} $$
+        $$ S = 6 $$
+        <p><strong>Conclusión:</strong> La serie infinita converge a un valor exacto de \( S = 6 \).</p>
       </div>
 
-      <!-- ══ GENERADOR ══ -->
       <div id="generador-container" data-tema="series"></div>
 
-      <!-- ══ QUIZ ══ -->
       <div class="gen-box">
         <h2>Quiz — Pon a prueba lo que aprendiste</h2>
         <p>Responde 3 preguntas para verificar tu comprensión del tema.</p>
         <div id="quiz" data-topic="series_y_sucesiones"></div>
       </div>
 
-      <!-- ══ NAVEGACIÓN ══ -->
       <div class="nav-btns">
-        <a href="integral.html" class="btn">❮ Anterior: Integrales</a>
+        <a href="integral.html" class="btn outline">❮ Anterior: Integrales</a>
         <a href="diferenciales.html" class="btn">Siguiente: Ecuaciones Diferenciales ❯</a>
       </div>
     </main>
@@ -208,8 +222,9 @@ La serie converge a S = 6.</pre>
   <script src="../quiz.js"></script>
   <script src="../app.js"></script>
   <script>
-    loadComponents("series_y_sucesiones");
-    initQuiz("series_y_sucesiones");
+    if(typeof loadComponents === "function") loadComponents("series_y_sucesiones");
+    if(typeof initQuiz === "function") initQuiz("series_y_sucesiones");
   </script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </body>
 </html>

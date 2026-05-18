@@ -7,7 +7,15 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Figtree:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
   <link rel="stylesheet" href="../tutorial.css">
+  <style>
+    /* Estilos para el índice de contenido */
+    .toc-list { list-style: none; padding-left: 0; margin-top: 10px; }
+    .toc-list li { margin-bottom: 6px; }
+    .toc-list a { color: var(--accent2); text-decoration: none; font-size: 14px; transition: opacity 0.2s; }
+    .toc-list a:hover { opacity: 0.7; text-decoration: underline; }
+  </style>
 </head>
 <body>
 
@@ -22,244 +30,222 @@
 
     <main class="content">
       <h1>Funciones</h1>
-      <p>
-        Una <strong>función</strong> es una relación entre dos conjuntos donde a cada elemento
-        del conjunto de entrada (dominio) le corresponde exactamente un elemento del conjunto
-        de salida (rango). Se denota como <em>f(x)</em>.
-      </p>
-
-      <h2>Notación</h2>
-      <p>Una función se escribe de la siguiente forma:</p>
-
-      <div class="example-box">
-        <div class="label">Ejemplo</div>
-        <pre>f(x) = expresión en términos de x
-
-Ejemplo: f(x) = 2x + 3</pre>
+      
+      <div class="note-box" style="margin-bottom: 2rem;">
+        <strong style="color: var(--accent); text-transform: uppercase; font-size: 11px; letter-spacing: 1px;">Contenido de esta lección</strong>
+        <ul class="toc-list">
+          <li><a href="#notacion">1. Notación y Concepto</a></li>
+          <li><a href="#dominio">2. Dominio y Rango</a></li>
+          <li><a href="#tipos">3. Tipos de Funciones</a></li>
+          <li><a href="#evaluacion">4. Evaluación de Funciones</a></li>
+          <li><a href="#operaciones">5. Operaciones entre Funciones</a></li>
+          <li><a href="#composicion">6. Composición de Funciones</a></li>
+          <li><a href="#inversa">7. Función Inversa</a></li>
+          <li><a href="#par-impar">8. Funciones Par e Impar</a></li>
+        </ul>
       </div>
 
-      <p>Donde <em>x</em> es la variable independiente y <em>f(x)</em> es el valor que produce la función.</p>
-
-      <!-- ══ DOMINIO Y RANGO ══ -->
-      <hr class="section-hr">
-      <h2>Dominio y Rango</h2>
       <p>
-        El <strong>dominio</strong> es el conjunto de todos los valores que puede tomar <em>x</em>.
-        El <strong>rango</strong> (o imagen) es el conjunto de todos los valores posibles de <em>f(x)</em>.
+        Una <strong>función</strong> es una relación entre dos conjuntos donde a cada elemento del conjunto de entrada (dominio) le corresponde exactamente un elemento del conjunto de salida (rango). Se denota comúnmente como \( f(x) \).
+      </p>
+
+      <h2 id="notacion">1. Notación</h2>
+      <p>Una función se escribe de la siguiente forma expresando una variable en términos de otra:</p>
+
+      <div class="example-box">
+        <div class="label">Ejemplo de Notación</div>
+        $$ f(x) = 2x + 3 $$
+        <p>Donde \( x \) es la variable <strong>independiente</strong> (la que nosotros elegimos) y \( f(x) \) es el valor <strong>dependiente</strong> que produce la función (el resultado).</p>
+      </div>
+
+      <div class="divider"></div>
+      <h2 id="dominio">2. Dominio y Rango</h2>
+      <p>
+        El <strong>dominio</strong> es el conjunto de todos los valores válidos que puede tomar \( x \).
+        El <strong>rango</strong> (o imagen) es el conjunto de todos los valores posibles resultantes de \( f(x) \).
       </p>
 
       <div class="example-box">
         <div class="label">Ejemplo — Dominio y Rango</div>
-        <pre>f(x) = √(x − 3)
-
-Dominio: x − 3 ≥ 0  →  x ≥ 3  →  D = [3, +∞)
-Rango:   √(x − 3) ≥ 0          →  R = [0, +∞)
-
-Explicación: no podemos sacar raíz de un número negativo,
-por eso x debe ser mayor o igual a 3.</pre>
+        <p><strong>Dada la función:</strong> \( f(x) = \sqrt{x - 3} \)</p>
+        <p><strong>Dominio:</strong> No podemos sacar raíz cuadrada de un número negativo en los reales, por lo que lo de adentro debe ser mayor o igual a cero.</p>
+        $$ x - 3 \ge 0 \quad \rightarrow \quad x \ge 3 $$
+        $$ D = [3, +\infty) $$
+        <p><strong>Rango:</strong> El resultado de una raíz cuadrada principal siempre es positivo o cero.</p>
+        $$ R = [0, +\infty) $$
       </div>
 
       <div class="note-box">
-        ⚠️ <strong>Restricciones comunes de dominio:</strong><br>
-        • Denominadores: el denominador no puede ser 0.<br>
-        • Raíces pares: el radicando debe ser ≥ 0.<br>
-        • Logaritmos: el argumento debe ser &gt; 0.
+        ⚠️ <strong>Restricciones comunes para buscar el Dominio:</strong><br>
+        • <strong>Denominadores:</strong> el denominador jamás puede ser \( 0 \).<br>
+        • <strong>Raíces pares:</strong> el interior (radicando) debe ser \( \ge 0 \).<br>
+        • <strong>Logaritmos:</strong> el argumento interior debe ser estrictamente \( > 0 \).
       </div>
 
-      <!-- ══ TIPOS DE FUNCIONES ══ -->
-      <hr class="section-hr">
-      <h2>Tipos de Funciones</h2>
+      <div class="divider"></div>
+      <h2 id="tipos">3. Tipos de Funciones</h2>
       <p>Las funciones se clasifican según su expresión algebraica y comportamiento gráfico.</p>
 
       <div class="example-box">
         <div class="label">Función Lineal</div>
-        <pre>f(x) = mx + b
-
-Donde m es la pendiente y b es la ordenada al origen.
-
-Ejemplo: f(x) = 2x + 1
-  → Pendiente: 2  (sube 2 unidades por cada 1 en x)
-  → Intercepto: 1 (cruza el eje y en y = 1)
-  → Gráfica: línea recta</pre>
+        $$ f(x) = mx + b $$
+        <p>Donde \( m \) es la pendiente y \( b \) es la ordenada al origen (intercepto en \( y \)).</p>
+        <p><strong>Ejemplo:</strong> \( f(x) = 2x + 1 \)</p>
+        <ul>
+          <li><strong>Pendiente:</strong> 2 (Sube 2 unidades en \( y \) por cada 1 unidad en \( x \)).</li>
+          <li><strong>Intercepto:</strong> 1 (Cruza el eje vertical en \( y = 1 \)).</li>
+          <li><strong>Gráfica:</strong> Línea recta infinita.</li>
+        </ul>
       </div>
 
       <div class="example-box">
         <div class="label">Función Cuadrática</div>
-        <pre>f(x) = ax² + bx + c   (a ≠ 0)
-
-Ejemplo: f(x) = x² − 4x + 3
-  → Gráfica: parábola
-  → Vértice en x = −b/(2a) = 4/2 = 2
-  → f(2) = 4 − 8 + 3 = −1  →  vértice: (2, −1)
-  → Raíces: x = 1  y  x = 3</pre>
+        $$ f(x) = ax^2 + bx + c \quad (a \neq 0) $$
+        <p><strong>Ejemplo:</strong> \( f(x) = x^2 - 4x + 3 \)</p>
+        <ul>
+          <li><strong>Gráfica:</strong> Parábola.</li>
+          <li><strong>Vértice:</strong> Se calcula con \( x = \frac{-b}{2a} = \frac{4}{2} = 2 \). Al evaluar \( f(2) = 4 - 8 + 3 = -1 \). El vértice es el punto \( (2, -1) \).</li>
+          <li><strong>Raíces:</strong> Cruza el eje \( x \) en \( x = 1 \) y \( x = 3 \).</li>
+        </ul>
       </div>
 
       <div class="example-box">
         <div class="label">Función Racional</div>
-        <pre>f(x) = p(x) / q(x)   donde q(x) ≠ 0
-
-Ejemplo: f(x) = (x + 2) / (x − 1)
-  → Dominio: x ≠ 1  (el denominador no puede ser 0)
-  → Asíntota vertical: x = 1
-  → Asíntota horizontal: y = 1 (mismo grado en num. y den.)</pre>
+        $$ f(x) = \frac{p(x)}{q(x)} \quad \text{donde } q(x) \neq 0 $$
+        <p><strong>Ejemplo:</strong> \( f(x) = \frac{x + 2}{x - 1} \)</p>
+        <ul>
+          <li><strong>Dominio:</strong> \( x \neq 1 \) (el denominador no puede ser 0).</li>
+          <li><strong>Asíntota vertical:</strong> Una "pared" invisible en \( x = 1 \).</li>
+          <li><strong>Asíntota horizontal:</strong> \( y = 1 \) (al tener el mismo grado, se dividen los coeficientes principales).</li>
+        </ul>
       </div>
 
       <div class="example-box">
         <div class="label">Función Valor Absoluto</div>
-        <pre>f(x) = |x|
-
-Definición por partes:
-  f(x) =  x   si x ≥ 0
-  f(x) = −x   si x &lt; 0
-
-Ejemplo: f(x) = |x − 2|
-  → Vértice en x = 2, f(2) = 0
-  → Dominio: todos los reales  →  D = (−∞, +∞)
-  → Rango: R = [0, +∞)</pre>
+        $$ f(x) = |x| $$
+        <p>Definición formal por partes:</p>
+        $$ f(x) = \begin{cases} x & \text{si } x \ge 0 \\ -x & \text{si } x < 0 \end{cases} $$
+        <p><strong>Ejemplo:</strong> \( f(x) = |x - 2| \)</p>
+        <ul>
+          <li><strong>Vértice:</strong> En \( x = 2 \), ya que \( f(2) = 0 \). Su gráfica tiene forma de "V".</li>
+          <li><strong>Dominio:</strong> Todos los reales \( \rightarrow D = (-\infty, +\infty) \).</li>
+          <li><strong>Rango:</strong> Solo valores positivos \( \rightarrow R = [0, +\infty) \).</li>
+        </ul>
       </div>
 
-      <!-- ══ EVALUACIÓN ══ -->
-      <hr class="section-hr">
-      <h2>Evaluación de Funciones</h2>
-      <p>Evaluar una función significa sustituir <em>x</em> por un valor específico y calcular el resultado.</p>
+      <div class="divider"></div>
+      <h2 id="evaluacion">4. Evaluación de Funciones</h2>
+      <p>Evaluar una función significa sustituir la letra \( x \) por un valor específico y calcular matemáticamente el resultado.</p>
 
       <div class="example-box">
-        <div class="label">Paso a paso — Evaluación</div>
-        <pre>f(x) = 3x² − 2x + 1
-
-Evaluar en x = 4:
-
-Paso 1: Sustituir x = 4
-  f(4) = 3(4)² − 2(4) + 1
-
-Paso 2: Resolver la potencia
-  = 3(16) − 2(4) + 1
-
-Paso 3: Multiplicar
-  = 48 − 8 + 1
-
-Paso 4: Sumar y restar
-  = 41</pre>
+        <div class="label">Paso a paso — Evaluación Numérica</div>
+        <p><strong>Problema:</strong> Evaluar la función \( f(x) = 3x^2 - 2x + 1 \) cuando \( x = 4 \).</p>
+        <p><strong>Paso 1:</strong> Sustituir \( x = 4 \).</p>
+        $$ f(4) = 3(4)^2 - 2(4) + 1 $$
+        <p><strong>Paso 2:</strong> Resolver potencias y multiplicaciones.</p>
+        $$ = 3(16) - 8 + 1 $$
+        $$ = 48 - 8 + 1 $$
+        <p><strong>Resultado Final:</strong></p>
+        $$ f(4) = 41 $$
       </div>
 
       <div class="example-box">
         <div class="label">Evaluación con expresión algebraica</div>
-        <pre>g(x) = x² + 3x
-
-Evaluar g(x + 1):
-
-Paso 1: Sustituir x por (x + 1)
-  g(x + 1) = (x + 1)² + 3(x + 1)
-
-Paso 2: Expandir
-  = x² + 2x + 1 + 3x + 3
-
-Paso 3: Simplificar
-  = x² + 5x + 4</pre>
+        <p><strong>Problema:</strong> Evaluar \( g(x + 1) \) en la función \( g(x) = x^2 + 3x \).</p>
+        <p><strong>Paso 1:</strong> Sustituir cada \( x \) por la nueva expresión \( (x + 1) \).</p>
+        $$ g(x + 1) = (x + 1)^2 + 3(x + 1) $$
+        <p><strong>Paso 2:</strong> Expandir el binomio al cuadrado y distribuir el 3.</p>
+        $$ = (x^2 + 2x + 1) + (3x + 3) $$
+        <p><strong>Paso 3:</strong> Agrupar términos semejantes.</p>
+        $$ g(x + 1) = x^2 + 5x + 4 $$
       </div>
 
-      <!-- ══ OPERACIONES ══ -->
-      <hr class="section-hr">
-      <h2>Operaciones entre Funciones</h2>
-      <p>Dadas dos funciones <em>f</em> y <em>g</em>, podemos combinarlas de distintas formas:</p>
+      <div class="divider"></div>
+      <h2 id="operaciones">5. Operaciones entre Funciones</h2>
+      <p>Dadas dos funciones \( f \) y \( g \), podemos sumarlas, restarlas, multiplicarlas o dividirlas para crear nuevas funciones algebraicas.</p>
 
       <div class="example-box">
         <div class="label">Suma, Resta, Producto y Cociente</div>
-        <pre>f(x) = x + 2      g(x) = x − 1
-
-(f + g)(x) = (x + 2) + (x − 1) = 2x + 1
-(f − g)(x) = (x + 2) − (x − 1) = 3
-(f · g)(x) = (x + 2)(x − 1)   = x² + x − 2
-(f / g)(x) = (x + 2) / (x − 1)   con x ≠ 1</pre>
+        <p>Dadas \( f(x) = x + 2 \) y \( g(x) = x - 1 \):</p>
+        <p><strong>Suma:</strong></p>
+        $$ (f + g)(x) = (x + 2) + (x - 1) = 2x + 1 $$
+        <p><strong>Resta:</strong></p>
+        $$ (f - g)(x) = (x + 2) - (x - 1) = 3 $$
+        <p><strong>Multiplicación:</strong></p>
+        $$ (f \cdot g)(x) = (x + 2)(x - 1) = x^2 + x - 2 $$
+        <p><strong>División:</strong></p>
+        $$ \left(\frac{f}{g}\right)(x) = \frac{x + 2}{x - 1} \quad (\text{Restricción: } x \neq 1) $$
       </div>
 
-      <!-- ══ COMPOSICIÓN ══ -->
-      <hr class="section-hr">
-      <h2>Composición de Funciones</h2>
+      <div class="divider"></div>
+      <h2 id="composicion">6. Composición de Funciones</h2>
       <p>
-        La <strong>composición</strong> consiste en aplicar una función al resultado de otra.
-        Se denota <em>(f ∘ g)(x) = f(g(x))</em>.
+        La <strong>composición</strong> consiste en meter el resultado de una función directamente dentro de otra. Es como una cadena de montaje. Se denota \( (f \circ g)(x) = f(g(x)) \).
       </p>
 
       <div class="example-box">
         <div class="label">Paso a paso — Composición</div>
-        <pre>f(x) = 2x + 1      g(x) = x²
-
-Calcular (f ∘ g)(x) = f(g(x)):
-
-Paso 1: Aplicar g(x) primero
-  g(x) = x²
-
-Paso 2: Sustituir en f
-  f(g(x)) = f(x²) = 2(x²) + 1 = 2x² + 1
-
-Resultado: (f ∘ g)(x) = 2x² + 1
-
-Calcular (g ∘ f)(x) = g(f(x)):
-  g(f(x)) = g(2x + 1) = (2x + 1)² = 4x² + 4x + 1
-
-⚠️ Nota: f ∘ g ≠ g ∘ f  (la composición NO es conmutativa)</pre>
+        <p><strong>Problema:</strong> Dadas \( f(x) = 2x + 1 \) y \( g(x) = x^2 \), calcular \( f(g(x)) \) y \( g(f(x)) \).</p>
+        
+        <p><strong>1. Calcular \( (f \circ g)(x) = f(g(x)) \):</strong></p>
+        $$ f(g(x)) = f(x^2) = 2(x^2) + 1 = 2x^2 + 1 $$
+        
+        <p><strong>2. Calcular \( (g \circ f)(x) = g(f(x)) \):</strong></p>
+        $$ g(f(x)) = g(2x + 1) = (2x + 1)^2 = 4x^2 + 4x + 1 $$
+        
+        <p> <em>Nota: Observa que \( f(g(x)) \neq g(f(x)) \). La composición matemática NO es conmutativa.</em></p>
       </div>
 
-      <!-- ══ FUNCIÓN INVERSA ══ -->
-      <hr class="section-hr">
-      <h2>Función Inversa</h2>
+      <div class="divider"></div>
+      <h2 id="inversa">7. Función Inversa</h2>
       <p>
-        La <strong>función inversa</strong> <em>f⁻¹(x)</em> "deshace" lo que hace <em>f(x)</em>.
-        Solo existe si la función es <strong>biyectiva</strong> (uno a uno).
+        La <strong>función inversa</strong>, denotada como \( f^{-1}(x) \), es aquella que "deshace" matemáticamente lo que hizo la original. Solo existe si la función es uno a uno (biyectiva).
       </p>
 
       <div class="example-box">
         <div class="label">Paso a paso — Función Inversa</div>
-        <pre>Hallar la inversa de f(x) = 3x − 6
-
-Paso 1: Escribir y = f(x)
-  y = 3x − 6
-
-Paso 2: Despejar x en términos de y
-  y + 6 = 3x
-  x = (y + 6) / 3
-
-Paso 3: Intercambiar x e y
-  y = (x + 6) / 3
-
-Resultado: f⁻¹(x) = (x + 6) / 3
-
-Verificación: f(f⁻¹(x)) = 3·((x+6)/3) − 6 = x + 6 − 6 = x ✓</pre>
+        <p><strong>Problema:</strong> Hallar la inversa de \( f(x) = 3x - 6 \).</p>
+        <p><strong>Paso 1:</strong> Escribir la función usando \( y \).</p>
+        $$ y = 3x - 6 $$
+        <p><strong>Paso 2:</strong> Despejar la letra \( x \).</p>
+        $$ y + 6 = 3x $$
+        $$ x = \frac{y + 6}{3} $$
+        <p><strong>Paso 3:</strong> Intercambiar las letras \( x \) e \( y \).</p>
+        $$ y = \frac{x + 6}{3} $$
+        <p><strong>Resultado Final:</strong></p>
+        $$ f^{-1}(x) = \frac{x + 6}{3} $$
+        <p><em>Verificación:</em> \( f(f^{-1}(x)) = 3\left(\frac{x + 6}{3}\right) - 6 = x + 6 - 6 = x \) ✓</p>
       </div>
 
       <div class="note-box">
-        💡 <strong>Propiedad:</strong> Si <em>f(a) = b</em>, entonces <em>f⁻¹(b) = a</em>.
-        La gráfica de <em>f⁻¹</em> es el reflejo de la gráfica de <em>f</em> respecto a la recta <em>y = x</em>.
+        💡 <strong>Propiedad Gráfica:</strong> Si un punto \( (a, b) \) pertenece a la gráfica de \( f \), entonces el punto \( (b, a) \) pertenece a \( f^{-1} \). La gráfica de la inversa siempre es un reflejo de la original utilizando como espejo la recta diagonal \( y = x \).
       </div>
 
-      <!-- ══ FUNCIONES PAR E IMPAR ══ -->
-      <hr class="section-hr">
-      <h2>Funciones Par e Impar</h2>
-      <p>Esta clasificación describe la simetría de una función.</p>
+      <div class="divider"></div>
+      <h2 id="par-impar">8. Funciones Par e Impar</h2>
+      <p>Esta clasificación nos ayuda a identificar rápidamente la simetría de una gráfica sin tener que dibujarla.</p>
 
       <div class="example-box">
-        <div class="label">Par vs Impar</div>
-        <pre>Función PAR:   f(−x) = f(x)    → simétrica respecto al eje y
-Función IMPAR: f(−x) = −f(x)   → simétrica respecto al origen
-
-Ejemplos:
-  f(x) = x²    →  f(−x) = (−x)² = x²   = f(x)    → PAR
-  f(x) = x³    →  f(−x) = (−x)³ = −x³  = −f(x)   → IMPAR
-  f(x) = x + 1 →  f(−x) = −x + 1  (ni par ni impar)</pre>
+        <div class="label">Pruebas de Simetría</div>
+        <p><strong>Función PAR (Simétrica en el eje Y):</strong> El signo negativo desaparece.</p>
+        $$ f(-x) = f(x) $$
+        <p><em>Ejemplo:</em> \( f(x) = x^2 \rightarrow f(-x) = (-x)^2 = x^2 \quad \) <strong>(PAR)</strong></p>
+        
+        <p><strong>Función IMPAR (Simétrica en el origen):</strong> El signo negativo sale por completo de la función.</p>
+        $$ f(-x) = -f(x) $$
+        <p><em>Ejemplo:</em> \( f(x) = x^3 \rightarrow f(-x) = (-x)^3 = -x^3 \quad \) <strong>(IMPAR)</strong></p>
+        
+        <p><em>Nota:</em> Si al sustituir \( -x \) no obtienes ni la función original ni su versión negativa (ej. \( f(x) = x + 1 \)), la función no es ni par ni impar.</p>
       </div>
 
-      <!-- ══ GENERADOR ══ -->
       <div id="generador-container" data-tema="funciones"></div>
 
-        <!-- ══ QUIZ ══ -->
       <div class="gen-box">
         <h2>Quiz — Pon a prueba lo que aprendiste</h2>
         <p>Responde 5 preguntas para verificar tu comprensión del tema.</p>
         <div id="quiz" data-topic="funciones"></div>
       </div>
 
-      <!-- ══ NAVEGACIÓN ══ -->
       <div class="nav-btns">
         <a href="ecuaciones.html" class="btn outline">❮ Anterior: Ecuaciones</a>
         <a href="exponenciales.html" class="btn">Siguiente: Exponenciales ❯</a>
@@ -273,8 +259,9 @@ Ejemplos:
   <script src="../quiz.js"></script>
   <script src="../app.js"></script>
   <script>
-    loadComponents("funciones");
-    initQuiz("funciones");
+    if(typeof loadComponents === "function") loadComponents("funciones");
+    if(typeof initQuiz === "function") initQuiz("funciones");
   </script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </body>
 </html>
