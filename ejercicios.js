@@ -140,14 +140,13 @@ const GENERATORS = {
     basico() {
       const sol = rnd(-10, 10);
       const b   = rndNZ(1, 8);
-      const c   = b * sol + rnd(-5, 5);
-      const d   = rnd(-5, 5);
-      // bx + d = c  → x = (c - d) / b
-      const lhs = d, rhs = b * sol + d;
+      const d   = rndNZ(-8, 8);
+      // bx + d = rhs  → x = (rhs - d) / b
+      const rhs = b * sol + d;
       return {
         enunciado: `Resuelve la ecuación: ${b}x ${signo(d)} = ${rhs}`,
         pasos: [
-          { titulo: "Despejar el término con x", explicacion: `Pasamos ${d > 0 ? '+' : ''}${d} al otro lado cambiando de signo.`, formula: `${b}x = ${rhs} ${signo(-d)}` },
+          { titulo: "Despejar el término con x", explicacion: `Pasamos ${d > 0 ? '+' : '−'}${Math.abs(d)} al otro lado cambiando de signo.`, formula: `${b}x = ${rhs} ${signo(-d)}` },
           { titulo: "Simplificar el lado derecho", explicacion: `${rhs} ${d >= 0 ? '−' : '+'} ${Math.abs(d)} = ${sol * b}`, formula: `${b}x = ${sol * b}` },
           { titulo: "Dividir entre el coeficiente de x", explicacion: `Dividimos ambos lados entre ${b}.`, formula: `x = ${sol * b} ÷ ${b} = ${sol}` },
           { titulo: "Verificación", explicacion: `Sustituimos x = ${sol} en la ecuación original.`, formula: `${b}·(${sol}) ${signo(d)} = ${b * sol + d} = ${rhs} ✓` },
@@ -156,42 +155,40 @@ const GENERATORS = {
       };
     },
     intermedio() {
-      const sol = rnd(-8, 8);
-      const a = rndNZ(1, 6), b = rnd(-10, 10);
-      const c = rndNZ(1, 6), d = rnd(-10, 10);
-      // ax + b = cx + d  → x = (d - b) / (a - c)
-      const rhs = c * sol + d;
-      const lhs_n = a * sol + b;
-      if (a === c) return GENERATORS.ecuaciones.intermedio();
-      const num = d - b, den = a - c;
-      const xval = num / den;
-      if (!Number.isInteger(xval)) return GENERATORS.ecuaciones.intermedio();
+      const xval = rnd(-8, 8);
+      const a = rndNZ(2, 7);
+      let c = rndNZ(1, 6);
+      if (a === c) c = a - 1;
+      const b = rndNZ(-10, 10);
+      // ax + b = cx + d  →  (a - c)x = d - b  →  d = (a - c)*xval + b
+      const d = (a - c) * xval + b;
       return {
         enunciado: `Resuelve: ${a}x ${signo(b)} = ${c}x ${signo(d)}`,
         pasos: [
-          { titulo: "Agrupar términos con x", explicacion: "Pasamos todos los términos con x al lado izquierdo.", formula: `${a}x − ${c}x = ${d} ${signo(-b)}` },
+          { titulo: "Agrupar términos con x", explicacion: "Pasamos todos los términos con x al lado izquierdo y las constantes al derecho.", formula: `${a}x − ${c}x = ${d} ${signo(-b)}` },
           { titulo: "Simplificar cada lado", explicacion: `${a}x − ${c}x = ${a - c}x. En el lado derecho: ${d} ${signo(-b)} = ${d - b}.`, formula: `${a - c}x = ${d - b}` },
-          { titulo: "Despejar x", explicacion: `Dividimos entre ${a - c}.`, formula: `x = ${d - b} ÷ ${a - c} = ${xval}` },
-          { titulo: "Verificación", explicacion: "Comprobamos con la ecuación original.", formula: `${a}·(${xval}) ${signo(b)} = ${a * xval + b}    |    ${c}·(${xval}) ${signo(d)} = ${c * xval + d} ✓` },
+          { titulo: "Despejar x", explicacion: `Dividimos ambos lados entre ${a - c}.`, formula: `x = ${d - b} ÷ ${a - c} = ${xval}` },
+          { titulo: "Verificación", explicacion: "Comprobamos sustituyendo en la ecuación original.", formula: `${a}·(${xval}) ${signo(b)} = ${a * xval + b}    |    ${c}·(${xval}) ${signo(d)} = ${c * xval + d} ✓` },
         ],
         respuesta: `x = ${xval}`
       };
     },
     avanzado() {
       // Ecuación cuadrática: ax² + bx + c = 0 con soluciones enteras
-      const r1 = rnd(-6, 6), r2 = rnd(-6, 6);
+      const r1 = rndNZ(-6, 6), r2 = rndNZ(-6, 6);
       const A = 1, B = -(r1 + r2), C = r1 * r2;
       const disc = B * B - 4 * A * C;
+      const termB = B === 0 ? "" : ` ${signo(B)}x`;
       return {
-        enunciado: `Resuelve la ecuación cuadrática: x² ${signo(B)}x ${signo(C)} = 0`,
+        enunciado: `Resuelve la ecuación cuadrática: x²${termB} ${signo(C)} = 0`,
         pasos: [
           { titulo: "Identificar coeficientes", explicacion: "Ecuación de la forma ax² + bx + c = 0.", formula: `a = 1,   b = ${B},   c = ${C}` },
-          { titulo: "Calcular el discriminante", explicacion: "Δ = b² − 4ac", formula: `Δ = (${B})² − 4·(1)·(${C}) = ${B * B} − ${4 * C} = ${disc}` },
+          { titulo: "Calcular el discriminante", explicacion: "Δ = b² − 4ac", formula: `Δ = (${B})² − 4·(1)·(${C}) = ${B * B} − (${4 * C}) = ${disc}` },
           { titulo: "Aplicar la fórmula general", explicacion: `x = (−b ± √Δ) / 2a`, formula: `x = (−(${B}) ± √${disc}) / 2\nx = (${-B} ± ${Math.sqrt(disc)}) / 2` },
-          { titulo: "Calcular las dos soluciones", explicacion: "Tomamos una vez el signo + y otra el signo −.", formula: `x₁ = (${-B} + ${Math.sqrt(disc)}) / 2 = ${r1}\nx₂ = (${-B} − ${Math.sqrt(disc)}) / 2 = ${r2}` },
-          { titulo: "Verificación por factorización", explicacion: "Podemos expresar la ecuación como producto de factores.", formula: `(x − ${r1})(x − ${r2}) = 0` },
+          { titulo: "Calcular las dos soluciones", explicacion: "Tomamos una vez el signo + y otra el signo −.", formula: `x₁ = (${-B} + ${Math.sqrt(disc)}) / 2 = ${Math.max(r1, r2)}\nx₂ = (${-B} − ${Math.sqrt(disc)}) / 2 = ${Math.min(r1, r2)}` },
+          { titulo: "Verificación por factorización", explicacion: "Podemos expresar la ecuación como producto de factores.", formula: `(x ${signo(-r1)})(x ${signo(-r2)}) = 0` },
         ],
-        respuesta: `x₁ = ${r1},   x₂ = ${r2}`
+        respuesta: r1 === r2 ? `x = ${r1} (raíz doble)` : `x₁ = ${Math.max(r1, r2)},   x₂ = ${Math.min(r1, r2)}`
       };
     }
   },
@@ -204,11 +201,11 @@ const GENERATORS = {
       const a = rndNZ(-5,5), b = rndNZ(-5,5), c = rndNZ(-5,5), d = rndNZ(-5,5);
       const r0 = a+c, r1 = b+d;
       return {
-        enunciado: `Suma los polinomios: P(x) = ${a}x + ${b}   y   Q(x) = ${c}x + ${d}`,
+        enunciado: `Suma los polinomios: P(x) = ${a}x ${signo(b)}   y   Q(x) = ${c}x ${signo(d)}`,
         pasos: [
-          { titulo: "Identificar términos semejantes", explicacion: "Agrupamos los términos del mismo grado.", formula: `(${a}x + ${c}x) + (${b} + ${d})` },
-          { titulo: "Sumar coeficientes de x", explicacion: `${a} + ${c} = ${r0}`, formula: `${r0}x` },
-          { titulo: "Sumar términos independientes", explicacion: `${b} + ${d} = ${r1}`, formula: `${r1}` },
+          { titulo: "Identificar términos semejantes", explicacion: "Agrupamos los términos del mismo grado.", formula: `(${a}x ${signo(c)}x) + (${b} ${signo(d)})` },
+          { titulo: "Sumar coeficientes de x", explicacion: `${a} + (${c}) = ${r0}`, formula: `${r0}x` },
+          { titulo: "Sumar términos independientes", explicacion: `${b} + (${d}) = ${r1}`, formula: `${r1}` },
           { titulo: "Resultado", explicacion: "Escribimos el polinomio resultante.", formula: `P(x) + Q(x) = ${r0}x ${signo(r1)}` },
         ],
         respuesta: `${r0}x ${signo(r1)}`
@@ -221,8 +218,8 @@ const GENERATORS = {
       return {
         enunciado: `Suma: P(x) = ${a}x² ${signo(b)}x ${signo(c)}   y   Q(x) = ${d}x² ${signo(e)}x ${signo(f)}`,
         pasos: [
-          { titulo: "Agrupar por grado", explicacion: "Sumamos coeficientes del mismo grado.", formula: `(${a}+${d})x² + (${b}+${e})x + (${c}+${f})` },
-          { titulo: "Calcular cada grupo", explicacion: `Grado 2: ${a}+${d}=${r2} | Grado 1: ${b}+${e}=${r1} | Grado 0: ${c}+${f}=${r0}`, formula: `${r2}x² ${signo(r1)}x ${signo(r0)}` },
+          { titulo: "Agrupar por grado", explicacion: "Sumamos coeficientes del mismo grado.", formula: `(${a} ${signo(d)})x² + (${b} ${signo(e)})x + (${c} ${signo(f)})` },
+          { titulo: "Calcular cada grupo", explicacion: `Grado 2: ${a}+(${d})=${r2} | Grado 1: ${b}+(${e})=${r1} | Grado 0: ${c}+(${f})=${r0}`, formula: `${r2}x² ${signo(r1)}x ${signo(r0)}` },
         ],
         respuesta: `${r2}x² ${signo(r1)}x ${signo(r0)}`
       };
@@ -419,7 +416,7 @@ const GENERATORS = {
         pasos: [
           { titulo: "Sustituir el valor de t", explicacion: `Reemplazamos t = ${t} en la función.`, formula: `N(${t}) = ${A}·e^(${k}·${t})` },
           { titulo: "Calcular el exponente", explicacion: `${k} × ${t} = ${k * t}`, formula: `N(${t}) = ${A}·e^(${k * t})` },
-          { titulo: "Evaluar e^(${k * t})", explicacion: `e^(${k * t}) ≈ ${round2(Math.exp(k * t))}`, formula: `N(${t}) = ${A} × ${round2(Math.exp(k * t))}` },
+          { titulo: `Evaluar e^(${k * t})`, explicacion: `e^(${k * t}) ≈ ${round2(Math.exp(k * t))}`, formula: `N(${t}) = ${A} × ${round2(Math.exp(k * t))}` },
           { titulo: "Resultado final", explicacion: "Multiplicamos.", formula: `N(${t}) ≈ ${res}` },
         ],
         respuesta: `N(${t}) ≈ ${res}`
@@ -447,7 +444,7 @@ const GENERATORS = {
         enunciado: `Se invierte $${P} a una tasa continua del ${round2(r * 100)}% anual. ¿Cuánto habrá en ${t} años?`,
         pasos: [
           { titulo: "Modelo de interés compuesto continuo", explicacion: "A(t) = P·e^(rt), donde P es el capital inicial y r la tasa.", formula: `A(t) = ${P}·e^(${r}·t)` },
-          { titulo: "Sustituir t = ${t}", explicacion: `Evaluamos en t = ${t} años.`, formula: `A(${t}) = ${P}·e^(${r}·${t})` },
+          { titulo: `Sustituir t = ${t}`, explicacion: `Evaluamos en t = ${t} años.`, formula: `A(${t}) = ${P}·e^(${r}·${t})` },
           { titulo: "Calcular el exponente", explicacion: `${r} × ${t} = ${round2(r * t)}`, formula: `A(${t}) = ${P}·e^(${round2(r * t)})` },
           { titulo: "Evaluar la exponencial", explicacion: `e^(${round2(r * t)}) ≈ ${round2(Math.exp(r * t))}`, formula: `A(${t}) = ${P} × ${round2(Math.exp(r * t))}` },
           { titulo: "Resultado", explicacion: "Multiplicamos para obtener el monto final.", formula: `A(${t}) ≈ $${A}` },
@@ -672,11 +669,11 @@ const GENERATORS = {
         enunciado: `Resuelve: dy/dx + ${a}y = ${b}`,
         pasos: [
           { titulo: "Identificar la forma", explicacion: "Es una ecuación lineal de primer orden: dy/dx + P(x)y = Q(x)", formula: `P(x) = ${a},   Q(x) = ${b}` },
-          { titulo: "Factor integrante", explicacion: "μ(x) = e^(∫P dx) = e^(∫${a} dx)", formula: `μ(x) = e^(${a}x)` },
+          { titulo: "Factor integrante", explicacion: `μ(x) = e^(∫P dx) = e^(∫${a} dx)`, formula: `μ(x) = e^(${a}x)` },
           { titulo: "Multiplicar ambos lados por μ", explicacion: "", formula: `e^(${a}x)·dy/dx + ${a}·e^(${a}x)·y = ${b}·e^(${a}x)` },
-          { titulo: "Reconocer la derivada del producto", explicacion: "El lado izquierdo es d/dx[y·e^(${a}x)]", formula: `d/dx[y·e^(${a}x)] = ${b}·e^(${a}x)` },
+          { titulo: "Reconocer la derivada del producto", explicacion: `El lado izquierdo es d/dx[y·e^(${a}x)]`, formula: `d/dx[y·e^(${a}x)] = ${b}·e^(${a}x)` },
           { titulo: "Integrar ambos lados", explicacion: "", formula: `y·e^(${a}x) = (${b}/${a})·e^(${a}x) + C` },
-          { titulo: "Solución general", explicacion: "Dividimos entre e^(${a}x).", formula: `y = ${b}/${a} + C·e^(−${a}x)` },
+          { titulo: "Solución general", explicacion: `Dividimos entre e^(${a}x).`, formula: `y = ${b}/${a} + C·e^(−${a}x)` },
         ],
         respuesta: `y = ${b}/${a} + C·e^(−${a}x)`
       };
@@ -768,8 +765,8 @@ const GENERATORS = {
         enunciado: `Usa la propiedad de desplazamiento temporal: si F{f(t)} = F(ω), ¿cuánto vale F{f(t − ${t0})}?`,
         pasos: [
           { titulo: "Propiedad de desplazamiento temporal", explicacion: "Un retardo en el tiempo equivale a multiplicar en frecuencia por un exponencial complejo.", formula: `F{f(t − t₀)} = e^(−jωt₀) · F(ω)` },
-          { titulo: "Sustituir t₀ = ${t0}", explicacion: `Reemplazamos el valor del retardo.`, formula: `F{f(t − ${t0})} = e^(−jω·${t0}) · F(ω)` },
-          { titulo: "Interpretar el resultado", explicacion: "El módulo |F(ω)| no cambia; solo se modifica la fase en −${t0}ω radianes.", formula: `|F{f(t−${t0})}| = |F(ω)|   (misma amplitud)\n∠ = ∠F(ω) − ${t0}ω   (fase desplazada)` },
+          { titulo: `Sustituir t₀ = ${t0}`, explicacion: `Reemplazamos el valor del retardo.`, formula: `F{f(t − ${t0})} = e^(−jω·${t0}) · F(ω)` },
+          { titulo: "Interpretar el resultado", explicacion: `El módulo |F(ω)| no cambia; solo se modifica la fase en −${t0}ω radianes.`, formula: `|F{f(t−${t0})}| = |F(ω)|   (misma amplitud)\n∠ = ∠F(ω) − ${t0}ω   (fase desplazada)` },
           { titulo: "Conclusión", explicacion: "El desplazamiento temporal no afecta el espectro de amplitud.", formula: `F{f(t − ${t0})} = e^(−j${t0}ω) · F(ω)` },
         ],
         respuesta: `F{f(t − ${t0})} = e^(−j${t0}ω) · F(ω)`
@@ -784,9 +781,138 @@ const GENERATORS = {
           { titulo: "Sustituir las transformadas", explicacion: "Multiplicamos F(ω) por G(ω).", formula: `F(ω)·G(ω) = 1/(${a}+jω) · 1/(${b}+jω)` },
           { titulo: "Escribir el producto", explicacion: "El resultado es una fracción de segundo orden.", formula: `H(ω) = 1 / [(${a}+jω)(${b}+jω)]` },
           { titulo: "Expandir el denominador", explicacion: `(${a}+jω)(${b}+jω) = ${a*b} + (${a+b})jω + (jω)² = ${a*b} + (${a+b})jω − ω²`, formula: `H(ω) = 1 / (${a*b} + ${a+b}·jω − ω²)` },
-          { titulo: "Interpretación", explicacion: "Corresponde a un sistema de segundo orden con dos polos en s = −${a} y s = −${b}.", formula: `Polos: jω = −${a}  y  jω = −${b}` },
+          { titulo: "Interpretación", explicacion: `Corresponde a un sistema de segundo orden con dos polos en s = −${a} y s = −${b}.`, formula: `Polos: jω = −${a}  y  jω = −${b}` },
         ],
         respuesta: `H(ω) = 1 / [(${a}+jω)(${b}+jω)]`
+      };
+    }
+  },
+
+  // ══════════════════════════════════════════════════
+  //  ESTADÍSTICA DESCRIPTIVA
+  // ══════════════════════════════════════════════════
+  estadistica: {
+    basico() {
+      // Media, Mediana y Moda con un conjunto impar de 7 datos y moda única
+      const moda = rnd(4, 12);
+      const d1 = Math.max(1, moda - rnd(2, 4));
+      const d2 = moda - 1;
+      const d3 = moda + 1;
+      const d4 = moda + rnd(2, 4);
+      const d5 = moda + rnd(5, 7);
+      // 7 datos: [d1, d2, moda, moda, d3, d4, d5] (ya ordenados, pero los desordenamos para el enunciado)
+      const ordenados = [d1, d2, moda, moda, d3, d4, d5];
+      const desordenados = [...ordenados].sort(() => Math.random() - 0.5);
+      const n = ordenados.length;
+      const suma = ordenados.reduce((acc, v) => acc + v, 0);
+      const media = round2(suma / n);
+      const mediana = ordenados[3]; // posición central (índice 3 de 7)
+
+      return {
+        enunciado: `Calcula la media (x̄), mediana (Me) y moda (Mo) del siguiente conjunto de datos: ${desordenados.join(", ")}`,
+        pasos: [
+          {
+            titulo: "Ordenar los datos de menor a mayor",
+            explicacion: `Contamos con n = ${n} datos. Primero los ordenamos para facilitar la búsqueda de la mediana y la moda.`,
+            formula: ordenados.join(", ")
+          },
+          {
+            titulo: "Calcular la Media Aritmética (x̄)",
+            explicacion: "Sumamos todos los datos y dividimos entre el número total de datos (n = 7).",
+            formula: `x̄ = (${ordenados.join(" + ")}) / ${n} = ${suma} / ${n} ≈ ${media}`
+          },
+          {
+            titulo: "Encontrar la Mediana (Me)",
+            explicacion: `Como n = ${n} es impar, la mediana es el dato que ocupa la posición central (posición (7+1)/2 = 4).`,
+            formula: `${ordenados.slice(0,3).join(", ")}, [${mediana}], ${ordenados.slice(4).join(", ")}   →   Me = ${mediana}`
+          },
+          {
+            titulo: "Identificar la Moda (Mo)",
+            explicacion: `La moda es el valor que más veces se repite en el conjunto de datos (se repite 2 veces).`,
+            formula: `Mo = ${moda}`
+          }
+        ],
+        respuesta: `x̄ = ${media},   Me = ${mediana},   Mo = ${moda}`
+      };
+    },
+    intermedio() {
+      // Desviación Media (DM) con media entera exacta (5 datos)
+      const media = rnd(6, 15);
+      const k1 = rnd(1, 3), k2 = rnd(2, 5);
+      // Construimos 5 datos cuya suma sea 5 * media
+      const datos = [media - k2, media - k1, media, media + k1, media + k2];
+      const desordenados = [...datos].sort(() => Math.random() - 0.5);
+      const n = datos.length;
+      const suma = datos.reduce((a, b) => a + b, 0);
+      const desvAbs = datos.map(x => Math.abs(x - media));
+      const sumaDesv = desvAbs.reduce((a, b) => a + b, 0);
+      const dm = round2(sumaDesv / n);
+
+      return {
+        enunciado: `Calcula la Desviación Media (DM) de los siguientes datos: ${desordenados.join(", ")}`,
+        pasos: [
+          {
+            titulo: "Calcular la media aritmética (x̄)",
+            explicacion: `Sumamos los n = ${n} datos y dividimos entre ${n}.`,
+            formula: `x̄ = (${datos.join(" + ")}) / ${n} = ${suma} / ${n} = ${media}`
+          },
+          {
+            titulo: "Calcular las desviaciones absolutas |xᵢ − x̄|",
+            explicacion: `Restamos la media (${media}) a cada dato y tomamos el valor absoluto (siempre positivo).`,
+            formula: datos.map((x, idx) => `|${x} − ${media}| = ${desvAbs[idx]}`).join("   |   ")
+          },
+          {
+            titulo: "Sumar las desviaciones absolutas",
+            explicacion: "Sumamos todos los valores absolutos obtenidos en el paso anterior.",
+            formula: `Σ|xᵢ − x̄| = ${desvAbs.join(" + ")} = ${sumaDesv}`
+          },
+          {
+            titulo: "Dividir entre el total de datos (n)",
+            explicacion: "Aplicamos la fórmula DM = Σ|xᵢ − x̄| / n.",
+            formula: `DM = ${sumaDesv} / ${n} = ${dm}`
+          }
+        ],
+        respuesta: `DM = ${dm} (con x̄ = ${media})`
+      };
+    },
+    avanzado() {
+      // Varianza (σ²) y Desviación Estándar (σ) poblacional con media entera (5 datos)
+      const media = rnd(5, 14);
+      const k1 = rnd(1, 3), k2 = rnd(2, 4);
+      const datos = [media - k2, media - k1, media, media + k1, media + k2];
+      const desordenados = [...datos].sort(() => Math.random() - 0.5);
+      const n = datos.length;
+      const suma = datos.reduce((a, b) => a + b, 0);
+      const cuadrados = datos.map(x => Math.pow(x - media, 2));
+      const sumaCuadrados = cuadrados.reduce((a, b) => a + b, 0);
+      const varianza = round2(sumaCuadrados / n);
+      const desvEst = round2(Math.sqrt(sumaCuadrados / n));
+
+      return {
+        enunciado: `Calcula la Varianza (σ²) y la Desviación Estándar (σ) poblacional de los datos: ${desordenados.join(", ")}`,
+        pasos: [
+          {
+            titulo: "Calcular la media aritmética (x̄)",
+            explicacion: `Sumamos los n = ${n} datos y dividimos entre ${n}.`,
+            formula: `x̄ = (${datos.join(" + ")}) / ${n} = ${suma} / ${n} = ${media}`
+          },
+          {
+            titulo: "Elevar al cuadrado cada desviación (xᵢ − x̄)²",
+            explicacion: `Restamos la media (${media}) a cada dato y elevamos al cuadrado para eliminar signos negativos.`,
+            formula: datos.map((x, idx) => `(${x} − ${media})² = (${x - media})² = ${cuadrados[idx]}`).join("\n")
+          },
+          {
+            titulo: "Calcular la Varianza (σ²)",
+            explicacion: "Sumamos los cuadrados de las desviaciones y dividimos entre n.",
+            formula: `σ² = (${cuadrados.join(" + ")}) / ${n} = ${sumaCuadrados} / ${n} = ${varianza}`
+          },
+          {
+            titulo: "Calcular la Desviación Estándar (σ)",
+            explicacion: "Sacamos la raíz cuadrada de la varianza para regresar a las unidades originales de los datos.",
+            formula: `σ = √(${varianza}) ≈ ${desvEst}`
+          }
+        ],
+        respuesta: `σ² = ${varianza},   σ ≈ ${desvEst}`
       };
     }
   }

@@ -3,20 +3,22 @@
 // =====================================================
 
 const TOPICS = [
-  { id: "aritmetica",    label: "Aritmética",              icon: "+" },
-  { id: "algebra",       label: "Álgebra",                 icon: "x" },
-  { id: "ecuaciones",    label: "Ecuaciones",              icon: "=" },
-  { id: "polinomios",    label: "Polinomios",              icon: "xⁿ" },
-  { id: "funciones",     label: "Funciones",               icon: "f(x)" },
-  { id: "trigonometria", label: "Trigonometría",           icon: "sin" },
-  { id: "logaritmos",    label: "Logaritmos",              icon: "log" },
-  { id: "limites",       label: "Límites",                 icon: "lim" },
-  { id: "derivadas",     label: "Derivadas",               icon: "d/dx" },
-  { id: "integrales",    label: "Integrales",              icon: "∫" },
-  { id: "series",        label: "Series y Sucesiones",     icon: "Σ" },
-  { id: "edo",           label: "Ec. Diferenciales",       icon: "y'" },
-  { id: "laplace",       label: "Transformada de Laplace", icon: "ℒ" },
-  { id: "fourier_series", label: "Transformada de Fourier", icon: "F(ω)" }, 
+  { id: "aritmetica",     label: "Aritmética",              icon: "+" },
+  { id: "algebra",        label: "Álgebra",                 icon: "x" },
+  { id: "ecuaciones",     label: "Ecuaciones",              icon: "=" },
+  { id: "polinomios",     label: "Polinomios",              icon: "xⁿ" },
+  { id: "funciones",      label: "Funciones",               icon: "f(x)" },
+  { id: "exponenciales",  label: "Exponenciales",           icon: "eˣ" },
+  { id: "estadistica",    label: "Estadística",             icon: "x̄" },
+  { id: "trigonometria",  label: "Trigonometría",           icon: "sin" },
+  { id: "logaritmos",     label: "Logaritmos",              icon: "log" },
+  { id: "limites",        label: "Límites",                 icon: "lim" },
+  { id: "derivadas",      label: "Derivadas",               icon: "d/dx" },
+  { id: "integrales",     label: "Integrales",              icon: "∫" },
+  { id: "series",         label: "Series y Sucesiones",     icon: "Σ" },
+  { id: "edo",            label: "Ec. Diferenciales",       icon: "y'" },
+  { id: "laplace",        label: "Transformada de Laplace", icon: "ℒ" },
+  { id: "fourier_series", label: "Transformada de Fourier", icon: "F(ω)" },
 ];
 
 let selectedTopic = null;
@@ -138,36 +140,13 @@ function escHtml(str) {
     .replace(/>/g,"&gt;").replace(/"/g,"&quot;")
     .replace(/\n/g,"<br>");
 }
-// detector de la side bar
+// Carga del widget generador dentro de cada tutorial
 document.addEventListener("DOMContentLoaded", () => {
-
-  fetch('../utilidades/sidebar.html')
-    .then(response => {
-      if (!response.ok) throw new Error("No se pudo cargar el menú");
-      return response.text();
-    })
-    .then(html => {
-      document.getElementById('menu-lateral').innerHTML = html;
-
-      // ✅ Extraer solo el nombre del archivo actual
-      const paginaActual = window.location.pathname.split('/').pop() || 'index.html';
-
-      document.querySelectorAll('#menu-lateral a').forEach(enlace => {
-        const href = enlace.getAttribute('href') || '';
-        const nombreEnlace = href.split('/').pop(); // ← extrae solo "funciones.html"
-        if (nombreEnlace === paginaActual) {
-          enlace.classList.add('active');
-        } else {
-          enlace.classList.remove('active');
-        }
-      });
-    })
-    .catch(error => console.error('Error cargando el menú lateral:', error));
-
-  // generador de ejercicios
   const genContainer = document.getElementById('generador-container');
   if (genContainer) {
-    fetch('../utilidades/generador.html')
+    const enTutorial = window.location.pathname.includes("/tutoriales/");
+    const base = enTutorial ? "../" : "";
+    fetch(`${base}utilidades/generador.html`)
       .then(response => {
         if (!response.ok) throw new Error("No se pudo cargar el generador");
         return response.text();
@@ -182,7 +161,6 @@ document.addEventListener("DOMContentLoaded", () => {
       })
       .catch(error => console.error('Error cargando el generador:', error));
   }
-
 });
 const TOPIC_ALIAS = {
   series_y_sucesiones: "series",

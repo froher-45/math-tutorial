@@ -184,7 +184,7 @@ const QUIZ_BANK = {
       pregunta: "¿Cuándo existe un límite en x = a?",
       opciones: [
         "Cuando f(a) está definida",
-        "Cuando el límite por la izquierda e derecha son iguales",
+        "Cuando los límites por la izquierda y por la derecha son iguales",
         "Cuando la función es continua en todo su dominio",
         "Cuando f(a) = 0"
       ],
@@ -532,6 +532,69 @@ const QUIZ_BANK = {
       pregunta: "¿Cuántas condiciones iniciales se necesitan para una EDO de segundo orden?",
       opciones: ["Ninguna", "Una", "Dos", "Tres"],
       correcta: 2
+    }
+  ],
+
+  estadistica: [
+    {
+      pregunta: "¿Cuál es la media aritmética (x̄) de los datos: 4, 6, 8, 10, 12?",
+      opciones: ["6", "8", "9", "10"],
+      correcta: 1
+    },
+    {
+      pregunta: "¿Cuál es la mediana (Me) del conjunto de datos: 12, 5, 8, 3, 15?",
+      opciones: ["5", "8", "9", "12"],
+      correcta: 1
+    },
+    {
+      pregunta: "En el conjunto de datos: 2, 4, 4, 6, 7, 7, 7, 9, ¿cuál es la moda (Mo)?",
+      opciones: ["4", "6", "7", "No tiene moda"],
+      correcta: 2
+    },
+    {
+      pregunta: "Si un conjunto ordenado tiene un número par de datos, ¿cómo se obtiene la mediana?",
+      opciones: [
+        "Se toma el primer dato del conjunto",
+        "Se calcula el promedio de los dos valores centrales",
+        "Se resta el valor menor al valor mayor",
+        "No existe mediana cuando n es par"
+      ],
+      correcta: 1
+    },
+    {
+      pregunta: "¿Qué mide la Desviación Media (DM) de un conjunto de datos?",
+      opciones: [
+        "El valor que más se repite en la muestra",
+        "El promedio de las distancias absolutas de cada dato respecto a la media",
+        "El cuadrado de la media aritmética",
+        "El punto medio entre el valor máximo y mínimo"
+      ],
+      correcta: 1
+    },
+    {
+      pregunta: "¿Cuál es la relación matemática entre la Desviación Estándar (σ) y la Varianza (σ²)?",
+      opciones: [
+        "La desviación estándar es el doble de la varianza",
+        "La desviación estándar es la raíz cuadrada de la varianza",
+        "La varianza es la raíz cuadrada de la desviación estándar",
+        "Son exactamente el mismo valor numérico"
+      ],
+      correcta: 1
+    },
+    {
+      pregunta: "¿Por qué en la fórmula de la varianza se elevan al cuadrado las diferencias (xᵢ − x̄)²?",
+      opciones: [
+        "Para que la suma de las desviaciones no se anule por los signos negativos y penalizar valores alejados",
+        "Para reducir el tamaño de los números",
+        "Porque solo funciona con números enteros",
+        "Para calcular la moda automáticamente"
+      ],
+      correcta: 0
+    },
+    {
+      pregunta: "Calcula la Desviación Media (DM) de los datos: 2, 4, 6 (sabiendo que su media es x̄ = 4):",
+      opciones: ["0", "4/3 ≈ 1.33", "2", "4"],
+      correcta: 1
     }
   ]
 };

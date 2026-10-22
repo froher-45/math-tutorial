@@ -61,7 +61,7 @@
         <div class="info-card">
           <div class="info-card-icon">📈</div>
           <h3>Tasa de cambio</h3>
-          <p>¿Qué tan rápido cambia $f(x)$ cuando $x$ aumenta un poquito?</p>
+          <p>¿Qué tan rápido cambia \( f(x) \) cuando \( x \) aumenta un poquito?</p>
         </div>
         <div class="info-card">
           <div class="info-card-icon">📐</div>
@@ -229,8 +229,8 @@
       </table>
 
       <div class="note-box">
-        💡 <strong>Nota:</strong> La función $e^x$ es la única función que es su propia derivada.
-        Es por eso que el número de Euler ($e$) es tan especial en matemáticas.
+        💡 <strong>Nota:</strong> La función \( e^x \) es la única función que es su propia derivada.
+        Es por eso que el número de Euler (\( e \)) es tan especial en matemáticas.
       </div>
 
       <div class="divider"></div>
@@ -433,12 +433,13 @@
     }
 
     function drawAxes(ctx, W, H, xMin, xMax, yMin, yMax) {
+      const isLight = document.body.classList.contains('light-mode');
       const toX = x => (x-xMin)/(xMax-xMin)*W;
       const toY = y => H-(y-yMin)/(yMax-yMin)*H;
-      ctx.strokeStyle = 'rgba(255,255,255,0.07)'; ctx.lineWidth = 1;
+      ctx.strokeStyle = isLight ? 'rgba(0,0,0,0.08)' : 'rgba(255,255,255,0.07)'; ctx.lineWidth = 1;
       for (let gx=Math.ceil(xMin); gx<=xMax; gx++) { ctx.beginPath(); ctx.moveTo(toX(gx),0); ctx.lineTo(toX(gx),H); ctx.stroke(); }
       for (let gy=Math.ceil(yMin); gy<=yMax; gy++) { ctx.beginPath(); ctx.moveTo(0,toY(gy)); ctx.lineTo(W,toY(gy)); ctx.stroke(); }
-      ctx.strokeStyle = 'rgba(255,255,255,0.22)'; ctx.lineWidth = 1.5;
+      ctx.strokeStyle = isLight ? 'rgba(0,0,0,0.3)' : 'rgba(255,255,255,0.22)'; ctx.lineWidth = 1.5;
       if (yMin<0&&yMax>0) { ctx.beginPath(); ctx.moveTo(0,toY(0)); ctx.lineTo(W,toY(0)); ctx.stroke(); }
       if (xMin<0&&xMax>0) { ctx.beginPath(); ctx.moveTo(toX(0),0); ctx.lineTo(toX(0),H); ctx.stroke(); }
     }
@@ -499,6 +500,7 @@
     document.getElementById('tanFunc').addEventListener('change', dibujarTangente);
 
     window.addEventListener('load', () => { graficar(); dibujarTangente(); });
+    window.addEventListener('themechange', () => { graficar(); dibujarTangente(); });
 
     // ── Calculadora ──
     function calcDerivada(expr) {
