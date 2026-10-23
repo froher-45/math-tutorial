@@ -595,6 +595,21 @@ const QUIZ_BANK = {
       pregunta: "Calcula la Desviación Media (DM) de los datos: 2, 4, 6 (sabiendo que su media es x̄ = 4):",
       opciones: ["0", "4/3 ≈ 1.33", "2", "4"],
       correcta: 1
+    },
+    {
+      pregunta: "¿Cuál es la Media Geométrica (G) de los números 4 y 9?",
+      opciones: ["6.5", "6", "13", "36"],
+      correcta: 1
+    },
+    {
+      pregunta: "¿Cuándo se debe utilizar la Media Ponderada en lugar de la Media Aritmética simple?",
+      opciones: [
+        "Cuando todos los datos tienen exactamente el mismo valor",
+        "Cuando cada dato tiene un peso o importancia relativa diferente",
+        "Solo cuando la cantidad de datos es impar",
+        "Cuando queremos encontrar el valor que más se repite"
+      ],
+      correcta: 1
     }
   ]
 };

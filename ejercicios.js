@@ -836,10 +836,70 @@ const GENERATORS = {
       };
     },
     intermedio() {
-      // Desviación Media (DM) con media entera exacta (5 datos)
+      const tipo = rnd(1, 3);
+
+      // Tipo 1: Media Ponderada (x̄ₚ)
+      if (tipo === 1) {
+        const c1 = rnd(6, 10), c2 = rnd(6, 10), c3 = rnd(5, 10);
+        const w1 = 20, w2 = 30, w3 = 50;
+        const p1 = w1 * c1, p2 = w2 * c2, p3 = w3 * c3;
+        const sumProd = p1 + p2 + p3;
+        const sumPesos = w1 + w2 + w3;
+        const mp = round2(sumProd / sumPesos);
+        return {
+          enunciado: `Calcula la Media Ponderada (x̄ₚ) de un curso donde Tareas (${w1}%) = ${c1}, Proyecto (${w2}%) = ${c2} y Examen (${w3}%) = ${c3}`,
+          pasos: [
+            {
+              titulo: "Fórmula de la Media Ponderada",
+              explicacion: "Multiplicamos cada calificación (xᵢ) por su peso (wᵢ) y dividimos entre la suma total de los pesos.",
+              formula: `x̄ₚ = (w₁·x₁ + w₂·x₂ + w₃·x₃) / (w₁ + w₂ + w₃)`
+            },
+            {
+              titulo: "Multiplicar cada dato por su peso",
+              explicacion: "Calculamos los productos individuales wᵢ · xᵢ.",
+              formula: `Tareas: ${w1} × ${c1} = ${p1}   |   Proyecto: ${w2} × ${c2} = ${p2}   |   Examen: ${w3} × ${c3} = ${p3}`
+            },
+            {
+              titulo: "Sumar productos y dividir entre suma de pesos",
+              explicacion: `La suma de los pesos es ${w1} + ${w2} + ${w3} = ${sumPesos}.`,
+              formula: `x̄ₚ = (${p1} + ${p2} + ${p3}) / ${sumPesos} = ${sumProd} / ${sumPesos} = ${mp}`
+            }
+          ],
+          respuesta: `x̄ₚ = ${mp}`
+        };
+      }
+
+      // Tipo 2: Media Geométrica (G)
+      if (tipo === 2) {
+        const a = rnd(2, 6), b = rnd(2, 6), c = rnd(2, 6);
+        const prod = a * b * c;
+        const geom = round2(Math.cbrt(prod));
+        return {
+          enunciado: `Calcula la Media Geométrica (G) de los 3 datos: ${a}, ${b}, ${c}`,
+          pasos: [
+            {
+              titulo: "Fórmula de la Media Geométrica",
+              explicacion: "Para n = 3 datos positivos, la media geométrica es la raíz cúbica de su producto.",
+              formula: `G = ³√(x₁ · x₂ · x₃)`
+            },
+            {
+              titulo: "Multiplicar todos los datos",
+              explicacion: `Multiplicamos ${a} × ${b} × ${c}.`,
+              formula: `${a} × ${b} × ${c} = ${prod}`
+            },
+            {
+              titulo: "Extraer la raíz cúbica (n = 3)",
+              explicacion: `Calculamos la raíz cúbica de ${prod}.`,
+              formula: `G = ³√(${prod}) ≈ ${geom}`
+            }
+          ],
+          respuesta: `G ≈ ${geom}`
+        };
+      }
+
+      // Tipo 3: Desviación Media (DM) con media entera exacta (5 datos)
       const media = rnd(6, 15);
       const k1 = rnd(1, 3), k2 = rnd(2, 5);
-      // Construimos 5 datos cuya suma sea 5 * media
       const datos = [media - k2, media - k1, media, media + k1, media + k2];
       const desordenados = [...datos].sort(() => Math.random() - 0.5);
       const n = datos.length;
