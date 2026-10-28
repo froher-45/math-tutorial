@@ -1,39 +1,48 @@
 // =====================================================
-//  app.js  —  Lógica de la interfaz
+//  app.js  —  Lógica de la interfaz del generador y validación
 // =====================================================
 
 const TOPICS = [
-  { id: "aritmetica",     label: "Aritmética",              icon: "+" },
-  { id: "algebra",        label: "Álgebra",                 icon: "x" },
-  { id: "ecuaciones",     label: "Ecuaciones",              icon: "=" },
-  { id: "polinomios",     label: "Polinomios",              icon: "xⁿ" },
-  { id: "funciones",      label: "Funciones",               icon: "f(x)" },
-  { id: "exponenciales",  label: "Exponenciales",           icon: "eˣ" },
-  { id: "estadistica",    label: "Estadística",             icon: "x̄" },
-  { id: "trigonometria",  label: "Trigonometría",           icon: "sin" },
-  { id: "logaritmos",     label: "Logaritmos",              icon: "log" },
-  { id: "limites",        label: "Límites",                 icon: "lim" },
-  { id: "derivadas",      label: "Derivadas",               icon: "d/dx" },
-  { id: "integrales",     label: "Integrales",              icon: "∫" },
-  { id: "series",         label: "Series y Sucesiones",     icon: "Σ" },
-  { id: "edo",            label: "Ec. Diferenciales",       icon: "y'" },
-  { id: "laplace",        label: "Transformada de Laplace", icon: "ℒ" },
-  { id: "fourier_series", label: "Transformada de Fourier", icon: "F(ω)" },
+  { id: "aritmetica",        label: "Aritmética",                    icon: "+" },
+  { id: "algebra",           label: "Álgebra",                       icon: "x" },
+  { id: "ecuaciones",        label: "Ecuaciones",                    icon: "=" },
+  { id: "polinomios",        label: "Polinomios",                    icon: "xⁿ" },
+  { id: "funciones",         label: "Funciones",                     icon: "f(x)" },
+  { id: "exponenciales",     label: "Exponenciales",                 icon: "eˣ" },
+  { id: "trigonometria",     label: "Trigonometría",                 icon: "sin" },
+  { id: "logaritmos",        label: "Logaritmos",                    icon: "log" },
+  { id: "limites",           label: "Límites",                       icon: "lim" },
+  { id: "derivadas",         label: "Derivadas",                     icon: "d/dx" },
+  { id: "integrales",        label: "Integrales",                    icon: "∫" },
+  { id: "series",            label: "Series y Sucesiones",           icon: "Σ" },
+  { id: "edo",               label: "Ec. Diferenciales",             icon: "y'" },
+  { id: "laplace",           label: "Transformada de Laplace",       icon: "ℒ" },
+  { id: "fourier_series",    label: "Transformada de Fourier",       icon: "F(ω)" },
+  { id: "estadistica",       label: "Media, Mediana y Moda",         icon: "x̄" },
+  { id: "medias_especiales", label: "Media Geométrica y Ponderada",  icon: "G" },
+  { id: "dispersion",        label: "Varianza y Desv. Estándar",     icon: "σ" },
 ];
+
+const TOPIC_ALIAS = {
+  series_y_sucesiones: "series",
+};
 
 let selectedTopic = null;
 let selectedDiff  = "basico";
+let currentExerciseData = null;
+let currentTutorialExerciseData = null;
 
 // ── Init ──────────────────────────────────────────────
 
 document.addEventListener("DOMContentLoaded", () => {
   buildTopicGrid();
   buildDiffButtons();
+  initTutorialGeneratorWidget();
 });
 
 function buildTopicGrid() {
   const grid = document.getElementById("topicsGrid");
-  if (!grid) return;  // ← agrega solo esta línea
+  if (!grid) return;
   TOPICS.forEach(t => {
     const btn = document.createElement("button");
     btn.className = "topic-btn";
@@ -57,7 +66,7 @@ function buildDiffButtons() {
   });
 }
 
-// ── Generar ───────────────────────────────────────────
+// ── Generar en página principal generador.html ────────
 
 function generateExercise() {
   if (!selectedTopic) {
@@ -66,18 +75,19 @@ function generateExercise() {
   }
 
   const gen = GENERATORS[selectedTopic.id];
-  if (!gen) { showError("Tema no disponible aún."); return; }
+  if (!gen) {
+    showError("Tema no disponible aún.");
+    return;
+  }
 
   const fn = gen[selectedDiff] || gen["basico"];
-  const data = fn();
-  renderExercise(data);
+  currentExerciseData = fn();
+  renderExercise(currentExerciseData);
 }
 
-// ── Render ────────────────────────────────────────────
+// ── Renderizado unificado de tarjeta de ejercicio ─────
 
-function renderExercise(data) {
-  const area = document.getElementById("exerciseArea");
-
+function buildExerciseCardHtml(data, topicLabel, diffLabel, onNewCall, contextKey) {
   const stepsHtml = (data.pasos || []).map((p, i) => `
     <div class="step">
       <div class="step-num">${i + 1}</div>
@@ -89,18 +99,32 @@ function renderExercise(data) {
     </div>
   `).join("");
 
-  const diffLabel = { basico: "Básico", intermedio: "Intermedio", avanzado: "Avanzado" }[selectedDiff] || selectedDiff;
-
-  area.innerHTML = `
+  return `
     <div class="ex-header">
       <div class="ex-meta">
-        <span class="badge badge-topic">${escHtml(selectedTopic.label)}</span>
-        <span class="badge badge-diff">${diffLabel}</span>
+        <span class="badge badge-topic">${escHtml(topicLabel)}</span>
+        <span class="badge badge-diff">${escHtml(diffLabel)}</span>
       </div>
-      <button class="new-btn" onclick="generateExercise()">Nuevo ↺</button>
+      <button class="new-btn" onclick="${onNewCall}">Nuevo ↺</button>
     </div>
 
     <p class="ex-question">${escHtml(data.enunciado)}</p>
+
+    <div class="ex-check-box">
+      <div class="ex-check-row">
+        <input
+          type="text"
+          id="ansInput_${contextKey}"
+          class="ex-check-input"
+          placeholder="Escribe tu respuesta (ej. ${escHtml(data.respuesta)})"
+          onkeydown="if(event.key==='Enter') checkExerciseAnswer('${contextKey}')"
+        />
+        <button type="button" class="ex-check-btn" onclick="checkExerciseAnswer('${contextKey}')">
+          Comprobar
+        </button>
+      </div>
+      <div id="ansFeedback_${contextKey}" class="ex-check-feedback"></div>
+    </div>
 
     <div class="divider"></div>
 
@@ -118,106 +142,105 @@ function renderExercise(data) {
     </div>`;
 }
 
+function renderExercise(data) {
+  const area = document.getElementById("exerciseArea");
+  if (!area) return;
+  const diffLabel = { basico: "Básico", intermedio: "Intermedio", avanzado: "Avanzado" }[selectedDiff] || selectedDiff;
+  area.innerHTML = buildExerciseCardHtml(data, selectedTopic.label, diffLabel, "generateExercise()", "main");
+}
+
 function toggleSolution() {
   const box = document.getElementById("solutionBox");
   const btn = document.getElementById("solToggle");
+  if (!box || !btn) return;
   const open = box.classList.toggle("open");
   btn.classList.toggle("open", open);
   btn.querySelector("span:first-child").textContent =
     open ? "Ocultar solución" : "Ver solución paso a paso";
 }
 
+// Alias para compatibilidad
+const toggleSol = toggleSolution;
+
+function checkExerciseAnswer(contextKey) {
+  const inputEl = document.getElementById(`ansInput_${contextKey}`);
+  const fbEl = document.getElementById(`ansFeedback_${contextKey}`);
+  const data = contextKey === "tutorial" ? currentTutorialExerciseData : currentExerciseData;
+  if (!inputEl || !fbEl || !data) return;
+
+  const result = (typeof StatsEngine !== "undefined" && StatsEngine.validateAnswer)
+    ? StatsEngine.validateAnswer(inputEl.value, data)
+    : { valid: inputEl.value.trim() === String(data.respuesta).trim(), message: "" };
+
+  fbEl.className = "ex-check-feedback " + (result.valid ? "ok" : "err");
+  fbEl.textContent = (result.valid ? "✓ " : "✗ ") + result.message;
+}
+
+// ── Widget generador embebido en cada tutorial ────────
+
+function initTutorialGeneratorWidget() {
+  const genContainer = document.getElementById("generador-container");
+  if (!genContainer) return;
+
+  const enTutorial = window.location.pathname.includes("/tutoriales/");
+  const base = enTutorial ? "../" : "";
+  fetch(`${base}utilidades/generador.html`)
+    .then(response => {
+      if (!response.ok) throw new Error("No se pudo cargar el generador");
+      return response.text();
+    })
+    .then(html => {
+      genContainer.innerHTML = html;
+      const temaAsignado = genContainer.getAttribute("data-tema");
+      const topicSelect = document.getElementById("topicSelect");
+      if (topicSelect && temaAsignado) {
+        topicSelect.value = temaAsignado;
+      }
+    })
+    .catch(error => console.error("Error cargando el generador:", error));
+}
+
+function genFromTutorial() {
+  const selectEl = document.getElementById("topicSelect");
+  const diffEl   = document.getElementById("diffSelect");
+  const area     = document.getElementById("tutorialExArea");
+  if (!selectEl || !diffEl || !area) return;
+
+  let topicId = selectEl.value;
+  topicId     = TOPIC_ALIAS[topicId] || topicId;
+  const diff  = diffEl.value;
+  const gen   = GENERATORS[topicId];
+
+  if (!gen) {
+    area.innerHTML = `<p style="color:#f87171;margin-top:12px">Tema no disponible aún.</p>`;
+    return;
+  }
+
+  currentTutorialExerciseData = (gen[diff] || gen["basico"])();
+  const topicLabel = selectEl.selectedOptions[0] ? selectEl.selectedOptions[0].text : topicId;
+  const diffLabel  = { basico: "Básico", intermedio: "Intermedio", avanzado: "Avanzado" }[diff] || diff;
+
+  area.innerHTML = `<div style="margin-top:16px">` +
+    buildExerciseCardHtml(currentTutorialExerciseData, topicLabel, diffLabel, "genFromTutorial()", "tutorial") +
+    `</div>`;
+}
+
 // ── Helpers ───────────────────────────────────────────
 
 function showError(msg) {
-  document.getElementById("exerciseArea").innerHTML =
-    `<div style="color:#f87171;padding:1rem;font-size:14px;">⚠ ${msg}</div>`;
+  const area = document.getElementById("exerciseArea");
+  if (area) {
+    area.innerHTML = `<div style="color:#f87171;padding:1rem;font-size:14px;">${escHtml(msg)}</div>`;
+  }
 }
 
 function escHtml(str) {
-  return String(str || "")
-    .replace(/&/g,"&amp;").replace(/</g,"&lt;")
-    .replace(/>/g,"&gt;").replace(/"/g,"&quot;")
-    .replace(/\n/g,"<br>");
+  return String(str ?? "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/\n/g, "<br>");
 }
-// Carga del widget generador dentro de cada tutorial
-document.addEventListener("DOMContentLoaded", () => {
-  const genContainer = document.getElementById('generador-container');
-  if (genContainer) {
-    const enTutorial = window.location.pathname.includes("/tutoriales/");
-    const base = enTutorial ? "../" : "";
-    fetch(`${base}utilidades/generador.html`)
-      .then(response => {
-        if (!response.ok) throw new Error("No se pudo cargar el generador");
-        return response.text();
-      })
-      .then(html => {
-        genContainer.innerHTML = html;
-        const temaAsignado = genContainer.getAttribute('data-tema');
-        const topicSelect = document.getElementById('topicSelect');
-        if (topicSelect && temaAsignado) {
-          topicSelect.value = temaAsignado;
-        }
-      })
-      .catch(error => console.error('Error cargando el generador:', error));
-  }
-});
-const TOPIC_ALIAS = {
-  series_y_sucesiones: "series",
-};
 
-function genFromTutorial() {
-      let topicId   = document.getElementById("topicSelect").value;
-      topicId       = TOPIC_ALIAS[topicId] || topicId;
-      const diff    = document.getElementById("diffSelect").value;
-      const area    = document.getElementById("tutorialExArea");
-      const gen     = GENERATORS[topicId];
-
-      if (!gen) { area.innerHTML = `<p style="color:#f87171;margin-top:12px">Tema no disponible aún.</p>`; return; }
-
-      const data       = (gen[diff] || gen["basico"])();
-      const topicLabel = document.getElementById("topicSelect").selectedOptions[0].text;
-      const diffLabel  = { basico:"Básico", intermedio:"Intermedio", avanzado:"Avanzado" }[diff];
-
-      area.innerHTML = `
-        <div class="ex-header" style="margin-top:16px">
-          <div class="ex-meta">
-            <span class="badge badge-topic">${topicLabel}</span>
-            <span class="badge badge-diff">${diffLabel}</span>
-          </div>
-          <button class="new-btn" onclick="genFromTutorial()">Nuevo ↺</button>
-        </div>
-        <p class="ex-question">${esc(data.enunciado)}</p>
-        <div class="divider"></div>
-        <button class="sol-toggle" id="solToggle" onclick="toggleSol()">
-          <span>Ver solución paso a paso</span>
-          <span class="sol-arrow">▾</span>
-        </button>
-        <div class="solution-box" id="solutionBox">
-          ${(data.pasos||[]).map((p,i) => `
-            <div class="step">
-              <div class="step-num">${i+1}</div>
-              <div class="step-body">
-                <div class="step-title">${esc(p.titulo)}</div>
-                ${p.explicacion ? `<div class="step-text">${esc(p.explicacion)}</div>` : ""}
-                ${p.formula     ? `<code class="step-formula">${esc(p.formula)}</code>` : ""}
-              </div>
-            </div>`).join("")}
-          <div class="answer-box">
-            <span class="answer-label">Respuesta</span>
-            <span class="answer-value">${esc(data.respuesta)}</span>
-          </div>
-        </div>`;
-    }
-
-    function toggleSol() {
-      const box  = document.getElementById("solutionBox");
-      const btn  = document.getElementById("solToggle");
-      const open = box.classList.toggle("open");
-      btn.classList.toggle("open", open);
-      btn.querySelector("span:first-child").textContent = open ? "Ocultar solución" : "Ver solución paso a paso";
-    }
-
-    function esc(s) {
-      return String(s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/\n/g,"<br>");
-    }
+const esc = escHtml;

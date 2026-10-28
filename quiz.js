@@ -547,32 +547,148 @@ const QUIZ_BANK = {
       correcta: 1
     },
     {
-      pregunta: "En el conjunto de datos: 2, 4, 4, 6, 7, 7, 7, 9, ¿cuál es la moda (Mo)?",
-      opciones: ["4", "6", "7", "No tiene moda"],
-      correcta: 2
+      pregunta: "En el conjunto de datos: 2, 4, 4, 4, 5, 5, 7, 9, ¿cuál es la moda (Mo)?",
+      opciones: ["4", "4.5", "5", "No tiene moda"],
+      correcta: 0
     },
     {
-      pregunta: "Si un conjunto ordenado tiene un número par de datos, ¿cómo se obtiene la mediana?",
+      pregunta: "Si un conjunto ordenado tiene un número par de datos (por ejemplo, n = 8), ¿cómo se obtiene la mediana?",
       opciones: [
         "Se toma el primer dato del conjunto",
-        "Se calcula el promedio de los dos valores centrales",
+        "Se calcula el promedio de los dos valores centrales (posiciones 4 y 5)",
         "Se resta el valor menor al valor mayor",
         "No existe mediana cuando n es par"
       ],
       correcta: 1
     },
     {
+      pregunta: "¿Cómo se denomina al número que sintetiza una característica cuando se calcula a partir de una muestra frente al de toda la población?",
+      opciones: ["Estadístico en la muestra y parámetro en la población", "Parámetro en la muestra y estadístico en la población", "Variable en ambos casos", "Rango en la muestra y censo en la población"],
+      correcta: 0
+    },
+    {
+      pregunta: "En el conjunto de referencia 2, 4, 4, 4, 5, 5, 7, 9, ¿cuál es el valor de la mediana (Me)?",
+      opciones: ["4", "4.5", "5", "5.5"],
+      correcta: 1
+    },
+    {
+      pregunta: "¿Qué medida de tendencia central es más robusta (menos sensible) ante valores extremos o atípicos?",
+      opciones: ["La media aritmética", "La mediana", "El rango", "La varianza"],
+      correcta: 1
+    },
+    {
+      pregunta: "Cuando ningún valor se repite en un conjunto de datos (todos tienen fᵢ = 1), la distribución se denomina:",
+      opciones: ["Unimodal", "Bimodal", "Amodal (sin moda)", "Simétrica"],
+      correcta: 2
+    }
+  ],
+
+  medias_especiales: [
+    {
+      pregunta: "¿Cuál es la Media Geométrica (G) de los números 4 y 9?",
+      opciones: ["6.5", "6", "13", "36"],
+      correcta: 1
+    },
+    {
+      pregunta: "¿Cuándo se debe utilizar la Media Ponderada en lugar de la Media Aritmética simple?",
+      opciones: [
+        "Cuando todos los datos tienen exactamente el mismo valor",
+        "Cuando cada dato tiene un peso o importancia relativa diferente (wᵢ)",
+        "Solo cuando la cantidad de datos es impar",
+        "Cuando queremos encontrar el valor que más se repite"
+      ],
+      correcta: 1
+    },
+    {
+      pregunta: "¿Cuál es la Media Geométrica (G) de los 3 valores: 2, 4 y 8?",
+      opciones: ["4", "4.67", "6", "8"],
+      correcta: 0
+    },
+    {
+      pregunta: "¿Qué condición deben cumplir los datos para poder calcular la Media Geométrica en los números reales?",
+      opciones: [
+        "Ser todos negativos",
+        "Incluir al menos un cero",
+        "Ser estrictamente positivos (xᵢ > 0)",
+        "Ser únicamente números primos"
+      ],
+      correcta: 2
+    },
+    {
+      pregunta: "Según la desigualdad de las medias (AM-GM), para cualquier conjunto de datos positivos se cumple que:",
+      opciones: [
+        "La media geométrica siempre es mayor que la aritmética (G > x̄)",
+        "La media geométrica es menor o igual que la media aritmética (G ≤ x̄)",
+        "La media geométrica es el cuadrado de la media aritmética",
+        "No existe ninguna relación entre G y x̄"
+      ],
+      correcta: 1
+    },
+    {
+      pregunta: "Si en un curso Tareas vale 40% (nota 8) y Examen vale 60% (nota 10), ¿cuál es la media ponderada?",
+      opciones: ["9.0", "9.2", "8.8", "9.5"],
+      correcta: 1
+    },
+    {
+      pregunta: "Si una inversión crece 20% el primer año y cae 20% el segundo año, ¿qué medida calcula correctamente el factor medio anual?",
+      opciones: [
+        "La media aritmética de +20% y −20%",
+        "La media geométrica de los factores 1.20 y 0.80",
+        "La moda de los porcentajes",
+        "El rango de los porcentajes"
+      ],
+      correcta: 1
+    },
+    {
+      pregunta: "Si todos los pesos wᵢ de una media ponderada son iguales entre sí, el resultado coincide con:",
+      opciones: ["La mediana", "La media aritmética simple", "La varianza", "La media geométrica"],
+      correcta: 1
+    }
+  ],
+
+  dispersion: [
+    {
+      pregunta: "Para el conjunto de referencia 2, 4, 4, 4, 5, 5, 7, 9 (con media 5), ¿cuánto vale la Varianza Poblacional (σ²) y la Desviación Estándar Poblacional (σ)?",
+      opciones: [
+        "σ² = 4, σ = 2",
+        "σ² = 8, σ = 4",
+        "σ² = 2, σ = 4",
+        "σ² = 5, σ = 2.24"
+      ],
+      correcta: 0
+    },
+    {
+      pregunta: "Para el mismo conjunto 2, 4, 4, 4, 5, 5, 7, 9 (n = 8, suma de cuadrados = 32), ¿cuánto vale la Varianza Muestral (s²)?",
+      opciones: [
+        "32 / 8 = 4",
+        "32 / 7 ≈ 4.5714",
+        "32 / 9 ≈ 3.5556",
+        "√32 ≈ 5.6569"
+      ],
+      correcta: 1
+    },
+    {
+      pregunta: "¿Por qué en la Varianza Muestral (s²) se divide entre (n − 1) en lugar de N?",
+      opciones: [
+        "Por la corrección de Bessel, para obtener un estimador insesgado de la varianza poblacional",
+        "Porque el último dato de la muestra siempre se descarta",
+        "Para que la varianza sea menor que la poblacional",
+        "Solo por convención estética"
+      ],
+      correcta: 0
+    },
+    {
       pregunta: "¿Qué mide la Desviación Media (DM) de un conjunto de datos?",
       opciones: [
         "El valor que más se repite en la muestra",
-        "El promedio de las distancias absolutas de cada dato respecto a la media",
+        "El promedio de las distancias absolutas |xᵢ − x̄| de cada dato respecto a la media",
         "El cuadrado de la media aritmética",
         "El punto medio entre el valor máximo y mínimo"
       ],
       correcta: 1
     },
     {
-      pregunta: "¿Cuál es la relación matemática entre la Desviación Estándar (σ) y la Varianza (σ²)?",
+      pregunta: "¿Cuál es la relación matemática entre la Desviación Estándar y la Varianza?",
       opciones: [
         "La desviación estándar es el doble de la varianza",
         "La desviación estándar es la raíz cuadrada de la varianza",
@@ -582,9 +698,9 @@ const QUIZ_BANK = {
       correcta: 1
     },
     {
-      pregunta: "¿Por qué en la fórmula de la varianza se elevan al cuadrado las diferencias (xᵢ − x̄)²?",
+      pregunta: "¿Por qué en la fórmula de la varianza se elevan al cuadrado las desviaciones (xᵢ − x̄)²?",
       opciones: [
-        "Para que la suma de las desviaciones no se anule por los signos negativos y penalizar valores alejados",
+        "Para evitar que las desviaciones positivas y negativas se anulen entre sí y penalizar valores alejados",
         "Para reducir el tamaño de los números",
         "Porque solo funciona con números enteros",
         "Para calcular la moda automáticamente"
@@ -597,19 +713,14 @@ const QUIZ_BANK = {
       correcta: 1
     },
     {
-      pregunta: "¿Cuál es la Media Geométrica (G) de los números 4 y 9?",
-      opciones: ["6.5", "6", "13", "36"],
-      correcta: 1
-    },
-    {
-      pregunta: "¿Cuándo se debe utilizar la Media Ponderada en lugar de la Media Aritmética simple?",
+      pregunta: "¿Cómo se define el Rango (r) de un conjunto de observaciones?",
       opciones: [
-        "Cuando todos los datos tienen exactamente el mismo valor",
-        "Cuando cada dato tiene un peso o importancia relativa diferente",
-        "Solo cuando la cantidad de datos es impar",
-        "Cuando queremos encontrar el valor que más se repite"
+        "El valor mayor menos el valor menor de los datos",
+        "La suma del valor mayor y el valor menor dividida entre 2",
+        "La raíz cuadrada de la media aritmética",
+        "El número total de observaciones menos uno"
       ],
-      correcta: 1
+      correcta: 0
     }
   ]
 };
@@ -746,19 +857,16 @@ function selectAnswer(selected) {
 function showResult(score, total) {
   const container = document.getElementById("quiz");
   const pct       = Math.round((score / total) * 100);
-  const msg       = score === total  ? "¡Perfecto! Dominaste el tema 🎉"
-                  : score >= 4       ? "¡Muy bien! Casi lo tienes 👍"
-                  : score >= 3       ? "¡Bien! Sigue practicando 💪"
-                  : "Sigue repasando, tú puedes 📚";
+  const msg       = score === total  ? "¡Perfecto! Dominaste el tema"
+                  : score >= 4       ? "¡Muy bien! Casi lo tienes"
+                  : score >= 3       ? "¡Bien! Sigue practicando"
+                  : "Sigue repasando, tú puedes";
   const color     = score === total  ? "#34d399"
                   : score >= 3       ? "#fbbf24"
                   : "#f87171";
 
   container.innerHTML = `
     <div style="text-align:center; padding:16px 0">
-      <div style="font-size:48px; margin-bottom:12px">
-        ${score === total ? "🏆" : score >= 3 ? "⭐" : "📚"}
-      </div>
       <div style="font-family:var(--serif); font-size:32px; font-style:italic;
         color:${color}; margin-bottom:8px">
         ${score} / ${total}
@@ -772,8 +880,7 @@ function showResult(score, total) {
         style="background:var(--bg3); border:1px solid var(--border);
         border-radius:var(--radius-sm); padding:9px 20px;
         font-family:var(--sans); font-size:13px; color:var(--text2);
-        cursor:pointer; transition:all 0.18s">
-        🔄 Intentar de nuevo
+        cursor:pointer; transition:all 0.18s">Intentar de nuevo
       </button>
     </div>`;
 }

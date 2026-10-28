@@ -218,6 +218,58 @@ body { font-family: var(--sans); background: var(--bg); color: var(--text); min-
 .answer-label { font-size: 10.5px; font-weight: 600; letter-spacing: 0.07em; color: var(--accent); text-transform: uppercase; white-space: nowrap; }
 .answer-value { font-family: var(--mono); font-size: 15px; color: var(--accent2); font-weight: 500; }
 
+/* Validación interactiva de respuesta en ejercicios */
+.ex-check-box {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 1rem 0;
+  padding: 12px 14px;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+}
+.ex-check-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.ex-answer-input {
+  flex: 1;
+  min-width: 180px;
+  background: var(--bg2);
+  border: 1px solid var(--border-md);
+  border-radius: var(--radius-sm);
+  padding: 8px 12px;
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--text);
+}
+.ex-answer-input:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+.ex-check-btn {
+  background: var(--accent);
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: 8px 18px;
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 600;
+  color: white;
+  cursor: pointer;
+  transition: opacity 0.18s;
+}
+.ex-check-btn:hover { opacity: 0.88; }
+.ex-check-feedback {
+  font-size: 12.5px;
+  line-height: 1.5;
+}
+.ex-check-feedback.ok { color: #34d399; font-weight: 500; }
+.ex-check-feedback.err { color: #f87171; }
+
 /* ── ACERCA ── */
 .about-box {
   background: var(--bg2); border: 1px solid var(--border);

@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Media Geométrica y Ponderada — MathGen</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Figtree:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../tutorial.css">
+</head>
+<body>
+
+  <div class="bg-grid"></div>
+  <div class="bg-glow"></div>
+
+  <header></header>
+
+  <div class="layout">
+
+    <aside id="menu-lateral" class="sidebar"></aside>
+
+    <main class="content">
+      <h1>Media Geométrica y Ponderada</h1>
+
+      <div class="note-box" style="margin-bottom: 2rem;">
+        <strong style="color: var(--accent); text-transform: uppercase; font-size: 11px; letter-spacing: 1px;">Contenido de esta lección</strong>
+        <ul class="toc-list">
+          <li><a href="#otros-valores-medios">1. Otros Valores Medios</a></li>
+          <li><a href="#media-geometrica">2. Valor Geométrico o Media Geométrica (MG)</a></li>
+          <li><a href="#factor-crecimiento">3. Aplicación al Factor de Crecimiento Medio</a></li>
+          <li><a href="#media-ponderada">4. Valor Medio Ponderado o Media Ponderada (MP)</a></li>
+          <li><a href="#ejemplos-ponderada">5. Ejemplos Resueltos de Media Ponderada</a></li>
+          <li><a href="#calculadoras">6. Calculadoras Interactivas (MG y MP)</a></li>
+        </ul>
+      </div>
+
+      <p>
+        Además de la media aritmética, la mediana y la moda, existen distribuciones de datos en las que el promedio aritmético simple no resulta propicio. En esta lección estudiaremos otros dos valores centrales de gran utilidad en la estadística descriptiva: la <strong>media geométrica (\( MG \))</strong> y la <strong>media ponderada (\( MP \))</strong>.
+      </p>
+
+      <div class="divider"></div>
+      <h2 id="otros-valores-medios">1. Otros Valores Medios</h2>
+      <p>
+        La elección entre estas medidas depende de cómo se combinan los datos del problema:
+      </p>
+      <ul>
+        <li><strong>Media Geométrica (\( MG \)):</strong> Se utiliza cuando las observaciones se combinan de forma <strong>multiplicativa</strong>, como ocurre al promediar factores de crecimiento o tasas de interés a lo largo de varios periodos.</li>
+        <li><strong>Media Ponderada (\( MP \)):</strong> Se utiliza cuando cada dato tiene una <strong>importancia relativa distinta</strong> llamada <strong>peso o ponderación (\( w_i \))</strong>, como en el cálculo de calificaciones con distintos porcentajes o frecuencias.</li>
+      </ul>
+
+      <div class="divider"></div>
+      <h2 id="media-geometrica">2. Valor Geométrico o Media Geométrica (\( MG \))</h2>
+      <p>
+        La <strong>media geométrica</strong> de los datos \( x_1, x_2, \dots, x_n \) se simboliza por \( MG \) y está definida como la raíz \( n \)-ésima del producto de las \( n \) mediciones.
+      </p>
+
+      <div class="example-box">
+        <div class="label">Fórmula de la Media Geométrica</div>
+        $$ MG = \sqrt[n]{x_1 \cdot x_2 \cdots x_n} $$
+        <p><strong>Restricción:</strong> De la definición de media geométrica se deduce que no se puede aplicar cuando algún dato vale cero (\( x_i = 0 \)) o cuando la cantidad de datos es par y existen valores negativos.</p>
+      </div>
+
+      <div class="example-box">
+        <div class="label">Ejemplo 1 — Cálculo directo de la Media Geométrica</div>
+        <p><strong>Problema:</strong> Calcule la media geométrica de los tiempos entre llegadas (en minutos) de seis aviones al aeropuerto: \( 3.5, 4.2, 2.9, 3.8, 4.0 \) y \( 2.8 \).</p>
+        <p><strong>Solución:</strong> Como son \( n = 6 \) mediciones positivas, aplicamos la raíz sexta de su producto:</p>
+        $$ MG = \sqrt[6]{3.5 \times 4.2 \times 2.9 \times 3.8 \times 4.0 \times 2.8} = \sqrt[6]{1\,814.3664} \approx 3.4939\text{ minutos} $$
+      </div>
+
+      <div class="divider"></div>
+      <h2 id="factor-crecimiento">3. Aplicación al Factor de Crecimiento Medio</h2>
+      <p>
+        Una aplicación fundamental de la media geométrica se presenta en las tasas de interés al considerar su <strong>factor de crecimiento</strong>, definido como:
+      </p>
+
+      <div class="example-box">
+        <div class="label">Factor de Crecimiento</div>
+        $$ \text{Factor de crecimiento} = 1 + \frac{\text{tasa de interés}}{100} $$
+        <p>El <strong>factor de crecimiento medio</strong> de varios periodos es el valor medio de estos factores, y la medida central exacta que debe utilizarse es la <strong>media geométrica</strong>.</p>
+      </div>
+
+      <div class="example-box">
+        <div class="label">Ejemplo 2 — Tasas de interés en cuatro años</div>
+        <p><strong>Problema:</strong> Suponga que durante un periodo de cuatro años se registran tasas de interés anual de \( 100\%, 200\%, 250\% \) y \( 350\% \). Es decir, los factores de crecimiento son \( 2, 3, 3.5 \) y \( 4.5 \), respectivamente. ¿Cuánto crecerá un depósito inicial de \( \$1\,000 \) al término de cuatro años y cuál es su factor de crecimiento medio?</p>
+        <p><strong>Paso 1 (Monto real acumulado año por año):</strong></p>
+        <ul>
+          <li>Primer año: \( 1\,000 \times 2 = 2\,000 \)</li>
+          <li>Segundo año: \( 2\,000 \times 3 = 6\,000 \)</li>
+          <li>Tercer año: \( 6\,000 \times 3.5 = 21\,000 \)</li>
+          <li>Cuarto año: \( 21\,000 \times 4.5 = \$94\,500 \)</li>
+        </ul>
+        <p><strong>Paso 2 (Comparación entre media aritmética y media geométrica):</strong></p>
+        <p>Si usáramos erróneamente la media aritmética de los factores (\( \frac{2 + 3 + 3.5 + 4.5}{4} = 3.25 \)), el monto calculado sería \( 1\,000 \times (3.25)^4 = \$111\,566.41 \), valor que difiere del pago real. En cambio, si calculamos el factor de crecimiento medio con la <strong>media geométrica</strong>:</p>
+        $$ MG = \sqrt[4]{2 \times 3 \times 3.5 \times 4.5} = \sqrt[4]{94.5} \approx 3.11787 $$
+        <p>Al aplicar este factor medio geométrico durante los 4 años obtenemos \( 1\,000 \times (3.11787)^4 = \$94\,500 \), que corresponde exactamente al valor real.</p>
+      </div>
+
+      <div class="divider"></div>
+      <h2 id="media-ponderada">4. Valor Medio Ponderado o Media Ponderada (\( MP \))</h2>
+      <p>
+        En los casos en que cada dato tiene una importancia relativa diferente llamada <strong>peso o ponderación</strong>, la media más apropiada se obtiene sumando los productos de cada dato por su peso; esta medida se llama <strong>media ponderada</strong>.
+      </p>
+
+      <div class="example-box">
+        <div class="label">Definición y Fórmula de la Media Ponderada</div>
+        <p>Dado un conjunto de datos \( x_1, x_2, \dots, x_n \), se llaman <strong>pesos o ponderaciones</strong> a las cantidades \( w_1, w_2, \dots, w_n \) que cumplen:</p>
+        <ol>
+          <li>\( w_i \in [0, 1] \) para todo valor de \( i \).</li>
+          <li>\( w_1 + w_2 + \dots + w_n = 1 \).</li>
+        </ol>
+        <p>La <strong>media ponderada</strong> del conjunto de datos \( x_1, x_2, \dots, x_n \) con pesos respectivos \( w_1, w_2, \dots, w_n \) se denota por \( MP \) y se calcula por medio de:</p>
+        $$ MP = \sum_{i=1}^{n} w_i x_i = w_1 x_1 + w_2 x_2 + \dots + w_n x_n $$
+        <p>Cuando los pesos se expresan en porcentajes o en frecuencias absolutas cuya suma no está normalizada a \( 1 \), se divide entre la suma total de los pesos:</p>
+        $$ MP = \frac{\sum_{i=1}^{n} w_i x_i}{\sum_{i=1}^{n} w_i} $$
+      </div>
+
+      <div class="divider"></div>
+      <h2 id="ejemplos-ponderada">5. Ejemplos Resueltos de Media Ponderada</h2>
+
+      <div class="example-box">
+        <div class="label">Ejemplo 1 — Calificación ponderada de una materia</div>
+        <p><strong>Problema:</strong> Calcule la calificación promedio de un estudiante en la materia de Fundamentos de Física, si la calificación está ponderada de la siguiente forma: \( 10\% \) tareas (\( w_1 = 0.1 \)), \( 40\% \) laboratorio (\( w_2 = 0.4 \)) y \( 50\% \) teoría (\( w_3 = 0.5 \)). Suponga que las calificaciones del estudiante fueron \( 8, 9 \) y \( 4 \), respectivamente.</p>
+        <p><strong>Solución:</strong> Aplicando la fórmula de la media ponderada:</p>
+        $$ MP = (0.1 \times 8) + (0.4 \times 9) + (0.5 \times 4) = 0.8 + 3.6 + 2.0 = 6.4 $$
+        <p>La calificación final ponderada del estudiante es \( 6.4 \).</p>
+      </div>
+
+      <div class="example-box">
+        <div class="label">Ejemplo 2 — Media ponderada utilizando frecuencias</div>
+        <p><strong>Problema:</strong> En una muestra de \( 100 \) pistones se encontró que \( 55 \) tenían un diámetro interno de \( 10.5\text{ cm} \), \( 25 \) de \( 10.0\text{ cm} \) y los \( 20 \) restantes de \( 10.75\text{ cm} \). Determine la media ponderada de su diámetro interno.</p>
+        <p><strong>Solución:</strong> Las proporciones (pesos) de cada diámetro son \( w_1 = 0.55 \), \( w_2 = 0.25 \) y \( w_3 = 0.20 \):</p>
+        $$ MP = (0.55 \times 10.5) + (0.25 \times 10.0) + (0.20 \times 10.75) = 5.775 + 2.500 + 2.150 = 10.425\text{ cm} $$
+      </div>
+
+      <div class="divider"></div>
+      <h2 id="calculadoras">6. Calculadoras Interactivas (\( MG \) y \( MP \))</h2>
+
+      <div class="gen-box">
+        <h2>1. Calculadora de Media Ponderada (\( MP \))</h2>
+        <p>Ingresa los valores (\( x_i \)) y sus respectivos pesos o porcentajes (\( w_i \)) separados por comas.</p>
+        <div class="calc-grid">
+          <div class="calc-input-area">
+            <label for="pondVals">Valores (\( x_i \)):</label>
+            <input type="text" id="pondVals" value="8, 9, 4" placeholder="Ej: 8, 9, 4">
+            <label for="pondWeights" style="margin-top: 6px;">Pesos (\( w_i \)):</label>
+            <input type="text" id="pondWeights" value="0.1, 0.4, 0.5" placeholder="Ej: 0.1, 0.4, 0.5">
+            <button class="btn-tool" id="calcPondBtn" style="margin-top: 6px;">Calcular Media Ponderada</button>
+            <p id="pondError" class="error-msg"></p>
+          </div>
+          <div class="calc-results">
+            <div class="calc-result-item">
+              <span class="calc-result-label">Suma de productos Σ(wᵢ · xᵢ)</span>
+              <span class="calc-result-val" id="resPondNum">—</span>
+            </div>
+            <div class="calc-result-item">
+              <span class="calc-result-label">Suma de pesos Σwᵢ</span>
+              <span class="calc-result-val" id="resPondDen">—</span>
+            </div>
+            <div class="calc-result-item">
+              <span class="calc-result-label">Media Ponderada (MP)</span>
+              <span class="calc-result-val" id="resPondFinal">—</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="gen-box">
+        <h2>2. Calculadora de Media Geométrica (\( MG \))</h2>
+        <p>Ingresa números positivos para obtener su producto, su Media Geométrica (\( MG \)) y compararla con su Media Aritmética (\( \bar{x} \)).</p>
+        <div class="tool-controls">
+          <div class="input-group">
+            <label for="geomInput">Datos (\( > 0 \)) =</label>
+            <input type="text" id="geomInput" value="2, 3, 3.5, 4.5" placeholder="Ej: 2, 3, 3.5, 4.5">
+            <button class="btn-tool" id="calcGeomBtn">Calcular</button>
+          </div>
+          <p id="geomError" class="error-msg"></p>
+          <div class="stat-chips" style="margin-top: 8px;">
+            <div class="chip"><span class="chip-label">Cantidad (n)</span><span class="chip-val" id="resGeomN">—</span></div>
+            <div class="chip"><span class="chip-label">Producto (x₁·x₂···xₙ)</span><span class="chip-val" id="resGeomProd">—</span></div>
+            <div class="chip"><span class="chip-label">Media Geométrica (MG)</span><span class="chip-val" id="resGeomVal">—</span></div>
+            <div class="chip"><span class="chip-label">Media Aritmética (x̄)</span><span class="chip-val" id="resGeomArith">—</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div id="generador-container" data-tema="medias_especiales"></div>
+
+      <div class="gen-box">
+        <h2>Quiz — Pon a prueba lo que aprendiste</h2>
+        <p>Responde 5 preguntas para verificar tu comprensión sobre media geométrica y media ponderada.</p>
+        <div id="quiz" data-topic="medias_especiales"></div>
+      </div>
+
+      <div class="nav-btns">
+        <a href="estadistica.html" class="btn outline">❮ Anterior: Media, Mediana y Moda</a>
+        <a href="dispersion.html" class="btn">Siguiente: Variancia y Desviación Estándar ❯</a>
+      </div>
+    </main>
+
+  </div>
+
+  <script src="../components.js"></script>
+  <script src="../ejercicios.js"></script>
+  <script src="../quiz.js"></script>
+  <script src="../app.js"></script>
+  <script>
+    function runWeightedCalc() {
+      const vals = document.getElementById("pondVals").value.replace(/;/g, ",").split(/[\s,]+/).map(s => s.trim()).filter(Boolean).map(Number);
+      const weights = document.getElementById("pondWeights").value.replace(/;/g, ",").split(/[\s,]+/).map(s => s.trim()).filter(Boolean).map(Number);
+      const errEl = document.getElementById("pondError");
+      errEl.textContent = "";
+
+      const res = StatsEngine.calcWeightedMean(vals, weights);
+      if (!res || !res.valid) {
+        errEl.textContent = "Ingresa la misma cantidad de valores y pesos válidos (con Σwᵢ > 0).";
+        return;
+      }
+
+      document.getElementById("resPondNum").textContent   = res.sumProducts;
+      document.getElementById("resPondDen").textContent   = res.sumWeights;
+      document.getElementById("resPondFinal").textContent = StatsEngine.cleanNumber(res.weightedMean, 4);
+    }
+
+    function runGeomCalc() {
+      const vals = document.getElementById("geomInput").value.replace(/;/g, ",").split(/[\s,]+/).map(s => s.trim()).filter(Boolean).map(Number);
+      const errEl = document.getElementById("geomError");
+      errEl.textContent = "";
+
+      if (vals.length === 0 || vals.some(v => isNaN(v) || v <= 0)) {
+        errEl.textContent = "Todos los datos deben ser números estrictamente positivos (> 0).";
+        return;
+      }
+
+      const res = StatsEngine.analyzeDataset(vals);
+      const prod = StatsEngine.cleanNumber(vals.reduce((a, b) => a * b, 1), 4);
+      const gClean = StatsEngine.cleanNumber(res.geometricMean, 4);
+      const mClean = StatsEngine.cleanNumber(res.mean, 4);
+      document.getElementById("resGeomN").textContent     = res.n;
+      document.getElementById("resGeomProd").textContent  = prod;
+      document.getElementById("resGeomVal").textContent   = gClean;
+      document.getElementById("resGeomArith").textContent = mClean;
+    }
+
+    document.getElementById("calcPondBtn").addEventListener("click", runWeightedCalc);
+    document.getElementById("pondVals").addEventListener("input", runWeightedCalc);
+    document.getElementById("pondWeights").addEventListener("input", runWeightedCalc);
+
+    document.getElementById("calcGeomBtn").addEventListener("click", runGeomCalc);
+    document.getElementById("geomInput").addEventListener("input", runGeomCalc);
+
+    window.addEventListener("DOMContentLoaded", () => {
+      runWeightedCalc();
+      runGeomCalc();
+    });
+
+    if(typeof loadComponents === "function") loadComponents("medias_especiales");
+    if(typeof initQuiz === "function") initQuiz("medias_especiales");
+  </script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</body>
+</html>

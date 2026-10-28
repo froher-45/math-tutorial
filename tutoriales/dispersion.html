@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Variancia y Desviación Estándar — MathGen</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Figtree:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../tutorial.css">
+</head>
+<body>
+
+  <div class="bg-grid"></div>
+  <div class="bg-glow"></div>
+
+  <header></header>
+
+  <div class="layout">
+
+    <aside id="menu-lateral" class="sidebar"></aside>
+
+    <main class="content">
+      <h1>Variancia y Desviación Estándar</h1>
+
+      <div class="note-box" style="margin-bottom: 2rem;">
+        <strong style="color: var(--accent); text-transform: uppercase; font-size: 11px; letter-spacing: 1px;">Contenido de esta lección</strong>
+        <ul class="toc-list">
+          <li><a href="#medidas-dispersion">1. Medidas de Dispersión</a></li>
+          <li><a href="#rango">2. Rango (r)</a></li>
+          <li><a href="#variancia-desviacion">3. Variancia y Desviación Estándar</a></li>
+          <li><a href="#otra-expresion">4. Otra Expresión para el Cálculo de las Variancias</a></li>
+          <li><a href="#desviacion-media">5. Desviación Media (DM)</a></li>
+          <li><a href="#laboratorio">6. Calculadora Interactiva de Dispersión</a></li>
+        </ul>
+      </div>
+
+      <p>
+        Cuando se lleva a cabo el análisis de la distribución de los datos de una muestra, el estudio de sus medidas centrales no es suficiente, debido a que diferentes conjuntos de datos pueden tener medidas centrales idénticas y comportamientos completamente distintos. En esta lección estudiaremos las <strong>medidas de dispersión</strong>: el <strong>rango</strong>, la <strong>variancia (varianza)</strong>, la <strong>desviación estándar</strong> y la <strong>desviación media</strong>.
+      </p>
+
+      <div class="divider"></div>
+      <h2 id="medidas-dispersion">1. Medidas de Dispersión</h2>
+      <p>
+        Una medida de dispersión (o variabilidad) indica qué tan cercanos o separados están los valores con respecto a la media u otra medida de tendencia central.
+      </p>
+
+      <div class="example-box">
+        <div class="label">Ejemplo 1 — Dos conjuntos con la misma media y distinta dispersión</div>
+        <p>Consideremos dos conjuntos de \( n = 6 \) datos:</p>
+        <ul>
+          <li><strong>Primer conjunto:</strong> \( 20, 12, 15, 16, 13 \) y \( 14 \quad \rightarrow \quad \bar{x} = \frac{90}{6} = 15 \)</li>
+          <li><strong>Segundo conjunto:</strong> \( 5, 0, 50, 17, 8 \) y \( 10 \quad \rightarrow \quad \bar{x} = \frac{90}{6} = 15 \)</li>
+        </ul>
+        <p>En ambos casos se obtiene exactamente el mismo promedio (\( \bar{x} = 15 \)), pero al ubicarlos en una recta numérica es evidente que las observaciones del segundo conjunto tienen una dispersión mucho mayor que las del primero.</p>
+      </div>
+
+      <div class="divider"></div>
+      <h2 id="rango">2. Rango (\( r \))</h2>
+      <p>
+        El primer valor que muestra cómo están dispersos los datos es el <strong>rango</strong> de las observaciones, denotado por \( r \). El rango es una medida variacional que indica el tamaño o longitud del intervalo en el que se encuentran distribuidos los datos:
+      </p>
+
+      <div class="example-box">
+        <div class="label">Fórmula del Rango</div>
+        $$ r = \text{Rango} = \text{Valor mayor} - \text{Valor menor} $$
+        <p><strong>Ejemplo con los dos conjuntos anteriores:</strong></p>
+        <ul>
+          <li>En el primer conjunto (\( 20, 12, 15, 16, 13, 14 \)): \( r_1 = 20 - 12 = 8 \). Los datos están distribuidos en un intervalo de longitud \( 8 \).</li>
+          <li>En el segundo conjunto (\( 5, 0, 50, 17, 8, 10 \)): \( r_2 = 50 - 0 = 50 \). Los datos están distribuidos en un intervalo de longitud \( 50 \).</li>
+        </ul>
+        <p>Aunque el rango muestra cuál conjunto tiene mayor separación entre extremos, no refleja el comportamiento de todos los datos con respecto a su media.</p>
+      </div>
+
+      <div class="divider"></div>
+      <h2 id="variancia-desviacion">3. Variancia y Desviación Estándar</h2>
+      <p>
+        Sea una muestra \( x_1, x_2, \dots, x_n \) con \( n \) datos y valor medio \( \bar{x} \). Los cuadrados de las desviaciones de cada uno de los datos con respecto a su valor medio son \( (x_1 - \bar{x})^2, (x_2 - \bar{x})^2, \dots, (x_n - \bar{x})^2 \). A partir de ellos se definen dos tipos de variancia:
+      </p>
+
+      <div class="example-box">
+        <div class="label">Fórmulas de la Variancia (Sesgada vs. Insesgada)</div>
+        <p>Sean \( x_1, x_2, \dots, x_n \) los valores de una muestra aleatoria, llamaremos:</p>
+        <p><strong>1. Variancia (varianza) sesgada o poblacional (\( s_n^2 \) o \( \sigma^2 \)):</strong></p>
+        $$ s_n^2 = \frac{1}{n} \sum_{i=1}^{n} (x_i - \bar{x})^2 $$
+        <p><strong>2. Variancia (varianza) insesgada o muestral (\( s_{n-1}^2 \) o \( s^2 \)):</strong></p>
+        $$ s_{n-1}^2 = \frac{1}{n - 1} \sum_{i=1}^{n} (x_i - \bar{x})^2 $$
+      </div>
+
+      <div class="note-box">
+        <strong>¿Por qué existen dos definiciones de variancia?</strong><br>
+        La <strong>variancia sesgada o poblacional (\( s_n^2 \))</strong> refleja directamente el promedio de los cuadrados de las desviaciones y se emplea cuando se tiene toda la población o en probabilidad. En cambio, la <strong>variancia insesgada o muestral (\( s_{n-1}^2 \))</strong> divide entre \( n - 1 \) y es la más propicia en los cálculos estadísticos e inferenciales cuando se trabaja con muestras.
+      </div>
+
+      <h3>Desviación Estándar (\( s_n \) y \( s_{n-1} \))</h3>
+      <p>
+        Como la variancia se calcula con los cuadrados de las desviaciones, no queda expresada en las mismas unidades que los datos originales. Por esta razón se introduce la <strong>desviación estándar</strong>:
+      </p>
+
+      <div class="example-box">
+        <div class="label">Definición y Fórmulas de la Desviación Estándar</div>
+        <p>Se llama <strong>desviación estándar</strong> de un conjunto de datos a la raíz cuadrada positiva de la variancia, la cual dependerá del tipo de variancia que se esté empleando:</p>
+        $$ \text{Poblacional:} \quad s_n = \sigma = \sqrt{s_n^2} = \sqrt{\frac{1}{n}\sum_{i=1}^{n} (x_i - \bar{x})^2} \qquad \Big| \qquad \text{Muestral:} \quad s_{n-1} = s = \sqrt{s_{n-1}^2} = \sqrt{\frac{1}{n - 1}\sum_{i=1}^{n} (x_i - \bar{x})^2} $$
+      </div>
+
+      <div class="example-box">
+        <div class="label">Ejemplo 2 — Cálculo de la Variancia Insesgada y su Desviación Estándar</div>
+        <p><strong>Problema:</strong> Calcule la variancia insesgada (\( s_{n-1}^2 \)) y su desviación estándar (\( s_{n-1} \)) en cada uno de los dos conjuntos dados al inicio de la lección.</p>
+
+        <p><strong>Para el Conjunto 1 (\( 20, 12, 15, 16, 13, 14 \) con \( n = 6 \) y \( \bar{x} = 15 \)):</strong></p>
+        $$ s_{n-1}^2 = \frac{1}{6 - 1}\left[(20 - 15)^2 + (12 - 15)^2 + (15 - 15)^2 + (16 - 15)^2 + (13 - 15)^2 + (14 - 15)^2\right] $$
+        $$ s_{n-1}^2 = \frac{1}{5}\left[25 + 9 + 0 + 1 + 4 + 1\right] = \frac{40}{5} = 8 $$
+        <p>Su desviación estándar muestral es:</p>
+        $$ s_{n-1} = \sqrt{8} \approx 2.8284 $$
+
+        <p><strong>Para el Conjunto 2 (\( 5, 0, 50, 17, 8, 10 \) con \( n = 6 \) y \( \bar{x} = 15 \)):</strong></p>
+        $$ s_{n-1}^2 = \frac{1}{6 - 1}\left[(5 - 15)^2 + (0 - 15)^2 + (50 - 15)^2 + (17 - 15)^2 + (8 - 15)^2 + (10 - 15)^2\right] $$
+        $$ s_{n-1}^2 = \frac{1}{5}\left[100 + 225 + 1\,225 + 4 + 49 + 25\right] = \frac{1\,628}{5} = 325.6 $$
+        <p>Su desviación estándar muestral es:</p>
+        $$ s_{n-1} = \sqrt{325.6} \approx 18.0444 $$
+        <p><strong>Interpretación:</strong> Aunque ambos conjuntos tienen media \( 15 \), el segundo conjunto tiene una variabilidad considerablemente mayor, por lo que los datos del primer conjunto son mucho más homogéneos.</p>
+      </div>
+
+      <div class="example-box">
+        <div class="label">Ejemplo 3 — Caso de Referencia (8 datos: 2, 4, 4, 4, 5, 5, 7, 9)</div>
+        <p>Para el conjunto \( 2, 4, 4, 4, 5, 5, 7, 9 \) (\( n = 8 \), rango \( r = 9 - 2 = 7 \), media \( \bar{x} = 5 \)):</p>
+        <ul>
+          <li><strong>Suma de cuadrados de las desviaciones:</strong>
+            $$ \sum_{i=1}^{8} (x_i - 5)^2 = (-3)^2 + 3(-1)^2 + 2(0)^2 + (2)^2 + (4)^2 = 9 + 3 + 0 + 4 + 16 = 32 $$
+          </li>
+          <li><strong>Variancia y desviación estándar poblacional (\( \div 8 \)):</strong>
+            $$ s_n^2 = \frac{32}{8} = 4 \quad \implies \quad s_n = \sqrt{4} = 2 $$
+          </li>
+          <li><strong>Variancia y desviación estándar muestral (\( \div 7 \)):</strong>
+            $$ s_{n-1}^2 = \frac{32}{8 - 1} = \frac{32}{7} \approx 4.5714 \quad \implies \quad s_{n-1} = \sqrt{\frac{32}{7}} \approx 2.1381 $$
+          </li>
+        </ul>
+      </div>
+
+      <div class="divider"></div>
+      <h2 id="otra-expresion">4. Otra Expresión para el Cálculo de las Variancias</h2>
+      <p>
+        En los cálculos prácticos de la variancia se acostumbra emplear una representación algebraica equivalente que evita restar la media a cada dato individual:
+      </p>
+
+      <div class="example-box">
+        <div class="label">Fórmulas Equivalentes para las Variancias</div>
+        <p><strong>Variancia sesgada o poblacional:</strong></p>
+        $$ s_n^2 = \frac{1}{n} \sum_{i=1}^{n} x_i^2 - \bar{x}^2 = \frac{n - 1}{n} s_{n-1}^2 $$
+        <p><strong>Variancia insesgada o muestral:</strong></p>
+        $$ s_{n-1}^2 = \frac{1}{n - 1} \sum_{i=1}^{n} x_i^2 - \frac{n}{n - 1} \bar{x}^2 = \frac{n}{n - 1} s_n^2 $$
+      </div>
+
+      <div class="example-box">
+        <div class="label">Ejemplo 4 — Comprobación con la fórmula alternativa</div>
+        <p>Para el conjunto \( 20, 12, 15, 16, 13, 14 \) (\( n = 6, \bar{x} = 15 \)):</p>
+        $$ s_{n-1}^2 = \frac{1}{6 - 1}\left[20^2 + 12^2 + 15^2 + 16^2 + 13^2 + 14^2\right] - \frac{6}{6 - 1}(15)^2 $$
+        $$ s_{n-1}^2 = \frac{1}{5}\left[400 + 144 + 225 + 256 + 169 + 196\right] - \frac{6}{5}(225) = 278 - 270 = 8 $$
+        <p>El resultado coincide exactamente con el obtenido mediante la definición.</p>
+      </div>
+
+      <div class="divider"></div>
+      <h2 id="desviacion-media">5. Desviación Media (\( DM \))</h2>
+      <p>
+        Otra medida de dispersión relacionada directamente con el promedio es la <strong>desviación media (\( DM \))</strong> o <strong>desviación media absoluta (\( DMA \))</strong>, definida como el promedio de los valores absolutos de las desviaciones de cada uno de los datos con respecto a la media:
+      </p>
+
+      <div class="example-box">
+        <div class="label">Fórmula de la Desviación Media</div>
+        $$ DM = \frac{1}{n} \sum_{i=1}^{n} |x_i - \bar{x}| $$
+      </div>
+
+      <div class="example-box">
+        <div class="label">Ejemplo 5 — Cálculo de la Desviación Media</div>
+        <p><strong>Problema:</strong> Calcule la desviación media para el conjunto \( 20, 12, 15, 16, 13 \) y \( 14 \) (cuya media es \( \bar{x} = 15 \)).</p>
+        <p><strong>Solución:</strong></p>
+        $$ DM = \frac{1}{6}\left\{ |20 - 15| + |12 - 15| + |15 - 15| + |16 - 15| + |13 - 15| + |14 - 15| \right\} $$
+        $$ DM = \frac{1}{6}\left\{ 5 + 3 + 0 + 1 + 2 + 1 \right\} = \frac{12}{6} = 2 $$
+      </div>
+
+      <div class="divider"></div>
+      <h2 id="laboratorio">6. Calculadora Interactiva de Dispersión</h2>
+
+      <div class="gen-box">
+        <h2>Calculadora de Rango, Variancia, Desviación Estándar y Desviación Media</h2>
+        <p>Ingresa un conjunto de datos para calcular su rango, desviación media, variancia poblacional (\( s_n^2 \)), variancia muestral (\( s_{n-1}^2 \)) y sus respectivas desviaciones estándar, además de visualizar las desviaciones respecto a la media.</p>
+        <div class="tool-controls">
+          <div class="input-group">
+            <label for="dispInput">Datos =</label>
+            <input type="text" id="dispInput" value="2, 4, 4, 4, 5, 5, 7, 9" placeholder="Ej: 2, 4, 4, 4, 5, 5, 7, 9">
+            <button class="btn-tool" id="calcDispBtn">Calcular y Graficar</button>
+          </div>
+          <p id="dispError" class="error-msg"></p>
+          <div class="stat-chips" style="margin-top: 6px;">
+            <div class="chip"><span class="chip-label">Cantidad (n) / Rango (r)</span><span class="chip-val" id="resDispNR">—</span></div>
+            <div class="chip"><span class="chip-label">Media (x̄)</span><span class="chip-val" id="resDispMM">—</span></div>
+            <div class="chip"><span class="chip-label">Desviación Media (DM)</span><span class="chip-val" id="resDispDM">—</span></div>
+            <div class="chip"><span class="chip-label">Suma Cuadrados Σ(xᵢ−x̄)²</span><span class="chip-val" id="resDispSS">—</span></div>
+            <div class="chip"><span class="chip-label">Poblacional: sₙ² y sₙ</span><span class="chip-val" id="resDispPob">—</span></div>
+            <div class="chip"><span class="chip-label">Muestral (insesgada): sₙ₋₁² y sₙ₋₁</span><span class="chip-val" id="resDispMue">—</span></div>
+          </div>
+          <div class="legend" style="margin-top: 6px;">
+            <span class="dot dot-blue"></span> Datos (\( x_i \))
+            <span class="dot dot-orange"></span> Media (\( \bar{x} \)) y banda \( \bar{x} \pm s_n \)
+          </div>
+        </div>
+        <canvas id="dispCanvas" style="height: 240px;"></canvas>
+      </div>
+
+      <div id="generador-container" data-tema="dispersion"></div>
+
+      <div class="gen-box">
+        <h2>Quiz — Pon a prueba lo que aprendiste</h2>
+        <p>Responde 5 preguntas sobre rango, desviación media, variancia y desviación estándar.</p>
+        <div id="quiz" data-topic="dispersion"></div>
+      </div>
+
+      <div class="nav-btns">
+        <a href="medias_especiales.html" class="btn outline">❮ Anterior: Media Geométrica y Ponderada</a>
+        <a href="../generador.html" class="btn">Ir al Generador Completo ❯</a>
+      </div>
+    </main>
+
+  </div>
+
+  <script src="../components.js"></script>
+  <script src="../ejercicios.js"></script>
+  <script src="../quiz.js"></script>
+  <script src="../app.js"></script>
+  <script>
+    function drawDispersionChart(nums, stats) {
+      const canvas = document.getElementById("dispCanvas");
+      if (!canvas) return;
+      const dpr = window.devicePixelRatio || 1;
+      const rect = canvas.getBoundingClientRect();
+      canvas.width = rect.width * dpr;
+      canvas.height = rect.height * dpr;
+      const ctx = canvas.getContext("2d");
+      ctx.scale(dpr, dpr);
+
+      const W = rect.width, H = rect.height;
+      ctx.clearRect(0, 0, W, H);
+
+      const isLight = document.body.classList.contains("light-mode");
+      const padL = 44, padR = 24, padT = 24, padB = 32;
+      const plotW = W - padL - padR;
+      const plotH = H - padT - padB;
+
+      const minVal = Math.min(...nums, stats.mean - stats.popStdDev) - 1;
+      const maxVal = Math.max(...nums, stats.mean + stats.popStdDev) + 1;
+      const span = Math.max(1, maxVal - minVal);
+
+      const toX = idx => nums.length === 1 ? padL + plotW / 2 : padL + (idx / (nums.length - 1)) * plotW;
+      const toY = v => padT + plotH - ((v - minVal) / span) * plotH;
+
+      const yTop = toY(stats.mean + stats.popStdDev);
+      const yBot = toY(stats.mean - stats.popStdDev);
+      ctx.fillStyle = "rgba(249, 115, 22, 0.10)";
+      ctx.fillRect(padL, yTop, plotW, Math.max(2, yBot - yTop));
+
+      ctx.strokeStyle = isLight ? "rgba(0,0,0,0.08)" : "rgba(255,255,255,0.07)";
+      ctx.fillStyle = isLight ? "#4a4a6a" : "#9896a8";
+      ctx.font = "11px 'DM Mono', monospace";
+      ctx.lineWidth = 1;
+      for (let i = 0; i <= 4; i++) {
+        const val = minVal + (span * i) / 4;
+        const y = toY(val);
+        ctx.beginPath();
+        ctx.moveTo(padL, y);
+        ctx.lineTo(W - padR, y);
+        ctx.stroke();
+        ctx.fillText(val.toFixed(1), 6, y + 4);
+      }
+
+      const yMean = toY(stats.mean);
+      ctx.beginPath();
+      ctx.strokeStyle = "#f97316";
+      ctx.lineWidth = 2;
+      ctx.setLineDash([6, 4]);
+      ctx.moveTo(padL, yMean);
+      ctx.lineTo(W - padR, yMean);
+      ctx.stroke();
+      ctx.setLineDash([]);
+
+      nums.forEach((v, i) => {
+        const x = toX(i);
+        const y = toY(v);
+
+        ctx.beginPath();
+        ctx.strokeStyle = "rgba(124, 106, 247, 0.55)";
+        ctx.lineWidth = 1.5;
+        ctx.moveTo(x, yMean);
+        ctx.lineTo(x, y);
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.arc(x, y, 5, 0, Math.PI * 2);
+        ctx.fillStyle = "#7c6af7";
+        ctx.fill();
+
+        ctx.fillStyle = isLight ? "#1a1a2e" : "#e8e6f0";
+        ctx.fillText(String(v), x - 6, y < yMean ? y - 9 : y + 16);
+      });
+    }
+
+    function runDispersionLab() {
+      const raw = document.getElementById("dispInput").value;
+      const errEl = document.getElementById("dispError");
+      errEl.textContent = "";
+
+      const nums = raw.replace(/;/g, ",").split(/[\s,]+/).map(s => s.trim()).filter(Boolean).map(Number);
+      if (nums.length === 0 || nums.some(isNaN)) {
+        errEl.textContent = "Ingresa al menos un número válido separado por comas.";
+        return;
+      }
+
+      const s = StatsEngine.analyzeDataset(nums);
+      document.getElementById("resDispNR").textContent  = `n = ${s.n}  |  r = ${s.range}`;
+      document.getElementById("resDispMM").textContent  = `x̄ = ${StatsEngine.cleanNumber(s.mean, 4)}`;
+      document.getElementById("resDispDM").textContent  = `DM = ${StatsEngine.cleanNumber(s.meanDeviation, 4)}`;
+      document.getElementById("resDispSS").textContent  = `${StatsEngine.cleanNumber(s.sumSqDevs, 4)}`;
+      document.getElementById("resDispPob").textContent = `sₙ² = ${StatsEngine.cleanNumber(s.popVariance, 4)}  |  sₙ = ${StatsEngine.cleanNumber(s.popStdDev, 4)}`;
+      document.getElementById("resDispMue").textContent = s.n > 1
+        ? `sₙ₋₁² = ${StatsEngine.cleanNumber(s.sampleVariance, 4)}  |  sₙ₋₁ = ${StatsEngine.cleanNumber(s.sampleStdDev, 4)}`
+        : "Requiere n ≥ 2";
+
+      drawDispersionChart(nums, s);
+    }
+
+    document.getElementById("calcDispBtn").addEventListener("click", runDispersionLab);
+    document.getElementById("dispInput").addEventListener("input", runDispersionLab);
+    window.addEventListener("DOMContentLoaded", runDispersionLab);
+    window.addEventListener("resize", runDispersionLab);
+    window.addEventListener("themechange", runDispersionLab);
+
+    if(typeof loadComponents === "function") loadComponents("dispersion");
+    if(typeof initQuiz === "function") initQuiz("dispersion");
+  </script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</body>
+</html>

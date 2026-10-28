@@ -3,18 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Estadística Descriptiva — MathGen</title>
+  <title>Media, Mediana y Moda — MathGen</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Figtree:wght@300;400;500;600&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
   <link rel="stylesheet" href="../tutorial.css">
-  <style>
-    .toc-list { list-style: none; padding-left: 0; margin-top: 10px; }
-    .toc-list li { margin-bottom: 6px; }
-    .toc-list a { color: var(--accent2); text-decoration: none; font-size: 14px; transition: opacity 0.2s; }
-    .toc-list a:hover { opacity: 0.7; text-decoration: underline; }
-  </style>
 </head>
 <body>
 
@@ -28,366 +21,215 @@
     <aside id="menu-lateral" class="sidebar"></aside>
 
     <main class="content">
-      <h1>Estadística Descriptiva</h1>
+      <h1>Media, Mediana y Moda</h1>
 
       <div class="note-box" style="margin-bottom: 2rem;">
         <strong style="color: var(--accent); text-transform: uppercase; font-size: 11px; letter-spacing: 1px;">Contenido de esta lección</strong>
         <ul class="toc-list">
-          <li><a href="#la-media">1. ¿Qué es la Media y las Medidas de Tendencia Central?</a></li>
-          <li><a href="#media-aritmetica">2. Media Aritmética (Promedio Simple)</a></li>
-          <li><a href="#media-ponderada">3. Media Ponderada (Promedio con Pesos)</a></li>
-          <li><a href="#media-geometrica">4. Media Geométrica (Tasas y Proporciones)</a></li>
-          <li><a href="#mediana">5. Mediana (El Valor Central)</a></li>
-          <li><a href="#moda">6. Moda (El Valor más Frecuente)</a></li>
-          <li><a href="#varianza">7. Varianza y Desviación Media</a></li>
-          <li><a href="#desviacion-estandar">8. Desviación Estándar</a></li>
-          <li><a href="#resumen">9. Tabla Resumen de Fórmulas</a></li>
-          <li><a href="#calculadora-estadistica">10. Calculadoras Interactivas de Estadística</a></li>
+          <li><a href="#parametros-estadisticos">1. Parámetros y Estadísticos (Medidas Centrales)</a></li>
+          <li><a href="#media-aritmetica">2. La Media (Media Aritmética)</a></li>
+          <li><a href="#mediana">3. La Mediana y su Cálculo</a></li>
+          <li><a href="#moda">4. La Moda</a></li>
+          <li><a href="#ejemplo-integrado">5. Ejemplo Integrado Paso a Paso</a></li>
+          <li><a href="#resumen">6. Tabla Resumen de Fórmulas</a></li>
+          <li><a href="#calculadora-central">7. Calculadora Interactiva de Medidas Centrales</a></li>
         </ul>
       </div>
 
       <p>
-        La <strong>Estadística Descriptiva</strong> es la rama de las matemáticas que recolecta, organiza y resume conjuntos de datos para extraer conclusiones claras. Sus herramientas se dividen en dos grandes bloques: las <strong>medidas de tendencia central y medias</strong> (que buscan el centro o valor representativo de los datos) y las <strong>medidas de dispersión</strong> (que miden qué tan alejados o concentrados están los datos respecto al centro).
+        La <strong>estadística descriptiva</strong> es la parte de la estadística que analiza, estudia y describe a la totalidad de individuos de una población o de una muestra con la finalidad de sintetizar la información para que pueda ser interpretada con claridad. En esta lección estudiaremos las tres <strong>medidas centrales</strong> principales: la <strong>media aritmética</strong>, la <strong>mediana</strong> y la <strong>moda</strong>.
       </p>
 
       <div class="divider"></div>
-      <h2 id="la-media">1. ¿Qué es la Media y las Medidas de Tendencia Central?</h2>
+      <h2 id="parametros-estadisticos">1. Parámetros y Estadísticos (Medidas Centrales)</h2>
       <p>
-        En estadística, el término <strong>media</strong> se refiere a un valor numérico que resume y representa el "centro de gravedad" de una colección de datos. Dependiendo de la naturaleza del problema (datos simples, datos con diferente importancia o tasas de crecimiento), utilizamos distintos tipos de medias: <strong>Aritmética</strong>, <strong>Ponderada</strong> o <strong>Geométrica</strong>, acompañadas por la <strong>Mediana</strong> y la <strong>Moda</strong>.
+        Los números que sintetizan los aspectos más relevantes de una distribución estadística pueden obtenerse tanto de una <strong>población</strong> (el conjunto de todos los elementos de interés, de tamaño \( N \)) como de una <strong>muestra</strong> (cualquier subconjunto finito y no vacío de la población, de tamaño \( n \)):
+      </p>
+      <ul>
+        <li><strong>Parámetro:</strong> Es toda medida descriptiva calculada a partir de los datos de toda la <strong>población</strong> (\( x_1, x_2, \dots, x_N \)).</li>
+        <li><strong>Estadístico:</strong> Es toda medida descriptiva calculada a partir de los datos de una <strong>muestra</strong> (\( x_1, x_2, \dots, x_n \)).</li>
+      </ul>
+      <p>
+        Los parámetros y estadísticos de la estadística descriptiva que estudiaremos en este bloque se clasifican en dos grandes grupos: las <strong>medidas centrales</strong> (media, mediana, moda, media geométrica y media ponderada) y las <strong>medidas de dispersión</strong> (rango, variancia, desviación estándar y desviación media).
       </p>
 
-      <div class="cards-row">
-        <div class="info-card">
-          <div class="info-card-icon">⚖️</div>
-          <h3>Media Aritmética (\( \bar{x} \))</h3>
-          <p>Suma de todos los valores dividida entre la cantidad de datos. Todos valen lo mismo.</p>
-        </div>
-        <div class="info-card">
-          <div class="info-card-icon">🏋️</div>
-          <h3>Media Ponderada (\( \bar{x}_p \))</h3>
-          <p>Cada dato se multiplica por su peso o importancia relativa antes de promediar.</p>
-        </div>
-        <div class="info-card">
-          <div class="info-card-icon">📈</div>
-          <h3>Media Geométrica (\( G \))</h3>
-          <p>Raíz \( n \)-ésima de la multiplicación de los datos. Ideal para tasas y porcentajes.</p>
-        </div>
-        <div class="info-card">
-          <div class="info-card-icon">🎯</div>
-          <h3>Mediana (\( Me \)) y Moda (\( Mo \))</h3>
-          <p>El dato que ocupa la posición central al ordenar y el dato que más se repite.</p>
-        </div>
+      <div class="divider"></div>
+      <h2 id="media-aritmetica">2. La Media (Media Aritmética)</h2>
+      <p>
+        Cuando se analiza un conjunto de datos numéricos, la primera medida para describir su localización o centro es su promedio, llamado formalmente <strong>media aritmética</strong>. Refleja la influencia que tiene cada uno de los valores de las observaciones en el valor central.
+      </p>
+
+      <div class="example-box">
+        <div class="label">Definición y Fórmula de la Media</div>
+        <p>Dado un conjunto finito de datos muestrales \( x_1, x_2, \dots, x_n \), se llama <strong>media muestral</strong> (promedio aritmético) o estadístico media al valor simbolizado por \( \bar{x} \) (<em>x barra</em> o <em>x testada</em>):</p>
+        $$ \bar{x} = \frac{x_1 + x_2 + \dots + x_n}{n} = \frac{1}{n} \sum_{i=1}^{n} x_i $$
+        <p>De forma similar, para una población finita \( x_1, x_2, \dots, x_N \), se simboliza con la letra griega <em>miu</em> (\( \mu \)) al parámetro <strong>media poblacional</strong>:</p>
+        $$ \mu = \frac{x_1 + x_2 + \dots + x_N}{N} = \frac{1}{N} \sum_{i=1}^{N} x_i $$
+      </div>
+
+      <div class="example-box">
+        <div class="label">Ejemplo 1 — Cálculo del ingreso promedio</div>
+        <p><strong>Problema:</strong> El señor Luis Martínez tiene registradas las cantidades mensuales que ha ganado en el último medio año (\( \$10\,800, \$9\,700, \$11\,100, \$8\,950, \$9\,750 \) y \( \$10\,500 \)) y desea conocer el valor que represente su salario promedio durante este tiempo.</p>
+        <p><strong>Solución:</strong> Sumamos los \( n = 6 \) sueldos mensuales y dividimos entre la cantidad de meses:</p>
+        $$ \bar{x} = \frac{10\,800 + 9\,700 + 11\,100 + 8\,950 + 9\,750 + 10\,500}{6} = \frac{60\,800}{6} = \$10\,133.33 $$
+        <p>El sueldo promedio de los últimos seis meses es de \( \$10\,133.33 \).</p>
+      </div>
+
+      <div class="example-box">
+        <div class="label">Ejemplo 2 — Efecto de los datos aberrantes en la media</div>
+        <p><strong>Problema:</strong> Se desea estimar el sueldo promedio de los trabajadores de una fábrica eligiendo aleatoriamente a \( n = 10 \) trabajadores, cuyos sueldos son: \( 2\,000, 2\,200, 2\,500, 2\,200, 1\,800, 25\,000, 2\,400, 2\,300, 2\,800 \) y \( 2\,400 \).</p>
+        <p><strong>Solución:</strong> Al aplicar la fórmula de la media muestral obtenemos:</p>
+        $$ \bar{x} = \frac{1}{10}\left[ 2\,000 + 2\,200 + 2\,500 + 2\,200 + 1\,800 + 25\,000 + 2\,400 + 2\,300 + 2\,800 + 2\,400 \right] = \frac{45\,600}{10} = 4\,560 $$
+        <p><strong>Observación:</strong> La media representa un valor promedio donde cada dato influye por igual. Por consiguiente, como el sueldo de \( \$25\,000 \) es mucho mayor que el resto (un <strong>dato aberrante</strong>), el valor \( \$4\,560 \) no refleja la realidad de los otros nueve trabajadores.</p>
       </div>
 
       <div class="divider"></div>
-      <h2 id="media-aritmetica">2. Media Aritmética (\( \bar{x} \))</h2>
+      <h2 id="mediana">3. La Mediana y su Cálculo</h2>
       <p>
-        Es el promedio clásico que usamos todos los días. Se calcula sumando todos los datos (\( x_i \)) y dividiendo entre el número total de elementos (\( n \)). En ella, cada dato aporta exactamente el mismo peso.
+        Cuando existen valores extremos o aberrantes, se recurre a una medida central en la que dichos valores no tengan una influencia tan marcada como en la media. Se llama <strong>mediana</strong> de un conjunto de datos al valor central de los datos cuando éstos se han ordenado en forma no decreciente en cuanto a su magnitud.
       </p>
-
-      <div class="example-box">
-        <div class="label">Fórmula de la Media Aritmética</div>
-        $$ \bar{x} = \frac{\sum_{i=1}^{n} x_i}{n} = \frac{x_1 + x_2 + x_3 + \dots + x_n}{n} $$
-        <ul>
-          <li><strong>\( \bar{x} \):</strong> Media aritmética muestral (o \( \mu \) para una población completa).</li>
-          <li><strong>\( x_i \):</strong> Cada uno de los datos del conjunto.</li>
-          <li><strong>\( n \):</strong> Cantidad total de datos.</li>
-        </ul>
-      </div>
-
-      <div class="example-box">
-        <div class="label">Paso a paso — Media Aritmética</div>
-        <p><strong>Problema:</strong> Calcular la media aritmética de los tiempos de respuesta (en ms) de un servidor: \( 12, 15, 18, 10, 20 \).</p>
-        <p><strong>Paso 1:</strong> Sumar todos los valores.</p>
-        $$ \sum x_i = 12 + 15 + 18 + 10 + 20 = 75 $$
-        <p><strong>Paso 2:</strong> Dividir entre el número total de datos (\( n = 5 \)).</p>
-        $$ \bar{x} = \frac{75}{5} = 15\text{ ms} $$
-      </div>
-
-      <div class="divider"></div>
-      <h2 id="media-ponderada">3. Media Ponderada (\( \bar{x}_p \))</h2>
-      <p>
-        ¿Qué pasa cuando <strong>no todos los datos tienen la misma importancia</strong>? Por ejemplo, en la universidad un examen final vale mucho más que una tarea semanal. En estos casos no podemos usar la media aritmética simple; usamos la <strong>Media Ponderada</strong>, asignando un <strong>peso o ponderación (\( w_i \))</strong> a cada valor (\( x_i \)).
-      </p>
-
-      <div class="example-box">
-        <div class="label">Fórmula de la Media Ponderada</div>
-        $$ \bar{x}_p = \frac{\sum_{i=1}^{n} (w_i \cdot x_i)}{\sum_{i=1}^{n} w_i} = \frac{w_1 x_1 + w_2 x_2 + \dots + w_n x_n}{w_1 + w_2 + \dots + w_n} $$
-        <ul>
-          <li><strong>\( x_i \):</strong> Valor de cada dato (por ejemplo, la calificación obtenida).</li>
-          <li><strong>\( w_i \):</strong> Peso, importancia o frecuencia asociada a ese dato (por ejemplo, porcentaje o créditos).</li>
-        </ul>
-      </div>
-
-      <div class="example-box">
-        <div class="label">Paso a paso — Media Ponderada (Calificación de un Curso)</div>
-        <p><strong>Problema:</strong> En la materia de Cálculo, la evaluación se divide así: <strong>Tareas (20%)</strong> sacaste \( 10 \), <strong>Proyecto (30%)</strong> sacaste \( 8 \), y <strong>Examen Final (50%)</strong> sacaste \( 6 \). ¿Cuál es tu calificación final ponderada?</p>
-        
-        <p><strong>Paso 1:</strong> Multiplicar cada calificación (\( x_i \)) por su respectivo peso (\( w_i \)).</p>
-        <ul>
-          <li>Tareas: \( 20 \times 10 = 200 \)</li>
-          <li>Proyecto: \( 30 \times 8 = 240 \)</li>
-          <li>Examen: \( 50 \times 6 = 300 \)</li>
-        </ul>
-
-        <p><strong>Paso 2:</strong> Sumar los productos obtenidos y sumar los pesos totales (\( 20 + 30 + 50 = 100 \)).</p>
-        $$ \bar{x}_p = \frac{200 + 240 + 300}{20 + 30 + 50} = \frac{740}{100} = 7.4 $$
-        <p><strong>Resultado:</strong> Tu calificación final es \( \mathbf{7.4} \). <em>(Observa que si hubieras hecho el promedio simple \( \frac{10+8+6}{3} \) habría dado \( 8.0 \), lo cual sería incorrecto porque el examen valía la mitad del curso).</em></p>
-      </div>
-
-      <div class="divider"></div>
-      <h2 id="media-geometrica">4. Media Geométrica (\( G \))</h2>
-      <p>
-        La <strong>Media Geométrica</strong> de \( n \) números positivos se define como la <strong>raíz \( n \)-ésima del producto de todos los datos</strong>. En lugar de sumar y dividir (como en la media aritmética), aquí <strong>multiplicamos todos los datos y sacamos raíz</strong>.
-      </p>
-      <p>
-        ¿Para qué sirve? Es la herramienta ideal para promediar <strong>tasas de crecimiento, rendimientos financieros, razones, proporciones o escalas geométricas</strong>.
-      </p>
-
-      <div class="example-box">
-        <div class="label">Fórmula de la Media Geométrica</div>
-        $$ G = \sqrt[n]{x_1 \cdot x_2 \cdot x_3 \cdots x_n} = \left( \prod_{i=1}^{n} x_i \right)^{\frac{1}{n}} $$
-        <ul>
-          <li>Para <strong>2 datos</strong> (\( n = 2 \)): \( G = \sqrt{x_1 \cdot x_2} \) (raíz cuadrada).</li>
-          <li>Para <strong>3 datos</strong> (\( n = 3 \)): \( G = \sqrt[3]{x_1 \cdot x_2 \cdot x_3} \) (raíz cúbica).</li>
-        </ul>
-      </div>
-
-      <div class="example-box">
-        <div class="label">Paso a paso — Media Geométrica</div>
-        <p><strong>Problema 1 (2 datos):</strong> Calcular la media geométrica de \( 4 \) y \( 9 \).</p>
-        $$ G = \sqrt{4 \times 9} = \sqrt{36} = 6 $$
-
-        <p><strong>Problema 2 (3 datos):</strong> Calcular la media geométrica de los números \( 2, 4, 8 \).</p>
-        <p><strong>Paso 1:</strong> Multiplicar los \( n = 3 \) datos entre sí.</p>
-        $$ 2 \times 4 \times 8 = 64 $$
-        <p><strong>Paso 2:</strong> Como son 3 datos, aplicamos la raíz cúbica (\( \sqrt[3]{\phantom{x}} \)).</p>
-        $$ G = \sqrt[3]{64} = 4 $$
-      </div>
 
       <div class="note-box">
-        💡 <strong>Propiedad matemática clave (Desigualdad MA-MG):</strong> Para cualquier conjunto de números positivos, la Media Geométrica siempre es menor o igual que la Media Aritmética (\( G \le \bar{x} \)), y solo son iguales cuando todos los datos valen exactamente lo mismo.
-      </div>
-
-      <div class="divider"></div>
-      <h2 id="mediana">5. Mediana (\( Me \))</h2>
-      <p>
-        La <strong>mediana</strong> es el valor que se encuentra exactamente en el centro de los datos cuando están <strong>ordenados de menor a mayor</strong>. Divide al conjunto en dos mitades con el 50% de los datos a cada lado. A diferencia de la media, la mediana no se altera si hay valores extremos muy grandes o muy pequeños.
-      </p>
-
-      <div class="example-box">
-        <div class="label">Caso 1 — Cantidad IMPAR de datos (\( n \) impar)</div>
-        <p>Cuando \( n \) es impar, la mediana es el dato único que queda exactamente en medio, en la posición \( \frac{n + 1}{2} \).</p>
-        <p><strong>Problema:</strong> Hallar la mediana de: \( 14, 5, 9, 2, 11 \)</p>
-        <p><strong>Paso 1:</strong> Ordenar de menor a mayor (\( n = 5 \)):</p>
-        $$ 2, \quad 5, \quad \mathbf{9}, \quad 11, \quad 14 $$
-        <p><strong>Paso 2:</strong> Tomar el dato central (posición \( \frac{5+1}{2} = 3 \)):</p>
-        $$ Me = 9 $$
+        <strong>Procedimiento de cálculo de la mediana (\( \tilde{x} \) o \( Me \)):</strong><br>
+        Sea el conjunto de datos muestrales \( x_1, x_2, \dots, x_n \). La mediana muestral la denotamos por \( \tilde{x} \) (<em>x tilde</em>) o \( Me \), y se obtiene ordenando primero los \( n \) datos en forma no decreciente:
+        $$ \tilde{x}_1 \le \tilde{x}_2 \le \dots \le \tilde{x}_n $$
       </div>
 
       <div class="example-box">
-        <div class="label">Caso 2 — Cantidad PAR de datos (\( n \) par)</div>
-        <p>Cuando \( n \) es par, quedan <strong>dos datos en el centro</strong>. La mediana se obtiene calculando el promedio de esos dos valores centrales.</p>
-        <p><strong>Problema:</strong> Hallar la mediana de: \( 12, 4, 8, 10, 6, 15 \)</p>
-        <p><strong>Paso 1:</strong> Ordenar de menor a mayor (\( n = 6 \)):</p>
-        $$ 4, \quad 6, \quad \mathbf{8, \quad 10}, \quad 12, \quad 15 $$
-        <p><strong>Paso 2:</strong> Promediar los dos valores centrales (\( 8 \) y \( 10 \)):</p>
-        $$ Me = \frac{8 + 10}{2} = \frac{18}{2} = 9 $$
-      </div>
-
-      <div class="divider"></div>
-      <h2 id="moda">6. Moda (\( Mo \))</h2>
-      <p>
-        La <strong>moda</strong> es el valor que aparece con mayor frecuencia en un conjunto de datos (el que más veces se repite).
-      </p>
-
-      <div class="example-box">
-        <div class="label">Casos posibles al buscar la Moda</div>
+        <div class="label">Fórmula de la Mediana según la paridad de n</div>
+        <p>Una vez ordenados los datos en forma no decreciente, localizamos el punto medio según ocurra alguno de los siguientes dos casos:</p>
         <ul>
-          <li><strong>Unimodal (una sola moda):</strong> En \( 2, 4, \mathbf{5, 5, 5}, 7, 9 \), el dato que más se repite es el \( 5 \) (tres veces) \( \rightarrow Mo = 5 \).</li>
-          <li><strong>Bimodal (dos modas):</strong> En \( 1, \mathbf{3, 3}, 6, \mathbf{8, 8}, 10 \), tanto el \( 3 \) como el \( 8 \) empatan con la frecuencia más alta \( \rightarrow Mo = 3 \text{ y } 8 \).</li>
-          <li><strong>Amodal (sin moda):</strong> En \( 4, 7, 10, 13, 19 \), ningún número se repite \( \rightarrow \text{No existe moda} \).</li>
+          <li><strong>Cuando la cantidad de observaciones \( n \) es impar:</strong> El punto medio del ordenamiento es el dato que se encuentra exactamente en la posición \( \frac{n + 1}{2} \).</li>
+          <li><strong>Cuando la cantidad de datos \( n \) es par:</strong> Resultan dos datos medios localizados en las posiciones \( \frac{n}{2} \) y \( \frac{n}{2} + 1 \), por lo que la mediana es el promedio aritmético de estos dos datos medios.</li>
+        </ul>
+        $$ \tilde{x} = \begin{cases} \tilde{x}_{\frac{n+1}{2}}, & \text{cuando la cantidad de datos } n \text{ es impar.} \\[10pt] \dfrac{\tilde{x}_{\frac{n}{2}} + \tilde{x}_{\frac{n}{2} + 1}}{2}, & \text{cuando la cantidad de datos } n \text{ es par.} \end{cases} $$
+      </div>
+
+      <div class="example-box">
+        <div class="label">Ejemplo Resuelto — Cálculo de la Mediana</div>
+        <p><strong>Problema:</strong> Encuentre la mediana del conjunto muestral de los \( n = 10 \) salarios del ejemplo anterior.</p>
+        <p><strong>Paso 1:</strong> Ordenamos los 10 salarios en forma no decreciente y los renombramos como \( \tilde{x}_1, \tilde{x}_2, \dots, \tilde{x}_{10} \):</p>
+        $$ 1\,800 \le 2\,000 \le 2\,200 \le 2\,200 \le \mathbf{2\,300} \le \mathbf{2\,400} \le 2\,400 \le 2\,500 \le 2\,800 \le 25\,000 $$
+        <p><strong>Paso 2:</strong> Como la cantidad de datos es \( n = 10 \) (número par), la mediana muestral se calcula con el promedio de los datos ordenados en las posiciones \( \frac{n}{2} = \frac{10}{2} = 5 \) y \( \frac{n}{2} + 1 = 5 + 1 = 6 \), que corresponden a \( \tilde{x}_5 = 2\,300 \) y \( \tilde{x}_6 = 2\,400 \):</p>
+        $$ \tilde{x} = \frac{\tilde{x}_5 + \tilde{x}_6}{2} = \frac{2\,300 + 2\,400}{2} = 2\,350 $$
+        <p><strong>Interpretación:</strong> Observa que el valor aberrante de \( \$25\,000 \) no influye en la mediana: si en lugar de \( \$25\,000 \) fuera \( \$5\,000 \) o \( \$100\,000 \), la mediana seguiría siendo \( \$2\,350 \). Por esta razón, la mediana es una medida central <strong>insensible a los valores extremos</strong>.</p>
+      </div>
+
+      <div class="divider"></div>
+      <h2 id="moda">4. La Moda</h2>
+      <p>
+        En algunos estudios es necesario encontrar el valor central de un conjunto de datos basándose en su repetición. La <strong>moda</strong> de un conjunto de datos (simbolizada por \( M \) o \( Mo \)) es el valor de éstos que se presenta en su distribución con <strong>mayor frecuencia</strong> (el dato que más veces se repite).
+      </p>
+
+      <div class="example-box">
+        <div class="label">Ejemplo Resuelto — La Moda</div>
+        <p><strong>Problema:</strong> En la siguiente lista se muestran las calificaciones de 20 exámenes de lingüística: \( 5, 8, 9, 9, 8, 10, 9, 5, 10, 5, 6, 5, 10, 10, 8, 9, 7, 9, 5, 9 \). Encuentre la moda de la distribución.</p>
+        <p><strong>Solución:</strong> Al realizar el conteo de los datos verificamos que resultan:</p>
+        <ul>
+          <li>Cinco datos con valor \( 5 \).</li>
+          <li>Un dato con valor \( 6 \) y otro con valor \( 7 \).</li>
+          <li>Tres datos con valor \( 8 \).</li>
+          <li><strong>Seis datos con valor \( 9 \).</strong></li>
+          <li>Cuatro datos con valor \( 10 \).</li>
+        </ul>
+        <p>Por lo tanto, la moda es \( M = 9 \), por ser la calificación que se repite más veces.</p>
+      </div>
+
+      <div class="example-box">
+        <div class="label">Particularidades de la Moda (Amodal y Multimodal)</div>
+        <p>La moda presenta las siguientes situaciones que siempre deben verificarse:</p>
+        <ul>
+          <li><strong>Puede no existir (Amodal):</strong> Cuando en una muestra todos los datos se repiten exactamente la misma cantidad de veces, el conjunto no tiene moda y se le llama <strong>amodal</strong>.<br>
+          <em>Ejemplo 1:</em> \( 6, 7, 9, 4, 8 \) (cada dato aparece 1 vez \( \rightarrow \) sin moda).<br>
+          <em>Ejemplo 2:</em> \( 6, 3, 8, 9, 3, 8, 6, 9 \) (todos los valores aparecen 2 veces \( \rightarrow \) sin moda).</li>
+          <li><strong>Puede no ser única (Multimodal):</strong> Cuando el conjunto tiene más de un valor que empata en la frecuencia máxima se llama <strong>multimodal</strong>: <strong>bimodal</strong> si tiene dos modas, <strong>trimodal</strong> si tiene tres, etcétera.<br>
+          <em>Ejemplo:</em> En la muestra \( 6, 7, 9, 4, 8, 6, 6, 8, 9, 6, 8, 6, 9, 3, 9, 9 \), tanto el \( 6 \) como el \( 9 \) se repiten cinco veces \( \rightarrow \) es <strong>bimodal</strong> con modas \( M = 6 \text{ y } 9 \).</li>
         </ul>
       </div>
 
       <div class="divider"></div>
-      <h2 id="varianza">7. Varianza (\( \sigma^2 \) o \( s^2 \)) y Desviación Media (\( DM \))</h2>
+      <h2 id="ejemplo-integrado">5. Ejemplo Integrado Paso a Paso</h2>
       <p>
-        Dos conjuntos de datos pueden tener exactamente la misma media pero comportarse de forma completamente distinta (por ejemplo, \( 7, 7, 7 \) frente a \( 1, 7, 13 \)). Para medir <strong>qué tan dispersos o separados están los datos respecto a su media</strong> usamos las medidas de dispersión.
-      </p>
-
-      <h3>A. Desviación Media (\( DM \))</h3>
-      <p>
-        Es el promedio de las distancias absolutas entre cada dato y la media aritmética:
-      </p>
-      <div class="example-box">
-        <div class="label">Fórmula de la Desviación Media</div>
-        $$ DM = \frac{\sum_{i=1}^{n} |x_i - \bar{x}|}{n} $$
-        <p><strong>Ejemplo rápido:</strong> Para \( 4, 7, 10 \), la media es \( \bar{x} = 7 \). Las distancias absolutas son \( |4-7|=3 \), \( |7-7|=0 \) y \( |10-7|=3 \). Por tanto, \( DM = \frac{3 + 0 + 3}{3} = 2 \).</p>
-      </div>
-
-      <h3>B. La Varianza (\( \sigma^2 \) y \( s^2 \))</h3>
-      <p>
-        La <strong>varianza</strong> mide la dispersión elevando al cuadrado la diferencia entre cada dato y la media: \( (x_i - \bar{x})^2 \). Al elevar al cuadrado se eliminan los signos negativos y se penalizan con mayor fuerza los valores que se alejan mucho del promedio.
+        Calculemos las tres medidas centrales sobre el conjunto de referencia de \( n = 8 \) datos:
+        $$ 2, \quad 4, \quad 4, \quad 4, \quad 5, \quad 5, \quad 7, \quad 9 $$
       </p>
 
       <div class="example-box">
-        <div class="label">Fórmulas de la Varianza (Poblacional vs. Muestral)</div>
-        <p><strong>1. Varianza Poblacional (\( \sigma^2 \)):</strong> Cuando analizas el total de la población (se divide entre \( N \)).</p>
-        $$ \sigma^2 = \frac{\sum_{i=1}^{N} (x_i - \mu)^2}{N} = \frac{(x_1 - \mu)^2 + (x_2 - \mu)^2 + \dots + (x_N - \mu)^2}{N} $$
-        <p><strong>2. Varianza Muestral (\( s^2 \)):</strong> Cuando trabajas solo con una muestra de la población (se divide entre \( n - 1 \)).</p>
-        $$ s^2 = \frac{\sum_{i=1}^{n} (x_i - \bar{x})^2}{n - 1} $$
-      </div>
-
-      <div class="divider"></div>
-      <h2 id="desviacion-estandar">8. Desviación Estándar (\( \sigma \) o \( s \))</h2>
-      <p>
-        Como la varianza eleva las diferencias al cuadrado, su resultado queda expresado en <strong>unidades al cuadrado</strong> (por ejemplo, \( \text{metros}^2 \) o \( \text{puntos}^2 \)), lo cual es difícil de interpretar directamente.
-      </p>
-      <p>
-        La <strong>Desviación Estándar</strong> (también llamada <em>desviación típica</em>) resuelve esto aplicando la <strong>raíz cuadrada a la varianza</strong>, devolviendo la medida de dispersión a las unidades originales del problema.
-      </p>
-
-      <div class="example-box">
-        <div class="label">Fórmulas de la Desviación Estándar</div>
-        $$ \text{Poblacional:} \quad \sigma = \sqrt{\sigma^2} = \sqrt{\frac{\sum_{i=1}^{N} (x_i - \mu)^2}{N}} $$
-        $$ \text{Muestral:} \quad s = \sqrt{s^2} = \sqrt{\frac{\sum_{i=1}^{n} (x_i - \bar{x})^2}{n - 1}} $$
-      </div>
-
-      <div class="example-box">
-        <div class="label">Paso a paso completo — Varianza y Desviación Estándar</div>
-        <p><strong>Problema:</strong> Calcular la varianza poblacional (\( \sigma^2 \)) y la desviación estándar (\( \sigma \)) de los datos: \( 4, 5, 7, 9, 10 \)</p>
-
-        <p><strong>Paso 1: Calcular la media aritmética (\( \bar{x} \)).</strong></p>
-        $$ \bar{x} = \frac{4 + 5 + 7 + 9 + 10}{5} = \frac{35}{5} = 7 $$
-
-        <p><strong>Paso 2: Restar la media a cada dato y elevar al cuadrado \( (x_i - \bar{x})^2 \).</strong></p>
+        <div class="label">Resolución Completa</div>
         <ul>
-          <li>\( (4 - 7)^2 = (-3)^2 = 9 \)</li>
-          <li>\( (5 - 7)^2 = (-2)^2 = 4 \)</li>
-          <li>\( (7 - 7)^2 = (0)^2 = 0 \)</li>
-          <li>\( (9 - 7)^2 = (2)^2 = 4 \)</li>
-          <li>\( (10 - 7)^2 = (3)^2 = 9 \)</li>
+          <li><strong>1. Media aritmética (\( \bar{x} \)):</strong> Sumamos los 8 valores y dividimos entre \( n = 8 \):
+            $$ \bar{x} = \frac{2 + 4 + 4 + 4 + 5 + 5 + 7 + 9}{8} = \frac{40}{8} = 5 $$
+          </li>
+          <li><strong>2. Mediana (\( \tilde{x} \)):</strong> Los datos ya están ordenados en forma no decreciente y \( n = 8 \) es par. Promediamos los datos en las posiciones \( \frac{8}{2} = 4 \) y \( \frac{8}{2} + 1 = 5 \) (que son \( \tilde{x}_4 = 4 \) y \( \tilde{x}_5 = 5 \)):
+            $$ \tilde{x} = \frac{4 + 5}{2} = 4.5 $$
+          </li>
+          <li><strong>3. Moda (\( M \)):</strong> El valor que se presenta con mayor frecuencia es el \( 4 \) (se repite 3 veces, mientras que el \( 5 \) se repite 2 veces):
+            $$ M = 4 $$
+          </li>
         </ul>
-
-        <p><strong>Paso 3: Sumar los cuadrados y dividir entre \( N = 5 \) para hallar la Varianza (\( \sigma^2 \)).</strong></p>
-        $$ \sigma^2 = \frac{9 + 4 + 0 + 4 + 9}{5} = \frac{26}{5} = 5.2 $$
-
-        <p><strong>Paso 4: Sacar la raíz cuadrada de la varianza para hallar la Desviación Estándar (\( \sigma \)).</strong></p>
-        $$ \sigma = \sqrt{5.2} \approx 2.28 $$
-
-        <p><em>(Si los datos fueran una muestra, dividiríamos entre \( n - 1 = 4 \): Varianza muestral \( s^2 = \frac{26}{4} = 6.5 \) y Desviación estándar muestral \( s = \sqrt{6.5} \approx 2.55 \)).</em></p>
       </div>
 
       <div class="divider"></div>
-      <h2 id="resumen">9. Tabla Resumen de Fórmulas</h2>
+      <h2 id="resumen">6. Tabla Resumen de Fórmulas</h2>
 
       <table class="math-table">
-        <caption>Formulario Completo de Estadística Descriptiva</caption>
+        <caption>Medidas Centrales Básicas</caption>
         <thead>
           <tr>
-            <th>Medida</th>
+            <th>Medida Central</th>
             <th>Símbolo</th>
-            <th>Fórmula / Regla</th>
+            <th>Fórmula / Regla de Cálculo</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td><strong>Media Aritmética</strong></td>
+            <td>Media Muestral</td>
             <td>\( \bar{x} \)</td>
-            <td>\( \bar{x} = \frac{\sum_{i=1}^{n} x_i}{n} \)</td>
+            <td>\( \bar{x} = \frac{1}{n}\sum_{i=1}^{n} x_i = \frac{x_1 + x_2 + \dots + x_n}{n} \)</td>
           </tr>
           <tr>
-            <td><strong>Media Ponderada</strong></td>
-            <td>\( \bar{x}_p \)</td>
-            <td>\( \bar{x}_p = \frac{\sum_{i=1}^{n} w_i \cdot x_i}{\sum_{i=1}^{n} w_i} \)</td>
+            <td>Media Poblacional</td>
+            <td>\( \mu \)</td>
+            <td>\( \mu = \frac{1}{N}\sum_{i=1}^{N} x_i = \frac{x_1 + x_2 + \dots + x_N}{N} \)</td>
           </tr>
           <tr>
-            <td><strong>Media Geométrica</strong></td>
-            <td>\( G \)</td>
-            <td>\( G = \sqrt[n]{x_1 \cdot x_2 \cdots x_n} \)</td>
+            <td>Mediana (\( n \) impar)</td>
+            <td>\( \tilde{x} \) o \( Me \)</td>
+            <td>\( \tilde{x} = \tilde{x}_{\frac{n+1}{2}} \) (con datos ordenados \( \tilde{x}_1 \le \dots \le \tilde{x}_n \))</td>
           </tr>
           <tr>
-            <td><strong>Mediana</strong></td>
-            <td>\( Me \)</td>
-            <td>Valor central con datos ordenados (o promedio de los 2 centrales si \( n \) es par)</td>
+            <td>Mediana (\( n \) par)</td>
+            <td>\( \tilde{x} \) o \( Me \)</td>
+            <td>\( \tilde{x} = \frac{\tilde{x}_{n/2} + \tilde{x}_{n/2 + 1}}{2} \) (promedio de los dos datos centrales)</td>
           </tr>
           <tr>
-            <td><strong>Moda</strong></td>
-            <td>\( Mo \)</td>
-            <td>Valor con mayor frecuencia (el que más veces se repite)</td>
-          </tr>
-          <tr>
-            <td><strong>Desviación Media</strong></td>
-            <td>\( DM \)</td>
-            <td>\( DM = \frac{\sum_{i=1}^{n} |x_i - \bar{x}|}{n} \)</td>
-          </tr>
-          <tr>
-            <td><strong>Varianza Poblacional / Muestral</strong></td>
-            <td>\( \sigma^2 \quad / \quad s^2 \)</td>
-            <td>\( \sigma^2 = \frac{\sum (x_i - \mu)^2}{N} \quad \Big| \quad s^2 = \frac{\sum (x_i - \bar{x})^2}{n - 1} \)</td>
-          </tr>
-          <tr>
-            <td><strong>Desviación Estándar</strong></td>
-            <td>\( \sigma \quad / \quad s \)</td>
-            <td>\( \sigma = \sqrt{\sigma^2} \quad \Big| \quad s = \sqrt{s^2} \)</td>
+            <td>Moda</td>
+            <td>\( M \) o \( Mo \)</td>
+            <td>Valor que se presenta con mayor frecuencia en la muestra</td>
           </tr>
         </tbody>
       </table>
 
       <div class="divider"></div>
-      <h2 id="calculadora-estadistica">10. Calculadoras Interactivas de Estadística</h2>
+      <h2 id="calculadora-central">7. Calculadora Interactiva de Medidas Centrales</h2>
 
       <div class="gen-box">
-        <h2>📊 1. Analizador General de Datos</h2>
-        <p>Ingresa tus datos separados por comas para obtener la Media Aritmética, Media Geométrica, Mediana, Moda, Varianza y Desviación Estándar en vivo.</p>
+        <h2>Calculadora de Media, Mediana y Moda</h2>
+        <p>Ingresa un conjunto de datos separados por comas para ordenarlos automáticamente y calcular su media, mediana y moda.</p>
         <div class="tool-controls">
           <div class="input-group">
-            <label for="statsInput">Datos =</label>
-            <input type="text" id="statsInput" value="4, 5, 7, 7, 9, 10" placeholder="Ej: 4, 5, 7, 7, 9, 10">
-            <button class="btn-tool" id="calcStatsBtn">Calcular todo</button>
+            <label for="centralInput">Datos =</label>
+            <input type="text" id="centralInput" value="2, 4, 4, 4, 5, 5, 7, 9" placeholder="Ej: 2, 4, 4, 4, 5, 5, 7, 9">
+            <button class="btn-tool" id="calcCentralBtn">Calcular</button>
           </div>
-          <p id="statsError" class="error-msg"></p>
-          <div class="stat-chips" id="statsResults" style="margin-top: 8px;">
-            <div class="chip"><span class="chip-label">Datos ordenados (n)</span><span class="chip-val" id="resOrdenados">—</span></div>
-            <div class="chip"><span class="chip-label">Media Aritmética (x̄)</span><span class="chip-val" id="resMedia">—</span></div>
-            <div class="chip"><span class="chip-label">Media Geométrica (G)</span><span class="chip-val" id="resGeom">—</span></div>
-            <div class="chip"><span class="chip-label">Mediana (Me)</span><span class="chip-val" id="resMediana">—</span></div>
-            <div class="chip"><span class="chip-label">Moda (Mo)</span><span class="chip-val" id="resModa">—</span></div>
-            <div class="chip"><span class="chip-label">Desviación Media (DM)</span><span class="chip-val" id="resDM">—</span></div>
-            <div class="chip"><span class="chip-label">Varianza Poblacional (σ²)</span><span class="chip-val" id="resVarPob">—</span></div>
-            <div class="chip"><span class="chip-label">Desv. Estándar Pob. (σ)</span><span class="chip-val" id="resStdPob">—</span></div>
-            <div class="chip"><span class="chip-label">Varianza Muestral (s²)</span><span class="chip-val" id="resVarMue">—</span></div>
-            <div class="chip"><span class="chip-label">Desv. Estándar Muestral (s)</span><span class="chip-val" id="resStdMue">—</span></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="gen-box">
-        <h2>🏋️ 2. Calculadora de Media Ponderada</h2>
-        <p>Ingresa los valores (\( x_i \)) y sus respectivos pesos o porcentajes (\( w_i \)) en el mismo orden.</p>
-        <div class="calc-grid">
-          <div class="calc-input-area">
-            <label for="pondVals">Valores (\( x_i \)):</label>
-            <input type="text" id="pondVals" value="10, 8, 6" placeholder="Ej: 10, 8, 6">
-            <label for="pondWeights" style="margin-top: 6px;">Pesos (\( w_i \)):</label>
-            <input type="text" id="pondWeights" value="20, 30, 50" placeholder="Ej: 20, 30, 50">
-            <button class="btn-tool" id="calcPondBtn" style="margin-top: 6px;">Calcular Media Ponderada</button>
-            <p id="pondError" class="error-msg"></p>
-          </div>
-          <div class="calc-results">
-            <div class="calc-result-item">
-              <span class="calc-result-label">Suma de productos Σ(wᵢ · xᵢ)</span>
-              <span class="calc-result-val" id="resPondNum">—</span>
-            </div>
-            <div class="calc-result-item">
-              <span class="calc-result-label">Suma de pesos Σwᵢ</span>
-              <span class="calc-result-val" id="resPondDen">—</span>
-            </div>
-            <div class="calc-result-item">
-              <span class="calc-result-label">Media Ponderada (x̄ₚ)</span>
-              <span class="calc-result-val" id="resPondFinal">—</span>
-            </div>
+          <p id="centralError" class="error-msg"></p>
+          <div class="stat-chips" style="margin-top: 8px;">
+            <div class="chip"><span class="chip-label">Cantidad de datos (n)</span><span class="chip-val" id="resN">—</span></div>
+            <div class="chip"><span class="chip-label">Suma (Σxᵢ)</span><span class="chip-val" id="resSum">—</span></div>
+            <div class="chip"><span class="chip-label">Datos ordenados</span><span class="chip-val" id="resSorted">—</span></div>
+            <div class="chip"><span class="chip-label">Media (x̄)</span><span class="chip-val" id="resMean">—</span></div>
+            <div class="chip"><span class="chip-label">Mediana (x̃)</span><span class="chip-val" id="resMedian">—</span></div>
+            <div class="chip"><span class="chip-label">Moda (M)</span><span class="chip-val" id="resMode">—</span></div>
           </div>
         </div>
       </div>
@@ -396,129 +238,47 @@
 
       <div class="gen-box">
         <h2>Quiz — Pon a prueba lo que aprendiste</h2>
-        <p>Responde 5 preguntas para verificar tu comprensión del módulo de Estadística.</p>
+        <p>Responde 5 preguntas para verificar tu comprensión sobre la media, la mediana y la moda.</p>
         <div id="quiz" data-topic="estadistica"></div>
       </div>
 
       <div class="nav-btns">
         <a href="fourier.html" class="btn outline">❮ Anterior: Transformada de Fourier</a>
-        <a href="../generador.html" class="btn">Ir al Generador Completo ❯</a>
+        <a href="medias_especiales.html" class="btn">Siguiente: Media Geométrica y Ponderada ❯</a>
       </div>
     </main>
 
   </div>
 
-  <script>
-    function calcularEstadistica() {
-      const raw = document.getElementById("statsInput").value;
-      const errEl = document.getElementById("statsError");
-      errEl.textContent = "";
-
-      const nums = raw
-        .split(/[\s,;]+/)
-        .map(s => s.trim())
-        .filter(Boolean)
-        .map(Number);
-
-      if (nums.length < 2 || nums.some(isNaN)) {
-        errEl.textContent = "⚠ Ingresa al menos 2 números válidos separados por comas.";
-        return;
-      }
-
-      const sorted = [...nums].sort((a, b) => a - b);
-      const n = sorted.length;
-      const sum = sorted.reduce((a, b) => a + b, 0);
-      const mean = sum / n;
-
-      // Media Geométrica (solo definida para valores > 0)
-      let geomText = "Requiere datos > 0";
-      if (sorted.every(x => x > 0)) {
-        const logSum = sorted.reduce((acc, x) => acc + Math.log(x), 0);
-        const geom = Math.exp(logSum / n);
-        geomText = Math.round(geom * 1000) / 1000;
-      }
-
-      // Mediana
-      const mid = Math.floor(n / 2);
-      const median = n % 2 !== 0 ? sorted[mid] : (sorted[mid - 1] + sorted[mid]) / 2;
-
-      // Moda
-      const freq = {};
-      let maxF = 0;
-      sorted.forEach(x => {
-        freq[x] = (freq[x] || 0) + 1;
-        if (freq[x] > maxF) maxF = freq[x];
-      });
-      let modeText = "Sin moda (amodal)";
-      if (maxF > 1) {
-        const modes = Object.keys(freq).filter(k => freq[k] === maxF);
-        modeText = `${modes.join(", ")} (${maxF} veces)`;
-      }
-
-      // Desviación media y varianzas
-      const sumAbs = sorted.reduce((acc, x) => acc + Math.abs(x - mean), 0);
-      const dm = sumAbs / n;
-
-      const sumSq = sorted.reduce((acc, x) => acc + Math.pow(x - mean, 2), 0);
-      const varPob = sumSq / n;
-      const stdPob = Math.sqrt(varPob);
-      const varMue = sumSq / (n - 1);
-      const stdMue = Math.sqrt(varMue);
-
-      const fmt = v => Math.round(v * 1000) / 1000;
-
-      document.getElementById("resOrdenados").textContent = `${sorted.join(", ")} (n = ${n})`;
-      document.getElementById("resMedia").textContent     = fmt(mean);
-      document.getElementById("resGeom").textContent      = geomText;
-      document.getElementById("resMediana").textContent   = fmt(median);
-      document.getElementById("resModa").textContent      = modeText;
-      document.getElementById("resDM").textContent        = fmt(dm);
-      document.getElementById("resVarPob").textContent    = fmt(varPob);
-      document.getElementById("resStdPob").textContent    = fmt(stdPob);
-      document.getElementById("resVarMue").textContent    = fmt(varMue);
-      document.getElementById("resStdMue").textContent    = fmt(stdMue);
-    }
-
-    function calcularPonderada() {
-      const vals = document.getElementById("pondVals").value.split(/[\s,;]+/).map(s => s.trim()).filter(Boolean).map(Number);
-      const weights = document.getElementById("pondWeights").value.split(/[\s,;]+/).map(s => s.trim()).filter(Boolean).map(Number);
-      const errEl = document.getElementById("pondError");
-      errEl.textContent = "";
-
-      if (vals.length < 2 || vals.length !== weights.length || vals.some(isNaN) || weights.some(isNaN)) {
-        errEl.textContent = "⚠ Ingresa la misma cantidad de valores y de pesos (mínimo 2).";
-        return;
-      }
-
-      const sumWeights = weights.reduce((a, b) => a + b, 0);
-      if (sumWeights === 0) {
-        errEl.textContent = "⚠ La suma de los pesos no puede ser 0.";
-        return;
-      }
-
-      const sumProd = vals.reduce((acc, x, i) => acc + x * weights[i], 0);
-      const pond = Math.round((sumProd / sumWeights) * 1000) / 1000;
-
-      document.getElementById("resPondNum").textContent   = Math.round(sumProd * 1000) / 1000;
-      document.getElementById("resPondDen").textContent   = Math.round(sumWeights * 1000) / 1000;
-      document.getElementById("resPondFinal").textContent = pond;
-    }
-
-    document.getElementById("calcStatsBtn").addEventListener("click", calcularEstadistica);
-    document.getElementById("statsInput").addEventListener("input", calcularEstadistica);
-    document.getElementById("calcPondBtn").addEventListener("click", calcularPonderada);
-    document.getElementById("pondVals").addEventListener("input", calcularPonderada);
-    document.getElementById("pondWeights").addEventListener("input", calcularPonderada);
-    window.addEventListener("DOMContentLoaded", () => {
-      calcularEstadistica();
-      calcularPonderada();
-    });
-  </script>
   <script src="../components.js"></script>
   <script src="../ejercicios.js"></script>
   <script src="../quiz.js"></script>
   <script src="../app.js"></script>
   <script>
+    function runCentralAnalyzer() {
+      const raw = document.getElementById("centralInput").value;
+      const errEl = document.getElementById("centralError");
+      errEl.textContent = "";
+
+      const nums = raw.replace(/;/g, ",").split(/[\s,]+/).map(s => s.trim()).filter(Boolean).map(Number);
+      if (nums.length === 0 || nums.some(isNaN)) {
+        errEl.textContent = "Ingresa al menos un número válido separado por comas.";
+        return;
+      }
+
+      const res = StatsEngine.analyzeDataset(nums);
+      document.getElementById("resN").textContent      = res.n;
+      document.getElementById("resSum").textContent    = res.sum;
+      document.getElementById("resSorted").textContent = res.sorted.join(", ");
+      document.getElementById("resMean").textContent   = StatsEngine.cleanNumber(res.mean, 4);
+      document.getElementById("resMedian").textContent = StatsEngine.cleanNumber(res.median, 4);
+      document.getElementById("resMode").textContent   = `${res.modeLabel} (${res.modeType})`;
+    }
+
+    document.getElementById("calcCentralBtn").addEventListener("click", runCentralAnalyzer);
+    document.getElementById("centralInput").addEventListener("input", runCentralAnalyzer);
+    window.addEventListener("DOMContentLoaded", runCentralAnalyzer);
+
     if(typeof loadComponents === "function") loadComponents("estadistica");
     if(typeof initQuiz === "function") initQuiz("estadistica");
   </script>

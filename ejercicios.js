@@ -27,7 +27,276 @@ function fmtFrac(n, d) {
   if (d < 0) return fmtFrac(-n, -d);
   return `${n}/${d}`;
 }
-function round2(n) { return Math.round(n * 100) / 100; }
+function round2(n) { return Math.round((n + Number.EPSILON) * 100) / 100; }
+function round4(n) { return Math.round((n + Number.EPSILON) * 10000) / 10000; }
+
+// ══════════════════════════════════════════════════════
+//  StatsEngine — Motor de Cálculo y Validación Estadística
+// ══════════════════════════════════════════════════════
+const StatsEngine = {
+  cleanNumber(val, decimals = 4) {
+    if (val === null || val === undefined || !Number.isFinite(val)) return null;
+    const factor = Math.pow(10, decimals);
+    const rounded = Math.round((val + Number.EPSILON) * factor) / factor;
+    return Object.is(rounded, -0) ? 0 : rounded;
+  },
+
+  calcQuantile(sorted, p) {
+    const n = sorted.length;
+    if (n === 0) return null;
+    if (n === 1) return sorted[0];
+    const pos = p * (n + 1);
+    if (pos <= 1) return sorted[0];
+    if (pos >= n) return sorted[n - 1];
+    const lowerIdx = Math.floor(pos) - 1;
+    const fracPart = pos - Math.floor(pos);
+    return sorted[lowerIdx] + fracPart * (sorted[lowerIdx + 1] - sorted[lowerIdx]);
+  },
+
+  analyzeDataset(rawArray) {
+    if (!Array.isArray(rawArray)) {
+      return { valid: false, error: "La entrada no es un arreglo válido." };
+    }
+    const nums = rawArray.map(v => Number(v)).filter(v => Number.isFinite(v));
+    if (nums.length === 0) {
+      return { valid: false, error: "El conjunto de datos está vacío o no contiene valores numéricos válidos." };
+    }
+
+    const n = nums.length;
+    const sorted = [...nums].sort((a, b) => a - b);
+    const sum = sorted.reduce((acc, v) => acc + v, 0);
+    const mean = sum / n;
+    const min = sorted[0];
+    const max = sorted[n - 1];
+    const range = max - min;
+
+    // Mediana
+    const median = (n % 2 === 1)
+      ? sorted[(n - 1) / 2]
+      : (sorted[n / 2 - 1] + sorted[n / 2]) / 2;
+
+    // Tabla de frecuencias
+    const freqMap = new Map();
+    sorted.forEach(x => freqMap.set(x, (freqMap.get(x) || 0) + 1));
+    let cumF = 0;
+    const freqTable = [];
+    for (const [x, f] of freqMap.entries()) {
+      cumF += f;
+      const h = f / n;
+      freqTable.push({
+        x,
+        f,
+        h,
+        pct: h * 100,
+        F: cumF,
+        H: cumF / n
+      });
+    }
+
+    // Moda (unimodal, bimodal, multimodal, amodal)
+    const maxFreq = Math.max(...freqTable.map(r => r.f));
+    let modes = [];
+    let modeType = "Amodal";
+    let modeLabel = "Sin moda (Amodal)";
+
+    if (n === 1) {
+      modes = [sorted[0]];
+      modeType = "Unimodal";
+      modeLabel = `${sorted[0]}`;
+    } else if (maxFreq === 1) {
+      modes = [];
+      modeType = "Amodal";
+      modeLabel = "Sin moda (Amodal)";
+    } else if (freqTable.length > 1 && freqTable.every(r => r.f === maxFreq)) {
+      modes = [];
+      modeType = "Amodal";
+      modeLabel = "Sin moda (frecuencia uniforme)";
+    } else {
+      modes = freqTable.filter(r => r.f === maxFreq).map(r => r.x);
+      modeType = modes.length === 1 ? "Unimodal" : (modes.length === 2 ? "Bimodal" : "Multimodal");
+      modeLabel = modes.join(", ");
+    }
+
+    // Media Geométrica (solo definida para datos estrictamente positivos)
+    const allPositive = sorted.every(x => x > 0);
+    const geometricMean = allPositive
+      ? Math.exp(sorted.reduce((acc, x) => acc + Math.log(x), 0) / n)
+      : null;
+
+    // Desviaciones respecto a la media
+    const absDevs = sorted.map(x => Math.abs(x - mean));
+    const sumAbsDevs = absDevs.reduce((acc, v) => acc + v, 0);
+    const meanDeviation = sumAbsDevs / n;
+
+    const sqDevs = sorted.map(x => Math.pow(x - mean, 2));
+    const sumSqDevs = sqDevs.reduce((acc, v) => acc + v, 0);
+
+    // Varianza y Desviación Estándar Poblacional (÷ N) y Muestral (÷ (n - 1))
+    const popVariance = sumSqDevs / n;
+    const popStdDev = Math.sqrt(popVariance);
+    const sampleVariance = n > 1 ? sumSqDevs / (n - 1) : null;
+    const sampleStdDev = n > 1 ? Math.sqrt(sampleVariance) : null;
+
+    const cvPop = mean !== 0 ? (popStdDev / Math.abs(mean)) * 100 : null;
+    const cvSample = (n > 1 && mean !== 0) ? (sampleStdDev / Math.abs(mean)) * 100 : null;
+
+    // Cuartiles y Rango Intercuartílico
+    const q1 = this.calcQuantile(sorted, 0.25);
+    const q2 = median;
+    const q3 = this.calcQuantile(sorted, 0.75);
+    const iqr = (q3 !== null && q1 !== null) ? (q3 - q1) : null;
+
+    return {
+      valid: true,
+      n,
+      raw: nums,
+      sorted,
+      sum: this.cleanNumber(sum, 6),
+      mean: this.cleanNumber(mean, 6),
+      median: this.cleanNumber(median, 6),
+      modes,
+      maxFreq,
+      modeType,
+      modeLabel,
+      geometricMean: geometricMean !== null ? this.cleanNumber(geometricMean, 6) : null,
+      min,
+      max,
+      range: this.cleanNumber(range, 6),
+      freqTable,
+      absDevs: absDevs.map(d => this.cleanNumber(d, 6)),
+      sumAbsDevs: this.cleanNumber(sumAbsDevs, 6),
+      meanDeviation: this.cleanNumber(meanDeviation, 6),
+      sqDevs: sqDevs.map(d => this.cleanNumber(d, 6)),
+      sumSqDevs: this.cleanNumber(sumSqDevs, 6),
+      popVariance: this.cleanNumber(popVariance, 6),
+      popStdDev: this.cleanNumber(popStdDev, 6),
+      sampleVariance: sampleVariance !== null ? this.cleanNumber(sampleVariance, 6) : null,
+      sampleStdDev: sampleStdDev !== null ? this.cleanNumber(sampleStdDev, 6) : null,
+      cvPop: cvPop !== null ? this.cleanNumber(cvPop, 4) : null,
+      cvSample: cvSample !== null ? this.cleanNumber(cvSample, 4) : null,
+      q1: this.cleanNumber(q1, 6),
+      q2: this.cleanNumber(q2, 6),
+      q3: this.cleanNumber(q3, 6),
+      iqr: this.cleanNumber(iqr, 6)
+    };
+  },
+
+  calcWeightedMean(values, weights) {
+    if (!Array.isArray(values) || !Array.isArray(weights) || values.length === 0 || values.length !== weights.length) {
+      return { valid: false, error: "Los valores y los pesos deben tener la misma cantidad de elementos." };
+    }
+    const vNums = values.map(Number);
+    const wNums = weights.map(Number);
+    if (vNums.some(v => !Number.isFinite(v)) || wNums.some(w => !Number.isFinite(w) || w < 0)) {
+      return { valid: false, error: "Valores o pesos inválidos (los pesos no pueden ser negativos)." };
+    }
+    const sumWeights = wNums.reduce((a, b) => a + b, 0);
+    if (sumWeights <= 0) {
+      return { valid: false, error: "La suma de los pesos debe ser estrictamente mayor que cero." };
+    }
+    const products = vNums.map((v, i) => this.cleanNumber(v * wNums[i], 6));
+    const sumProducts = this.cleanNumber(products.reduce((a, b) => a + b, 0), 6);
+    const weightedMean = this.cleanNumber(sumProducts / sumWeights, 6);
+    return {
+      valid: true,
+      values: vNums,
+      weights: wNums,
+      products,
+      sumProducts,
+      sumWeights: this.cleanNumber(sumWeights, 6),
+      weightedMean
+    };
+  },
+
+  // Extrae valores numéricos (incluyendo fracciones a/b y decimales con coma o punto) de una cadena
+  extractNumbers(str) {
+    if (str === null || str === undefined) return [];
+    let s = String(str).trim();
+    if (!s) return [];
+    // Si hay comas usadas como separador decimal (ej. "4,5" y no lista "4, 5, 6"), normalizar:
+    // Reemplaza patrones dígito,dígito sin espacio cuando hay un solo número o cuando se usa punto y coma
+    s = s.replace(/(\d),(\d)/g, "$1.$2");
+    // Buscar fracciones a/b o números decimales/enteros
+    const tokens = s.match(/[+-]?\d+(?:\.\d+)?(?:\s*\/\s*[+-]?\d+(?:\.\d+)?)?/g) || [];
+    const results = [];
+    for (const tok of tokens) {
+      if (tok.includes("/")) {
+        const [num, den] = tok.split("/").map(t => parseFloat(t.trim()));
+        if (Number.isFinite(num) && Number.isFinite(den) && den !== 0) {
+          results.push(num / den);
+        }
+      } else {
+        const val = parseFloat(tok);
+        if (Number.isFinite(val)) results.push(val);
+      }
+    }
+    return results;
+  },
+
+  // Valida la respuesta del estudiante contra la respuesta esperada del ejercicio
+  validateAnswer(userRaw, exerciseData, tolerance = 0.05) {
+    const input = String(userRaw || "").trim();
+    if (!input) {
+      return { valid: false, isEmpty: true, message: "Ingresa una respuesta antes de comprobar." };
+    }
+    const expectedStr = String(exerciseData.respuesta || "").trim();
+
+    // 1. Comparación textual normalizada (sin espacios, signos equivalentes)
+    const normText = (txt) => txt
+      .toLowerCase()
+      .replace(/,/g, ".")
+      .replace(/−/g, "-")
+      .replace(/≈/g, "=")
+      .replace(/\s+/g, "");
+
+    if (normText(input) === normText(expectedStr)) {
+      return { valid: true, message: "¡Correcto! Tu respuesta coincide exactamente." };
+    }
+
+    // Si la respuesta esperada tiene "x = valor" o similar, comparar también la parte derecha del "="
+    if (expectedStr.includes("=")) {
+      const rhsParts = expectedStr.split(",").map(part => {
+        const eqIdx = part.lastIndexOf("=");
+        return eqIdx >= 0 ? part.slice(eqIdx + 1).trim() : part.trim();
+      });
+      if (rhsParts.length === 1 && normText(input) === normText(rhsParts[0])) {
+        return { valid: true, message: "¡Correcto! El resultado es exacto." };
+      }
+    }
+
+    // 2. Comparación numérica con tolerancia de redondeo
+    const expectedNums = Array.isArray(exerciseData. numericAnswers)
+      ? exerciseData.numericAnswers
+      : this.extractNumbers(
+          expectedStr.includes("=")
+            ? expectedStr.split(",").map(p => p.includes("=") ? p.slice(p.lastIndexOf("=") + 1) : (p.includes("≈") ? p.slice(p.lastIndexOf("≈") + 1) : p)).join(" ")
+            : expectedStr
+        );
+
+    const userNums = this.extractNumbers(input);
+
+    if (expectedNums.length > 0 && userNums.length > 0) {
+      // Verificar si todos los números esperados están presentes dentro de la tolerancia
+      if (userNums.length === expectedNums.length) {
+        const allMatch = expectedNums.every((expVal, idx) => Math.abs(userNums[idx] - expVal) <= tolerance);
+        if (allMatch) {
+          return { valid: true, message: "¡Correcto! Tu resultado numérico es válido." };
+        }
+      }
+      // Si solo ingresó el resultado principal (el primer o último número clave)
+      if (userNums.length === 1 && expectedNums.length === 1) {
+        if (Math.abs(userNums[0] - expectedNums[0]) <= tolerance) {
+          return { valid: true, message: "¡Correcto! Tu resultado numérico es válido." };
+        }
+      }
+    }
+
+    return {
+      valid: false,
+      message: `Respuesta incorrecta. Se esperaba: ${expectedStr}`
+    };
+  }
+};
 
 // ── Tabla de temas ────────────────────────────────────
 
@@ -789,7 +1058,7 @@ const GENERATORS = {
   },
 
   // ══════════════════════════════════════════════════
-  //  ESTADÍSTICA DESCRIPTIVA
+  //  ESTADÍSTICA I: MEDIA, MEDIANA, MODA Y FRECUENCIAS
   // ══════════════════════════════════════════════════
   estadistica: {
     basico() {
@@ -800,182 +1069,378 @@ const GENERATORS = {
       const d3 = moda + 1;
       const d4 = moda + rnd(2, 4);
       const d5 = moda + rnd(5, 7);
-      // 7 datos: [d1, d2, moda, moda, d3, d4, d5] (ya ordenados, pero los desordenamos para el enunciado)
-      const ordenados = [d1, d2, moda, moda, d3, d4, d5];
-      const desordenados = [...ordenados].sort(() => Math.random() - 0.5);
-      const n = ordenados.length;
-      const suma = ordenados.reduce((acc, v) => acc + v, 0);
-      const media = round2(suma / n);
-      const mediana = ordenados[3]; // posición central (índice 3 de 7)
+      const base = [d1, d2, moda, moda, d3, d4, d5];
+      const desordenados = [...base].sort(() => Math.random() - 0.5);
+      const stats = StatsEngine.analyzeDataset(desordenados);
+      const media = round2(stats.mean);
+      const mediana = stats.median;
+      const modaVal = stats.modes[0];
 
       return {
-        enunciado: `Calcula la media (x̄), mediana (Me) y moda (Mo) del siguiente conjunto de datos: ${desordenados.join(", ")}`,
+        enunciado: `Calcula la media aritmética (x̄), la mediana (Me) y la moda (Mo) del siguiente conjunto de datos (n = ${stats.n}): ${desordenados.join(", ")}`,
+        numericAnswers: [media, mediana, modaVal],
         pasos: [
           {
-            titulo: "Ordenar los datos de menor a mayor",
-            explicacion: `Contamos con n = ${n} datos. Primero los ordenamos para facilitar la búsqueda de la mediana y la moda.`,
-            formula: ordenados.join(", ")
+            titulo: "1. Datos iniciales y ordenamiento",
+            explicacion: `Contamos con n = ${stats.n} observaciones. Las ordenamos de menor a mayor para localizar la posición central y contar repeticiones.`,
+            formula: stats.sorted.join(", ")
           },
           {
-            titulo: "Calcular la Media Aritmética (x̄)",
-            explicacion: "Sumamos todos los datos y dividimos entre el número total de datos (n = 7).",
-            formula: `x̄ = (${ordenados.join(" + ")}) / ${n} = ${suma} / ${n} ≈ ${media}`
+            titulo: "2. Fórmulas a utilizar",
+            explicacion: "Para un conjunto con n impar, aplicamos las definiciones de tendencia central:",
+            formula: `x̄ = (Σ xᵢ) / n   |   Posición Me = (n + 1) / 2   |   Mo = dato con mayor fᵢ`
           },
           {
-            titulo: "Encontrar la Mediana (Me)",
-            explicacion: `Como n = ${n} es impar, la mediana es el dato que ocupa la posición central (posición (7+1)/2 = 4).`,
-            formula: `${ordenados.slice(0,3).join(", ")}, [${mediana}], ${ordenados.slice(4).join(", ")}   →   Me = ${mediana}`
+            titulo: "3. Cálculo de la Media Aritmética (x̄)",
+            explicacion: `Sumamos los ${stats.n} valores y dividimos entre n = ${stats.n}.`,
+            formula: `x̄ = (${stats.sorted.join(" + ")}) / ${stats.n} = ${stats.sum} / ${stats.n} ≈ ${media}`
           },
           {
-            titulo: "Identificar la Moda (Mo)",
-            explicacion: `La moda es el valor que más veces se repite en el conjunto de datos (se repite 2 veces).`,
-            formula: `Mo = ${moda}`
+            titulo: "4. Determinación de la Mediana (Me) y la Moda (Mo)",
+            explicacion: `Posición central: (${stats.n} + 1)/2 = 4.º dato ordenado. El único valor que se repite ${stats.maxFreq} veces es ${modaVal}.`,
+            formula: `${stats.sorted.slice(0, 3).join(", ")}, [${mediana}], ${stats.sorted.slice(4).join(", ")}  →  Me = ${mediana}   |   Mo = ${modaVal} (f = ${stats.maxFreq})`
+          },
+          {
+            titulo: "5. Interpretación del resultado",
+            explicacion: `El centro de gravedad de los datos es ${media}, el 50% de las observaciones es menor o igual a ${mediana} y el valor más frecuente es ${modaVal}.`,
+            formula: `x̄ = ${media},   Me = ${mediana},   Mo = ${modaVal}`
           }
         ],
-        respuesta: `x̄ = ${media},   Me = ${mediana},   Mo = ${moda}`
+        respuesta: `x̄ = ${media}, Me = ${mediana}, Mo = ${modaVal}`
       };
     },
+
     intermedio() {
-      const tipo = rnd(1, 3);
-
-      // Tipo 1: Media Ponderada (x̄ₚ)
-      if (tipo === 1) {
-        const c1 = rnd(6, 10), c2 = rnd(6, 10), c3 = rnd(5, 10);
-        const w1 = 20, w2 = 30, w3 = 50;
-        const p1 = w1 * c1, p2 = w2 * c2, p3 = w3 * c3;
-        const sumProd = p1 + p2 + p3;
-        const sumPesos = w1 + w2 + w3;
-        const mp = round2(sumProd / sumPesos);
-        return {
-          enunciado: `Calcula la Media Ponderada (x̄ₚ) de un curso donde Tareas (${w1}%) = ${c1}, Proyecto (${w2}%) = ${c2} y Examen (${w3}%) = ${c3}`,
-          pasos: [
-            {
-              titulo: "Fórmula de la Media Ponderada",
-              explicacion: "Multiplicamos cada calificación (xᵢ) por su peso (wᵢ) y dividimos entre la suma total de los pesos.",
-              formula: `x̄ₚ = (w₁·x₁ + w₂·x₂ + w₃·x₃) / (w₁ + w₂ + w₃)`
-            },
-            {
-              titulo: "Multiplicar cada dato por su peso",
-              explicacion: "Calculamos los productos individuales wᵢ · xᵢ.",
-              formula: `Tareas: ${w1} × ${c1} = ${p1}   |   Proyecto: ${w2} × ${c2} = ${p2}   |   Examen: ${w3} × ${c3} = ${p3}`
-            },
-            {
-              titulo: "Sumar productos y dividir entre suma de pesos",
-              explicacion: `La suma de los pesos es ${w1} + ${w2} + ${w3} = ${sumPesos}.`,
-              formula: `x̄ₚ = (${p1} + ${p2} + ${p3}) / ${sumPesos} = ${sumProd} / ${sumPesos} = ${mp}`
-            }
-          ],
-          respuesta: `x̄ₚ = ${mp}`
-        };
-      }
-
-      // Tipo 2: Media Geométrica (G)
-      if (tipo === 2) {
-        const a = rnd(2, 6), b = rnd(2, 6), c = rnd(2, 6);
-        const prod = a * b * c;
-        const geom = round2(Math.cbrt(prod));
-        return {
-          enunciado: `Calcula la Media Geométrica (G) de los 3 datos: ${a}, ${b}, ${c}`,
-          pasos: [
-            {
-              titulo: "Fórmula de la Media Geométrica",
-              explicacion: "Para n = 3 datos positivos, la media geométrica es la raíz cúbica de su producto.",
-              formula: `G = ³√(x₁ · x₂ · x₃)`
-            },
-            {
-              titulo: "Multiplicar todos los datos",
-              explicacion: `Multiplicamos ${a} × ${b} × ${c}.`,
-              formula: `${a} × ${b} × ${c} = ${prod}`
-            },
-            {
-              titulo: "Extraer la raíz cúbica (n = 3)",
-              explicacion: `Calculamos la raíz cúbica de ${prod}.`,
-              formula: `G = ³√(${prod}) ≈ ${geom}`
-            }
-          ],
-          respuesta: `G ≈ ${geom}`
-        };
-      }
-
-      // Tipo 3: Desviación Media (DM) con media entera exacta (5 datos)
-      const media = rnd(6, 15);
-      const k1 = rnd(1, 3), k2 = rnd(2, 5);
-      const datos = [media - k2, media - k1, media, media + k1, media + k2];
-      const desordenados = [...datos].sort(() => Math.random() - 0.5);
-      const n = datos.length;
-      const suma = datos.reduce((a, b) => a + b, 0);
-      const desvAbs = datos.map(x => Math.abs(x - media));
-      const sumaDesv = desvAbs.reduce((a, b) => a + b, 0);
-      const dm = round2(sumaDesv / n);
+      // Conjunto con número PAR de datos (n = 8) para evaluar el promedio de los dos valores centrales en la mediana
+      const moda = rnd(3, 10);
+      const c1 = Math.max(1, moda - rnd(2, 3));
+      const c2 = moda;
+      const c3 = moda + rnd(1, 2);
+      const c4 = c3 + rnd(1, 2);
+      const c5 = c4 + rnd(2, 4);
+      // 8 datos: [c1, moda, moda, moda, c3, c3, c4, c5] -> moda aparece 3 veces, c3 aparece 2 veces
+      const base = [c1, c2, c2, c2, c3, c3, c4, c5];
+      const desordenados = [...base].sort(() => Math.random() - 0.5);
+      const stats = StatsEngine.analyzeDataset(desordenados);
+      const media = round2(stats.mean);
+      const mediana = round2(stats.median);
+      const modaVal = stats.modes[0];
+      const m1 = stats.sorted[3];
+      const m2 = stats.sorted[4];
 
       return {
-        enunciado: `Calcula la Desviación Media (DM) de los siguientes datos: ${desordenados.join(", ")}`,
+        enunciado: `Dado el conjunto de n = 8 datos: ${desordenados.join(", ")}, calcula la media (x̄), la mediana (Me) y la moda (Mo).`,
+        numericAnswers: [media, mediana, modaVal],
         pasos: [
           {
-            titulo: "Calcular la media aritmética (x̄)",
-            explicacion: `Sumamos los n = ${n} datos y dividimos entre ${n}.`,
-            formula: `x̄ = (${datos.join(" + ")}) / ${n} = ${suma} / ${n} = ${media}`
+            titulo: "1. Ordenar el conjunto de datos (n = 8)",
+            explicacion: "Ordenamos los 8 valores de menor a mayor para identificar los dos datos centrales (posiciones 4 y 5).",
+            formula: stats.sorted.join(", ")
           },
           {
-            titulo: "Calcular las desviaciones absolutas |xᵢ − x̄|",
-            explicacion: `Restamos la media (${media}) a cada dato y tomamos el valor absoluto (siempre positivo).`,
-            formula: datos.map((x, idx) => `|${x} − ${media}| = ${desvAbs[idx]}`).join("   |   ")
+            titulo: "2. Calcular la Media Aritmética (x̄)",
+            explicacion: "Sumamos todos los datos y dividimos entre n = 8.",
+            formula: `x̄ = (${stats.sorted.join(" + ")}) / 8 = ${stats.sum} / 8 = ${media}`
           },
           {
-            titulo: "Sumar las desviaciones absolutas",
-            explicacion: "Sumamos todos los valores absolutos obtenidos en el paso anterior.",
-            formula: `Σ|xᵢ − x̄| = ${desvAbs.join(" + ")} = ${sumaDesv}`
+            titulo: "3. Calcular la Mediana (Me) para n par",
+            explicacion: `Como n = 8 es par, promediamos los datos en las posiciones n/2 = 4 y n/2 + 1 = 5 (que son ${m1} y ${m2}).`,
+            formula: `Me = (${m1} + ${m2}) / 2 = ${m1 + m2} / 2 = ${mediana}`
           },
           {
-            titulo: "Dividir entre el total de datos (n)",
-            explicacion: "Aplicamos la fórmula DM = Σ|xᵢ − x̄| / n.",
-            formula: `DM = ${sumaDesv} / ${n} = ${dm}`
+            titulo: "4. Identificar la Moda (Mo) e interpretar",
+            explicacion: `El valor ${modaVal} tiene la mayor frecuencia absoluta (fᵢ = ${stats.maxFreq}), por lo que la distribución es unimodal.`,
+            formula: `Mo = ${modaVal} (se repite ${stats.maxFreq} veces)`
           }
         ],
-        respuesta: `DM = ${dm} (con x̄ = ${media})`
+        respuesta: `x̄ = ${media}, Me = ${mediana}, Mo = ${modaVal}`
       };
     },
+
     avanzado() {
-      // Varianza (σ²) y Desviación Estándar (σ) poblacional con media entera (5 datos)
+      // Conjunto de 9 datos con un dato aberrante (extremo) para analizar media, mediana y moda (Ejemplos 1.18 y 1.19 del libro)
+      const moda = rnd(18, 25);
+      const d1 = moda - 3;
+      const d2 = moda - 2;
+      const d3 = moda - 1;
+      const d4 = moda + 1;
+      const d5 = moda + 2;
+      const d6 = moda + 4;
+      const aberrante = moda + rnd(40, 65);
+      const base = [d1, d2, d3, moda, moda, d4, d5, d6, aberrante];
+      const desordenados = [...base].sort(() => Math.random() - 0.5);
+      const stats = StatsEngine.analyzeDataset(desordenados);
+      const media = round2(stats.mean);
+      const mediana = round2(stats.median);
+      const modaVal = stats.modes[0];
+
+      return {
+        enunciado: `En un estudio se registraron n = 9 mediciones (incluyendo un dato aberrante): ${desordenados.join(", ")}. Calcula la media muestral (x̄), la mediana (x̃) y la moda (M).`,
+        numericAnswers: [media, mediana, modaVal],
+        pasos: [
+          {
+            titulo: "1. Ordenar los datos en forma no decreciente",
+            explicacion: "Ordenamos los n = 9 valores de menor a mayor para ubicar el dato central y las repeticiones.",
+            formula: stats.sorted.join(" ≤ ")
+          },
+          {
+            titulo: "2. Calcular la Media Muestral (x̄)",
+            explicacion: `Sumamos las 9 observaciones y dividimos entre n = 9. Nota cómo el valor aberrante (${aberrante}) eleva el promedio.`,
+            formula: `x̄ = (${stats.sorted.join(" + ")}) / 9 = ${stats.sum} / 9 ≈ ${media}`
+          },
+          {
+            titulo: "3. Calcular la Mediana (x̃)",
+            explicacion: "Como n = 9 es impar, la mediana ocupa la posición (9 + 1) / 2 = 5, siendo insensible al valor extremo.",
+            formula: `x̃ = x̃₅ = ${mediana}`
+          },
+          {
+            titulo: "4. Determinar la Moda (M)",
+            explicacion: `El valor que se presenta con mayor frecuencia (2 veces) es ${modaVal}.`,
+            formula: `M = ${modaVal}`
+          }
+        ],
+        respuesta: `x̄ = ${media}, x̃ = ${mediana}, M = ${modaVal}`
+      };
+    }
+  },
+
+  // ══════════════════════════════════════════════════
+  //  ESTADÍSTICA II: MEDIA GEOMÉTRICA Y PONDERADA
+  // ══════════════════════════════════════════════════
+  medias_especiales: {
+    basico() {
+      // Media Ponderada (x̄_w)
+      const c1 = rnd(6, 10), c2 = rnd(6, 10), c3 = rnd(5, 10);
+      const w1 = 20, w2 = 30, w3 = 50;
+      const res = StatsEngine.calcWeightedMean([c1, c2, c3], [w1, w2, w3]);
+      const mp = round2(res.weightedMean);
+      const mediaSimple = round2((c1 + c2 + c3) / 3);
+
+      return {
+        enunciado: `Calcula la Media Ponderada (x̄_w) de un curso donde Tareas (${w1}%) = ${c1}, Proyecto (${w2}%) = ${c2} y Examen Final (${w3}%) = ${c3}.`,
+        numericAnswers: [mp],
+        pasos: [
+          {
+            titulo: "1. Identificar valores (xᵢ) y pesos (wᵢ)",
+            explicacion: "Cada rubro aporta una ponderación distinta a la calificación final.",
+            formula: `x₁ = ${c1} (w₁ = ${w1}),   x₂ = ${c2} (w₂ = ${w2}),   x₃ = ${c3} (w₃ = ${w3})`
+          },
+          {
+            titulo: "2. Fórmula de la Media Ponderada",
+            explicacion: "Multiplicamos cada dato por su peso y dividimos entre la suma total de los pesos.",
+            formula: `x̄_w = (w₁·x₁ + w₂·x₂ + w₃·x₃) / (w₁ + w₂ + w₃)`
+          },
+          {
+            titulo: "3. Calcular los productos parciales wᵢ·xᵢ",
+            explicacion: "Multiplicamos cada calificación por su porcentaje asignado.",
+            formula: `${w1}×${c1} = ${res.products[0]}   |   ${w2}×${c2} = ${res.products[1]}   |   ${w3}×${c3} = ${res.products[2]}`
+          },
+          {
+            titulo: "4. Sumar y dividir entre Σwᵢ",
+            explicacion: `La suma de pesos es ${res.sumWeights}. Observa que la media simple sería ${mediaSimple}, pero el examen final tiene el 50% de peso.`,
+            formula: `x̄_w = (${res.products.join(" + ")}) / ${res.sumWeights} = ${res.sumProducts} / ${res.sumWeights} = ${mp}`
+          }
+        ],
+        respuesta: `x̄_w = ${mp}`
+      };
+    },
+
+    intermedio() {
+      // Media Geométrica (G) de 3 datos positivos
+      const a = rnd(2, 8), b = rnd(2, 8), c = rnd(2, 8);
+      const stats = StatsEngine.analyzeDataset([a, b, c]);
+      const prod = a * b * c;
+      const geom = round2(stats.geometricMean);
+      const aritm = round2(stats.mean);
+
+      return {
+        enunciado: `Calcula la Media Geométrica (G) de los n = 3 valores positivos: ${a}, ${b}, ${c} y verifica que G ≤ x̄.`,
+        numericAnswers: [geom],
+        pasos: [
+          {
+            titulo: "1. Verificar positividad y fórmula",
+            explicacion: "Todos los datos son estrictamente positivos (xᵢ > 0). Para n = 3 aplicamos la raíz cúbica del producto.",
+            formula: `G = ³√(x₁ · x₂ · x₃)`
+          },
+          {
+            titulo: "2. Multiplicar los datos",
+            explicacion: `Calculamos el producto de los 3 factores.`,
+            formula: `Producto = ${a} × ${b} × ${c} = ${prod}`
+          },
+          {
+            titulo: "3. Extraer la raíz n-ésima (n = 3)",
+            explicacion: `Elevamos ${prod} a la potencia 1/3.`,
+            formula: `G = (${prod})^(1/3) ≈ ${geom}`
+          },
+          {
+            titulo: "4. Comparación con la Media Aritmética (desigualdad AM-GM)",
+            explicacion: `La media aritmética es x̄ ≈ ${aritm}. Se comprueba la propiedad matemática fundamental G ≤ x̄.`,
+            formula: `G = ${geom}  ≤  x̄ = ${aritm} ✓`
+          }
+        ],
+        respuesta: `G = ${geom}`
+      };
+    },
+
+    avanzado() {
+      // Crecimiento compuesto mediante Media Geométrica de factores de capitalización
+      const r1 = rnd(4, 12), r2 = rnd(5, 18), r3 = rnd(2, 10);
+      const f1 = round4(1 + r1 / 100);
+      const f2 = round4(1 + r2 / 100);
+      const f3 = round4(1 + r3 / 100);
+      const stats = StatsEngine.analyzeDataset([f1, f2, f3]);
+      const gFactor = round4(stats.geometricMean);
+      const tasaMedia = round2((stats.geometricMean - 1) * 100);
+
+      return {
+        enunciado: `Una inversión registra rendimientos anuales sucesivos de +${r1}%, +${r2}% y +${r3}%. Calcula el factor geométrico promedio (G) y la tasa de crecimiento anual compuesta.`,
+        numericAnswers: [tasaMedia],
+        pasos: [
+          {
+            titulo: "1. Convertir porcentajes a factores de crecimiento (1 + rᵢ)",
+            explicacion: "Para promediar tasas compuestas nunca se suman directamente los porcentajes; se convierten en factores multiplicativos.",
+            formula: `f₁ = 1 + ${r1}/100 = ${f1}  |  f₂ = 1 + ${r2}/100 = ${f2}  |  f₃ = 1 + ${r3}/100 = ${f3}`
+          },
+          {
+            titulo: "2. Aplicar la Media Geométrica a los factores",
+            explicacion: "Multiplicamos los 3 factores y extraemos la raíz cúbica.",
+            formula: `G = ³√(${f1} × ${f2} × ${f3}) = ³√(${round4(f1 * f2 * f3)}) ≈ ${gFactor}`
+          },
+          {
+            titulo: "3. Obtener la tasa anual equivalente",
+            explicacion: "Restamos 1 al factor geométrico y multiplicamos por 100 para expresarlo en porcentaje.",
+            formula: `r̄_G = (${gFactor} − 1) × 100 ≈ ${tasaMedia}%`
+          }
+        ],
+        respuesta: `${tasaMedia}%`
+      };
+    }
+  },
+
+  // ══════════════════════════════════════════════════
+  //  ESTADÍSTICA III: DISPERSIÓN, VARIANZA Y DESVIACIÓN ESTÁNDAR
+  // ══════════════════════════════════════════════════
+  dispersion: {
+    basico() {
+      // Rango (R) y Desviación Media (DM) con media entera exacta (5 datos)
+      const media = rnd(6, 15);
+      const k1 = rnd(1, 3), k2 = rnd(3, 6);
+      const base = [media - k2, media - k1, media, media + k1, media + k2];
+      const desordenados = [...base].sort(() => Math.random() - 0.5);
+      const stats = StatsEngine.analyzeDataset(desordenados);
+      const dm = round2(stats.meanDeviation);
+
+      return {
+        enunciado: `Calcula el Rango (R) y la Desviación Media (DM) del siguiente conjunto de datos: ${desordenados.join(", ")}`,
+        numericAnswers: [stats.range, dm],
+        pasos: [
+          {
+            titulo: "1. Ordenar los datos y calcular el Rango (R)",
+            explicacion: "Ordenamos de menor a mayor y restamos el mínimo al máximo.",
+            formula: `Ordenados: ${stats.sorted.join(", ")}   →   R = ${stats.max} − ${stats.min} = ${stats.range}`
+          },
+          {
+            titulo: "2. Calcular la Media Aritmética (x̄)",
+            explicacion: `Sumamos los n = ${stats.n} datos y dividimos entre ${stats.n}.`,
+            formula: `x̄ = (${stats.sorted.join(" + ")}) / ${stats.n} = ${stats.sum} / ${stats.n} = ${stats.mean}`
+          },
+          {
+            titulo: "3. Calcular las desviaciones absolutas |xᵢ − x̄|",
+            explicacion: `Calculamos la distancia absoluta de cada dato respecto a la media (${stats.mean}).`,
+            formula: stats.sorted.map((x, idx) => `|${x} − ${stats.mean}| = ${stats.absDevs[idx]}`).join("   |   ")
+          },
+          {
+            titulo: "4. Obtener la Desviación Media (DM)",
+            explicacion: "Sumamos las desviaciones absolutas y dividimos entre n.",
+            formula: `DM = (${stats.absDevs.join(" + ")}) / ${stats.n} = ${stats.sumAbsDevs} / ${stats.n} = ${dm}`
+          }
+        ],
+        respuesta: `R = ${stats.range}, DM = ${dm}`
+      };
+    },
+
+    intermedio() {
+      // Varianza Poblacional (σ²) y Desviación Estándar Poblacional (σ) (dividiendo entre N)
       const media = rnd(5, 14);
       const k1 = rnd(1, 3), k2 = rnd(2, 4);
-      const datos = [media - k2, media - k1, media, media + k1, media + k2];
-      const desordenados = [...datos].sort(() => Math.random() - 0.5);
-      const n = datos.length;
-      const suma = datos.reduce((a, b) => a + b, 0);
-      const cuadrados = datos.map(x => Math.pow(x - media, 2));
-      const sumaCuadrados = cuadrados.reduce((a, b) => a + b, 0);
-      const varianza = round2(sumaCuadrados / n);
-      const desvEst = round2(Math.sqrt(sumaCuadrados / n));
+      const base = [media - k2, media - k1, media, media + k1, media + k2];
+      const desordenados = [...base].sort(() => Math.random() - 0.5);
+      const stats = StatsEngine.analyzeDataset(desordenados);
+      const varianza = round2(stats.popVariance);
+      const desvEst = round2(stats.popStdDev);
 
       return {
-        enunciado: `Calcula la Varianza (σ²) y la Desviación Estándar (σ) poblacional de los datos: ${desordenados.join(", ")}`,
+        enunciado: `Considerando los siguientes datos como una población completa (N = ${stats.n}): ${desordenados.join(", ")}, calcula la Varianza Poblacional (σ²) y la Desviación Estándar Poblacional (σ).`,
+        numericAnswers: [varianza, desvEst],
         pasos: [
           {
-            titulo: "Calcular la media aritmética (x̄)",
-            explicacion: `Sumamos los n = ${n} datos y dividimos entre ${n}.`,
-            formula: `x̄ = (${datos.join(" + ")}) / ${n} = ${suma} / ${n} = ${media}`
+            titulo: "1. Calcular la Media Poblacional (μ)",
+            explicacion: `Sumamos los N = ${stats.n} valores y dividimos entre ${stats.n}.`,
+            formula: `μ = (${stats.sorted.join(" + ")}) / ${stats.n} = ${stats.sum} / ${stats.n} = ${stats.mean}`
           },
           {
-            titulo: "Elevar al cuadrado cada desviación (xᵢ − x̄)²",
-            explicacion: `Restamos la media (${media}) a cada dato y elevamos al cuadrado para eliminar signos negativos.`,
-            formula: datos.map((x, idx) => `(${x} − ${media})² = (${x - media})² = ${cuadrados[idx]}`).join("\n")
+            titulo: "2. Calcular las desviaciones al cuadrado (xᵢ − μ)²",
+            explicacion: `Restamos la media (${stats.mean}) a cada dato y elevamos al cuadrado.`,
+            formula: stats.sorted.map((x, idx) => `(${x} − ${stats.mean})² = ${stats.sqDevs[idx]}`).join("  |  ")
           },
           {
-            titulo: "Calcular la Varianza (σ²)",
-            explicacion: "Sumamos los cuadrados de las desviaciones y dividimos entre n.",
-            formula: `σ² = (${cuadrados.join(" + ")}) / ${n} = ${sumaCuadrados} / ${n} = ${varianza}`
+            titulo: "3. Calcular la Varianza Poblacional (σ² = Σ(xᵢ − μ)² / N)",
+            explicacion: `Al tratarse de una población completa, dividimos la suma de cuadrados (${stats.sumSqDevs}) entre N = ${stats.n}.`,
+            formula: `σ² = (${stats.sqDevs.join(" + ")}) / ${stats.n} = ${stats.sumSqDevs} / ${stats.n} = ${varianza}`
           },
           {
-            titulo: "Calcular la Desviación Estándar (σ)",
-            explicacion: "Sacamos la raíz cuadrada de la varianza para regresar a las unidades originales de los datos.",
+            titulo: "4. Calcular la Desviación Estándar Poblacional (σ = √σ²)",
+            explicacion: "Extraemos la raíz cuadrada para regresar a la escala original de los datos.",
             formula: `σ = √(${varianza}) ≈ ${desvEst}`
           }
         ],
-        respuesta: `σ² = ${varianza},   σ ≈ ${desvEst}`
+        respuesta: `σ² = ${varianza}, σ = ${desvEst}`
+      };
+    },
+
+    avanzado() {
+      // Varianza Muestral (s²) y Desviación Estándar Muestral (s) usando Corrección de Bessel (n - 1)
+      const media = rnd(6, 14);
+      const k1 = rnd(1, 3), k2 = rnd(2, 5);
+      const base = [media - k2, media - k1, media, media + k1, media + k2];
+      const desordenados = [...base].sort(() => Math.random() - 0.5);
+      const stats = StatsEngine.analyzeDataset(desordenados);
+      const s2 = round2(stats.sampleVariance);
+      const s = round2(stats.sampleStdDev);
+
+      return {
+        enunciado: `Se extrae una muestra aleatoria de n = ${stats.n} observaciones: ${desordenados.join(", ")}. Calcula la Varianza Muestral (s²) y la Desviación Estándar Muestral (s) aplicando la corrección de Bessel (n − 1).`,
+        numericAnswers: [s2, s],
+        pasos: [
+          {
+            titulo: "1. Calcular la Media Muestral (x̄)",
+            explicacion: `Promediamos las n = ${stats.n} observaciones de la muestra.`,
+            formula: `x̄ = (${stats.sorted.join(" + ")}) / ${stats.n} = ${stats.sum} / ${stats.n} = ${stats.mean}`
+          },
+          {
+            titulo: "2. Suma de cuadrados de las desviaciones SS = Σ(xᵢ − x̄)²",
+            explicacion: "Elevamos al cuadrado cada desviación respecto a la media muestral y sumamos.",
+            formula: `SS = ${stats.sqDevs.join(" + ")} = ${stats.sumSqDevs}`
+          },
+          {
+            titulo: "3. Varianza Muestral (s² = SS / (n − 1))",
+            explicacion: `Como es una muestra, dividimos entre los grados de libertad n − 1 = ${stats.n} − 1 = ${stats.n - 1} (corrección de Bessel).`,
+            formula: `s² = ${stats.sumSqDevs} / (${stats.n} − 1) = ${stats.sumSqDevs} / ${stats.n - 1} = ${s2}`
+          },
+          {
+            titulo: "4. Desviación Estándar Muestral (s = √s²)",
+            explicacion: `Extraemos la raíz cuadrada de la varianza muestral. Así regresamos a las unidades originales de la muestra.`,
+            formula: `s = √(${s2}) ≈ ${s}`
+          }
+        ],
+        respuesta: `s² = ${s2}, s = ${s}`
       };
     }
   }
 };
+
+if (typeof module !== "undefined" && module.exports) {
+  module.exports = { GENERATORS, StatsEngine, rnd, rndNZ, frac, gcd, mcm, signo, fmtFrac, round2, round4 };
+}
 
 
