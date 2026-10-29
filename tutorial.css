@@ -59,18 +59,22 @@ header nav a:hover  { color: var(--text2); background: var(--bg3); }
 header nav a.active { color: var(--accent2); }
 
 /* ── LAYOUT ── */
-.layout { display: flex; margin-top: 52px; position: relative; z-index: 10; }
+/* z-index alto: .layout crea su propio contexto de apilamiento (position+z-index), así que
+   si quedara por debajo del z-index del .sidebar-backdrop (80, ver más abajo), el backdrop
+   taparía al .sidebar aunque este tenga z-index más alto dentro de su propio contexto. */
+.layout { display: flex; margin-top: var(--header-h, 52px); position: relative; z-index: 95; }
 
 /* ── SIDEBAR ── */
 .sidebar {
-  width: 240px; 
-  height: calc(100vh - 52px); 
-  background: var(--bg2); 
+  width: 240px;
+  height: calc(100vh - var(--header-h, 52px));
+  background: var(--bg2);
   border-right: 1px solid var(--border);
-  padding: 20px 0 40px 0; 
-  position: fixed; 
-  top: 52px; 
+  padding: 20px 0 40px 0;
+  position: fixed;
+  top: var(--header-h, 52px);
   overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
   z-index: 90;
   transition: transform 0.22s ease;
 }
@@ -135,7 +139,7 @@ header nav a.active { color: var(--accent2); }
 .sidebar-backdrop {
   display: none;
   position: fixed;
-  inset: 52px 0 0 0;
+  inset: var(--header-h, 52px) 0 0 0;
   background: rgba(0, 0, 0, 0.5);
   z-index: 80;
 }
@@ -167,6 +171,23 @@ header nav a.active { color: var(--accent2); }
 .content li { margin-bottom: 4px; }
 .content strong { color: var(--text); }
 .content em { color: var(--accent2); font-style: italic; }
+
+/* ── FÓRMULAS (MathJax) ── */
+/* Una fórmula (en modo display \[ ... \] / $$ ... $$, o inline \( ... \) muy larga,
+   como una lista de datos) puede ser más ancha que su contenedor, sobre todo en
+   pantallas angostas. MathJax no la reparte en varias líneas (es un bloque rígido),
+   así que sin esto se desborda del cuadro o del párrafo en vez de darle su propio
+   scroll horizontal. */
+mjx-container {
+  overflow-x: auto;
+  overflow-y: hidden;
+  max-width: 100%;
+}
+mjx-container[display="true"] { padding-bottom: 2px; }
+/* Una fórmula inline es "display: inline" por defecto: overflow/max-width no
+   tienen ningún efecto en cajas inline (la spec los ignora), así que sin esto el
+   overflow-x:auto de arriba queda sin aplicarse en fórmulas inline largas. */
+mjx-container:not([display="true"]) { display: inline-block; vertical-align: middle; }
 
 /* Índice de contenido (TOC) */
 .toc-list { list-style: none; padding-left: 0; margin: 10px 0 0 0 !important; }
@@ -464,6 +485,29 @@ footer {
 /* ── RESPONSIVE ── */
 @media (max-width: 768px) {
   #mobile-menu-btn { display: inline-flex; }
+  /* El header pasa a dos filas: arriba el menú/logo/tema, abajo la navegación completa.
+     Si no se envuelve así, "Inicio / Generador / Acerca de" no cabe en una sola fila y
+     se desborda del header fijo, quedando montado sobre el contenido. */
+  header {
+    flex-wrap: wrap;
+    height: auto;
+    min-height: 52px;
+    padding: 10px 12px;
+    row-gap: 8px;
+  }
+  #theme-btn { order: 2; margin-left: auto; }
+  header nav {
+    order: 5;
+    width: 100%;
+    display: flex;
+    gap: 4px;
+  }
+  header nav a {
+    flex: 1;
+    text-align: center;
+    padding: 7px 4px;
+    font-size: 12.5px;
+  }
   .sidebar {
     transform: translateX(-100%);
     box-shadow: 6px 0 24px rgba(0, 0, 0, 0.35);
@@ -474,7 +518,6 @@ footer {
   .content { margin-left: 0; padding: 24px 16px; width: 100%; }
   .hero-title { font-size: 32px; }
   .story-block { flex-direction: column; gap: 12px; }
-  .math-table { display: block; overflow-x: auto; }
 }
 @media (max-width: 580px) {
   .nav-btns { flex-direction: column; gap: 10px; }
@@ -595,6 +638,13 @@ body.light-mode #theme-btn:hover {
 .info-card p  { font-size: 13px; color: var(--text3); line-height: 1.6; margin: 0; }
 
 /* ── TABLA ── */
+/* .table-scroll envuelve la tabla: deja que <table> se mida con su layout normal
+   (display:table) y es ESTE contenedor el que recorta/da scroll horizontal cuando
+   una celda (una fórmula larga, por ejemplo) no cabe. Forzar overflow-x:auto en la
+   propia <table> no basta: el navegador genera una caja de tabla anónima para sus
+   hijos (thead/tbody) que puede escaparse del recorte y desbordar la página. */
+.table-scroll { overflow-x: auto; overflow-y: hidden; max-width: 100%; margin: 20px 0; }
+.table-scroll .math-table { margin: 0; }
 .math-table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 13px; }
 .math-table caption { font-size: 11px; font-weight: 600; color: var(--text3); letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 8px; text-align: left; }
 .math-table th { background: var(--bg3); color: var(--text2); font-weight: 600; padding: 10px 14px; text-align: left; border-bottom: 1px solid var(--border-md); }

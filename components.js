@@ -178,6 +178,23 @@ function syncHashScrollAfterMathJax() {
   }
 }
 
+// Mide la altura real del header (puede variar: una fila en escritorio, dos en
+// móvil) y la expone como variable CSS para que .layout/.sidebar/.sidebar-backdrop
+// siempre encajen justo debajo, sin depender de un valor fijo en píxeles.
+function syncHeaderHeight() {
+  const header = document.querySelector("header");
+  if (header) {
+    document.documentElement.style.setProperty("--header-h", `${header.offsetHeight}px`);
+  }
+}
+
+if (!window.__headerHeightSyncBound) {
+  window.__headerHeightSyncBound = true;
+  window.addEventListener("resize", syncHeaderHeight);
+  window.addEventListener("orientationchange", syncHeaderHeight);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(syncHeaderHeight);
+}
+
 function loadComponents(activePage) {
   const enTutorial = window.location.pathname.includes("/tutoriales/");
   const base       = enTutorial ? "../" : "";
@@ -204,6 +221,8 @@ function loadComponents(activePage) {
       if (icon && document.body.classList.contains("light-mode")) {
         icon.textContent = "dark_mode";
       }
+
+      syncHeaderHeight();
     })
     .catch(err => console.error("Error cargando header.html:", err));
 

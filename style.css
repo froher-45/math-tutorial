@@ -304,6 +304,15 @@ body { font-family: var(--sans); background: var(--bg); color: var(--text); min-
   .hero h1 { font-size: 32px; }
   .grid { grid-template-columns: 1fr 1fr; }
   .about-box { flex-direction: column; }
+  /* El header pasa a dos filas: logo + botón de tema arriba, navegación completa abajo.
+     En una sola fila "Acerca de" no cabe y el botón de tema queda cortado fuera de pantalla. */
+  .header { flex-wrap: wrap; row-gap: 10px; padding: 1rem 1.25rem; }
+  #theme-btn { order: 2; }
+  .header nav {
+    order: 3; width: 100%;
+    justify-content: space-between;
+  }
+  .header nav a { padding: 6px 4px; font-size: 12.5px; }
 }
 @media (max-width: 580px) {
   .config-row { grid-template-columns: 1fr; }
