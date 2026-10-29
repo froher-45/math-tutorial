@@ -115,8 +115,8 @@ function buildExerciseCardHtml(data, topicLabel, diffLabel, onNewCall, contextKe
         <input
           type="text"
           id="ansInput_${contextKey}"
-          class="ex-check-input"
-          placeholder="Escribe tu respuesta (ej. ${escHtml(data.respuesta)})"
+          class="ex-answer-input"
+          placeholder="Escribe tu respuesta"
           onkeydown="if(event.key==='Enter') checkExerciseAnswer('${contextKey}')"
         />
         <button type="button" class="ex-check-btn" onclick="checkExerciseAnswer('${contextKey}')">

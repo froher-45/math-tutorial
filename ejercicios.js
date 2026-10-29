@@ -97,7 +97,7 @@ const StatsEngine = {
     const maxFreq = Math.max(...freqTable.map(r => r.f));
     let modes = [];
     let modeType = "Amodal";
-    let modeLabel = "Sin moda (Amodal)";
+    let modeLabel = "Sin moda";
 
     if (n === 1) {
       modes = [sorted[0]];
@@ -106,11 +106,11 @@ const StatsEngine = {
     } else if (maxFreq === 1) {
       modes = [];
       modeType = "Amodal";
-      modeLabel = "Sin moda (Amodal)";
+      modeLabel = "Sin moda";
     } else if (freqTable.length > 1 && freqTable.every(r => r.f === maxFreq)) {
       modes = [];
       modeType = "Amodal";
-      modeLabel = "Sin moda (frecuencia uniforme)";
+      modeLabel = "Frecuencia uniforme";
     } else {
       modes = freqTable.filter(r => r.f === maxFreq).map(r => r.x);
       modeType = modes.length === 1 ? "Unimodal" : (modes.length === 2 ? "Bimodal" : "Multimodal");

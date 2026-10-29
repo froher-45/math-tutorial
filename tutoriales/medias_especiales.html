@@ -145,7 +145,6 @@
             <input type="text" id="pondVals" value="8, 9, 4" placeholder="Ej: 8, 9, 4">
             <label for="pondWeights" style="margin-top: 6px;">Pesos (\( w_i \)):</label>
             <input type="text" id="pondWeights" value="0.1, 0.4, 0.5" placeholder="Ej: 0.1, 0.4, 0.5">
-            <button class="btn-tool" id="calcPondBtn" style="margin-top: 6px;">Calcular Media Ponderada</button>
             <p id="pondError" class="error-msg"></p>
           </div>
           <div class="calc-results">
@@ -172,7 +171,6 @@
           <div class="input-group">
             <label for="geomInput">Datos (\( > 0 \)) =</label>
             <input type="text" id="geomInput" value="2, 3, 3.5, 4.5" placeholder="Ej: 2, 3, 3.5, 4.5">
-            <button class="btn-tool" id="calcGeomBtn">Calcular</button>
           </div>
           <p id="geomError" class="error-msg"></p>
           <div class="stat-chips" style="margin-top: 8px;">
@@ -242,11 +240,9 @@
       document.getElementById("resGeomArith").textContent = mClean;
     }
 
-    document.getElementById("calcPondBtn").addEventListener("click", runWeightedCalc);
     document.getElementById("pondVals").addEventListener("input", runWeightedCalc);
     document.getElementById("pondWeights").addEventListener("input", runWeightedCalc);
 
-    document.getElementById("calcGeomBtn").addEventListener("click", runGeomCalc);
     document.getElementById("geomInput").addEventListener("input", runGeomCalc);
 
     window.addEventListener("DOMContentLoaded", () => {

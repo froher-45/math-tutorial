@@ -272,11 +272,24 @@ body { font-family: var(--sans); background: var(--bg); color: var(--text); min-
 
 /* ── ACERCA ── */
 .about-box {
-  background: var(--bg2); border: 1px solid var(--border);
+  background: var(--accent-glow); border: 1px solid rgba(124,106,247,0.28);
   border-radius: var(--radius); padding: 2rem;
+  display: flex; gap: 20px; align-items: flex-start;
+}
+.about-box-icon {
+  width: 46px; height: 46px; min-width: 46px;
+  background: var(--bg2); border: 1px solid rgba(124,106,247,0.28);
+  border-radius: var(--radius-sm);
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--serif); font-size: 22px; color: var(--accent2);
 }
 .about-box h2 { font-family: var(--serif); font-size: 22px; color: var(--text); margin-bottom: 12px; font-style: italic; }
 .about-box p  { font-size: 14px; color: var(--text2); line-height: 1.8; max-width: 580px; }
+.about-box-link {
+  display: inline-block; margin-top: 16px;
+  font-size: 13px; font-weight: 600; color: var(--accent2); text-decoration: none;
+}
+.about-box-link:hover { opacity: 0.8; }
 
 /* ── FOOTER ── */
 .footer { position: relative; z-index: 10; text-align: center; padding: 1.5rem; font-size: 11px; color: var(--text3); border-top: 1px solid var(--border); letter-spacing: 0.05em; }
@@ -290,6 +303,7 @@ body { font-family: var(--sans); background: var(--bg); color: var(--text); min-
 @media (max-width: 600px) {
   .hero h1 { font-size: 32px; }
   .grid { grid-template-columns: 1fr 1fr; }
+  .about-box { flex-direction: column; }
 }
 @media (max-width: 580px) {
   .config-row { grid-template-columns: 1fr; }

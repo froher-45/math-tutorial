@@ -188,7 +188,6 @@
           <div class="input-group">
             <label for="dispInput">Datos =</label>
             <input type="text" id="dispInput" value="2, 4, 4, 4, 5, 5, 7, 9" placeholder="Ej: 2, 4, 4, 4, 5, 5, 7, 9">
-            <button class="btn-tool" id="calcDispBtn">Calcular y Graficar</button>
           </div>
           <p id="dispError" class="error-msg"></p>
           <div class="stat-chips" style="margin-top: 6px;">
@@ -327,7 +326,6 @@
       drawDispersionChart(nums, s);
     }
 
-    document.getElementById("calcDispBtn").addEventListener("click", runDispersionLab);
     document.getElementById("dispInput").addEventListener("input", runDispersionLab);
     window.addEventListener("DOMContentLoaded", runDispersionLab);
     window.addEventListener("resize", runDispersionLab);

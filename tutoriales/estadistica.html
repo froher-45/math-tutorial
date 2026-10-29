@@ -220,7 +220,6 @@
           <div class="input-group">
             <label for="centralInput">Datos =</label>
             <input type="text" id="centralInput" value="2, 4, 4, 4, 5, 5, 7, 9" placeholder="Ej: 2, 4, 4, 4, 5, 5, 7, 9">
-            <button class="btn-tool" id="calcCentralBtn">Calcular</button>
           </div>
           <p id="centralError" class="error-msg"></p>
           <div class="stat-chips" style="margin-top: 8px;">
@@ -275,7 +274,6 @@
       document.getElementById("resMode").textContent   = `${res.modeLabel} (${res.modeType})`;
     }
 
-    document.getElementById("calcCentralBtn").addEventListener("click", runCentralAnalyzer);
     document.getElementById("centralInput").addEventListener("input", runCentralAnalyzer);
     window.addEventListener("DOMContentLoaded", runCentralAnalyzer);
 
